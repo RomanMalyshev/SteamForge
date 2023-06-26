@@ -11,11 +11,10 @@ namespace UI.Map
             battle,
             rest
         }
-
     }
 
     public class MapButton
     {
-        public Action<Map.typeOfEvent> _onButtonClick;
+        public Action<GameEvent> _onButtonClick;
     }
 }
