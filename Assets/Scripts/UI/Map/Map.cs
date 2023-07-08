@@ -1,32 +1,21 @@
 ﻿using System;
 using Unity.VisualScripting;
-using UnityEngine;
 
 namespace UI.Map
 {
-    public class Map : MonoBehaviour
+    //Example 
+    public class Map
     {
-        [SerializeField] private Encounter[] _encounters;
-
-        private void OnEnable()
-        {           
-            foreach (Encounter encounter in _encounters)
-            {
-                encounter._onEncounterSelected += EncounterSelected;
-            }
-        }
-
-        private void OnDisable()
+        public enum typeOfEvent
         {
-            foreach (Encounter encounter in _encounters)
-            {
-                encounter._onEncounterSelected -= EncounterSelected;
-            }
+            battle,
+            rest
         }
 
-        private void EncounterSelected(EncounterType type)
-        {
-            Debug.Log(type);
-        }
-    }    
+    }
+
+    public class MapButton
+    {
+        public Action<Map.typeOfEvent> _onButtonClick;
+    }
 }
