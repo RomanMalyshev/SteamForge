@@ -1,21 +1,29 @@
 ﻿using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace UI.Map
 {
-    //Example 
-    public class Map
+    public class Map : MonoBehaviour
     {
-        public enum typeOfEvent
-        {
-            battle,
-            rest
-        }
+        [FormerlySerializedAs("_enconterOrder")] [SerializeField] public List<EncounterColumn> _encounterOrder;
 
+        private void Start()
+        {
+            for (var index = 0; index < _encounterOrder.Count; index++)
+            {
+                var encounter = _encounterOrder[index];
+                encounter.name = $"Colum  {index}";
+            }
+        }
     }
 
-    public class MapButton
+    [Serializable]
+    public class EncounterColumn
     {
-        public Action<Map.typeOfEvent> _onButtonClick;
+        [HideInInspector]public string name;
+        public List<EncounterButton> encounter;
     }
 }

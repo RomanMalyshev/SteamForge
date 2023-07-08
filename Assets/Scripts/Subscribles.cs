@@ -35,7 +35,7 @@ namespace DefaultNamespace
         }
     }
 
-    public class SubscribableActionField<T> : SubscribableAction<T>
+    public class SubscribableField<T> : SubscribableAction<T>
     {
         private T _value;
         public T Value
@@ -48,7 +48,7 @@ namespace DefaultNamespace
             }
         }
 
-        public SubscribableActionField(T value)
+        public SubscribableField(T value = default)
         {
             Value = value;
         }

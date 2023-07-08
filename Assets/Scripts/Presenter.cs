@@ -6,7 +6,7 @@ namespace DefaultNamespace
     {
         public void Init()
         {
-            Globals.Global.View.OnButtonClick.Subscribe(encounter =>
+            Globals.Global.View.OnMapButtonClick.Subscribe(encounter =>
             {
                 Debug.Log($"{encounter} - on click!");
             });
@@ -26,7 +26,7 @@ namespace DefaultNamespace
         public void RunTest()
         {
             Globals.Global.View.OnEnterGame.Invoke();
-            Globals.Global.View.OnButtonClick.Value = EncounterType.trade;
+            Globals.Global.View.OnMapButtonClick.Value = EncounterType.trade;
             Globals.Global.View.OnExitFromGame.Invoke(10);
         }
     }
