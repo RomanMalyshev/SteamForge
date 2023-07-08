@@ -25,8 +25,7 @@ namespace DefaultNamespace
         {
             View.Init();
             Model.Init();
-            Presenter.Init();
-            Presenter.RunTest();
+            Presenter.Init();           
         }
     }
 }

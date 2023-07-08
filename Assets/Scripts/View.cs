@@ -5,7 +5,7 @@ namespace DefaultNamespace
 {
     public class View
     {
-        public readonly SubscribableField<EncounterType> OnMapButtonClick = new(EncounterType.camp);
+        public readonly SubscribableAction<EncounterType> OnMapButtonClick = new();
         public SubscribableAction<int> OnExitFromGame = new();
         public SubscribableAction OnEnterGame = new();
 

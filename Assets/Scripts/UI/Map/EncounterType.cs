@@ -1,7 +1,7 @@
 public enum EncounterType
 {
     Battle,
-    trade,
-    camp,
-    something
+    Trade,
+    Camp,
+    Something
 }

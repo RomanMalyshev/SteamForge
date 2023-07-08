@@ -11,17 +11,17 @@ PrefabInstance:
     - target: {fileID: 1727357186279694990, guid: f8466d6fddbfb824fab0815af90b9db2,
         type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0.8548727
       objectReference: {fileID: 0}
     - target: {fileID: 1727357186279694990, guid: f8466d6fddbfb824fab0815af90b9db2,
         type: 3}
       propertyPath: m_Color.g
-      value: 0.12585449
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1727357186279694990, guid: f8466d6fddbfb824fab0815af90b9db2,
         type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2113607374699329899, guid: f8466d6fddbfb824fab0815af90b9db2,
         type: 3}
@@ -131,12 +131,12 @@ PrefabInstance:
     - target: {fileID: 4593574371374747119, guid: f8466d6fddbfb824fab0815af90b9db2,
         type: 3}
       propertyPath: m_Name
-      value: Encounter Trade 1
+      value: Encounter Trade 3
       objectReference: {fileID: 0}
     - target: {fileID: 8534306796448356814, guid: f8466d6fddbfb824fab0815af90b9db2,
         type: 3}
       propertyPath: _type
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

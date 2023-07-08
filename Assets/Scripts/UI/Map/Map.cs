@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DefaultNamespace;
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -8,7 +9,9 @@ namespace UI.Map
 {
     public class Map : MonoBehaviour
     {
-        [FormerlySerializedAs("_enconterOrder")] [SerializeField] public List<EncounterColumn> _encounterOrder;
+        [FormerlySerializedAs("_enconterOrder")][SerializeField] public List<EncounterColumn> _encounterOrder;
+        [SerializeField] private PlayerFigure _playerFigure;
+
 
         private void Start()
         {
@@ -17,6 +20,22 @@ namespace UI.Map
                 var encounter = _encounterOrder[index];
                 encounter.name = $"Colum  {index}";
             }
+
+            foreach (var column in _encounterOrder)
+            {
+                foreach (var encounter1 in column.encounter)
+                {
+                    encounter1.OnEncounterSelect.Subscribe(rectTransform =>
+                    {
+                        MovePlayerFigure(rectTransform);
+                    });
+                }
+            }
+        }
+
+        private void MovePlayerFigure(RectTransform rectTransform)
+        {
+            _playerFigure.MoveToEncounter(rectTransform);
         }
     }
 

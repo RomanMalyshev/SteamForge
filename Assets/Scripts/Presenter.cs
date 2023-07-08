@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace DefaultNamespace
 {
@@ -21,13 +22,6 @@ namespace DefaultNamespace
             {
                 Debug.Log("Enter game");
             });
-        }
-        
-        public void RunTest()
-        {
-            Globals.Global.View.OnEnterGame.Invoke();
-            Globals.Global.View.OnMapButtonClick.Value = EncounterType.trade;
-            Globals.Global.View.OnExitFromGame.Invoke(10);
-        }
+        }        
     }
 }
