@@ -11,6 +11,7 @@ namespace UI.Map
     {
         [FormerlySerializedAs("_enconterOrder")][SerializeField] public List<EncounterColumn> _encounterOrder;
         [SerializeField] private PlayerFigure _playerFigure;
+        [SerializeField] private int _currentColumn;
 
 
         private void Start()
@@ -25,17 +26,30 @@ namespace UI.Map
             {
                 foreach (var encounter1 in column.encounter)
                 {
-                    encounter1.OnEncounterSelect.Subscribe(rectTransform =>
+                    encounter1.OnEncounterSelect.Subscribe((rectTransform, column1) =>
                     {
-                        MovePlayerFigure(rectTransform);
+                        MovePlayerFigure(rectTransform, column1);
                     });
                 }
             }
         }
 
-        private void MovePlayerFigure(RectTransform rectTransform)
+        private void MovePlayerFigure(RectTransform rectTransform, int column)
         {
             _playerFigure.MoveToEncounter(rectTransform);
+            _currentColumn = column;
+
+            foreach (var column1 in _encounterOrder)
+            {
+                foreach (var encounter1 in column1.encounter)
+                {
+                    if ((encounter1.Column - _currentColumn > 1) || (encounter1.Column - _currentColumn < -1))
+                    {
+                        encounter1.SetActive(false);
+                    }
+                    else encounter1.SetActive(true);
+                }
+            }
         }
     }
 

@@ -6,20 +6,17 @@ using UnityEngine;
 namespace UI.Map
 {
     public class PlayerFigure : MonoBehaviour
-    {
-        private int _currentColumn;
+    {       
         private RectTransform _rectTransform;
 
         private void Start()
-        {
-            _currentColumn = 1;
-            _rectTransform = GetComponent<RectTransform>(); ;
-
+        {            
+            _rectTransform = GetComponent<RectTransform>(); 
         }
 
         public void MoveToEncounter(RectTransform encounterPosition)
         {
-            _rectTransform.anchoredPosition = encounterPosition.anchoredPosition;
+            _rectTransform.anchoredPosition = encounterPosition.anchoredPosition;            
         }
 
     }
