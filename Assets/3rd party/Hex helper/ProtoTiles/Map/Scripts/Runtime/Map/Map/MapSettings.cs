@@ -13,6 +13,8 @@ namespace RedBjorn.ProtoTiles
     [CreateAssetMenu(menuName = "RedBjorn/ProtoTiles/Map")]
     public class MapSettings : ScriptableObjectExtended
     {
+        public MapView MapViewPrefab;
+        
         [Serializable]
         public class TileVisual
         {

@@ -273,7 +273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Map: {fileID: 11400000, guid: a5b6ec908bdaa7647b549ed77447374b, type: 2}
   GridToggle: 103
-  MapView: {fileID: 0}
+  MapView: {fileID: 3994880725926158062}
   Unit: {fileID: 7761698197727528356}
 --- !u!4 &1135105624
 Transform:
@@ -514,6 +514,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 856aad500f2662a44a6ef77297386a02, type: 3}
+--- !u!114 &3994880725926158062 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 63075332522798267, guid: 856aad500f2662a44a6ef77297386a02,
+    type: 3}
+  m_PrefabInstance: {fileID: 3994880725926158061}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f09cec509a4db324696b8496e093f06b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7761698197727528355
 PrefabInstance:
   m_ObjectHideFlags: 0

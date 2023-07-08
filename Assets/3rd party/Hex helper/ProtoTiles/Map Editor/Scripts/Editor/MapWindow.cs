@@ -485,7 +485,7 @@ namespace RedBjorn.ProtoTiles
         {
             var scene = EditorSceneManager.GetActiveScene();
             var filename = System.IO.Path.GetFileNameWithoutExtension(scene.path);
-            var directory = System.IO.Path.GetDirectoryName(scene.path);
+            var directory = System.IO.Path.GetDirectoryName(@"Assets\Data\Battle Fields");
             var mapPath = MapSettings.Path(directory, filename, Grids[GridType]);
             mapPath = AssetDatabase.GenerateUniqueAssetPath(mapPath);
             var mapInstance = ScriptableObject.CreateInstance<MapSettings>();
