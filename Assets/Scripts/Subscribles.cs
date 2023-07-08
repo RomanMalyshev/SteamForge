@@ -35,6 +35,23 @@ namespace DefaultNamespace
         }
     }
 
+    
+    public  class SubscribableAction<T0,T1>
+    {
+        
+        private readonly List<Action<T0,T1>> _subscribers = new();
+
+        public void Subscribe(Action<T0,T1> action)
+        {
+            _subscribers.Add(action);
+        }
+
+        public void Invoke(T0 value1,T1 value2)
+        {
+            foreach (var subscriber in _subscribers)
+                subscriber.Invoke(value1,value2);
+        }
+    }
     public class SubscribableField<T> : SubscribableAction<T>
     {
         private T _value;
