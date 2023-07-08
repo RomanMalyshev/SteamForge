@@ -4,6 +4,7 @@ namespace DefaultNamespace
 {
     public class Presenter
     {
+        private int cashAction;
         public void Init()
         {
             Globals.Global.View.OnMapButtonClick.Subscribe(encounter =>
