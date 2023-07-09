@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace DefaultNamespace.Player
 {
-    public class Unit:MonoBehaviour
+    public class Unit : MonoBehaviour
     {
         public int InitiativeTest = 1;
         public int ActionPoints = 20;
@@ -14,10 +14,14 @@ namespace DefaultNamespace.Player
         public CommandHandler Handler;
 
         private int _currentActionPoints;
+        private Model _model;
+
         public void Init(MapEntity battleFieldFieldEntity)
         {
-            Handler.Init(battleFieldFieldEntity);
+            _model = Globals.Global.Model;
             Handler.onHandlerEnd += OnHandlerEnd;
+
+            Handler.Init(battleFieldFieldEntity);
             Debug.Log($"Init {gameObject.name}. AP - {_currentActionPoints}");
         }
 
@@ -25,26 +29,25 @@ namespace DefaultNamespace.Player
         {
             Debug.Log($"Activate {gameObject.name}. AP - {_currentActionPoints}");
             _currentActionPoints = ActionPoints;
+            _model.OnNewUnitTern.Invoke(gameObject.name);
+            _model.OnChangeUnitActionPoints.Invoke(_currentActionPoints);
+
             Handler.Activate();
         }
-        
+
         public void Deactivate()
         {
             Debug.Log($"Deactivate {gameObject.name}. AP - {_currentActionPoints}");
-
             Handler.Deactivate();
         }
-        
+
         private void OnHandlerEnd()
         {
             _currentActionPoints -= 5;
+            _model.OnChangeUnitActionPoints.Invoke(_currentActionPoints);
             Debug.Log($"End handle {gameObject.name}. AP - {_currentActionPoints}");
             if (_currentActionPoints <= 0)
                 OnActionPointsEnd?.Invoke();
         }
-        
-   
-
-      
     }
 }
