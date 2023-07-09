@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using DefaultNamespace.Battle;
 using DefaultNamespace.Player;
 using UnityEngine;
 
@@ -29,7 +30,7 @@ public class Battle : MonoBehaviour
         {
             unit.Init(BattleField.FieldEntity);
             unit.Deactivate();
-            unit._onEndTurn += NextUnitMove;
+            unit.OnActionPointsEnd += NextUnitMove;
         }
         
         _unitTurnOrder = Units.OrderBy(unit => unit.InitiativeTest).ToList();
