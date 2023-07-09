@@ -1,13 +1,11 @@
-using DefaultNamespace.Player;
+using System;
 using RedBjorn.ProtoTiles;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class BattleField : MonoBehaviour
 {
-    public Unit TestUnit; 
-    
-    
+
+    public Action OnFieldReady;
     public MapSettings Field;
     public MapEntity FieldEntity {get; private set; }
     private MapView _mapView;
@@ -24,7 +22,7 @@ public class BattleField : MonoBehaviour
         _mapView.Init(FieldEntity);
 
 
-        TestUnit.Init(FieldEntity);
+        OnFieldReady?.Invoke();
         Debug.Log($"Setup Field - {field.name} ");
     }
 

@@ -21,10 +21,11 @@ namespace RedBjorn.ProtoTiles
                 {
                     return true;
                 }
-                return Rules.IsMovable.IsMet(this) && ObstacleCount == 0;
+                return Rules.IsMovable.IsMet(this) && ObstacleCount == 0 && !Occupied;
             }
         }
 
+        public bool Occupied { get; set; }
         public bool Visited { get; set; }
         public bool Considered { get; set; }
         public float Depth { get; set; }
