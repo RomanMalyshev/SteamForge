@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using Game.Battle.Skills;
 
 namespace DefaultNamespace
 {
@@ -8,7 +7,8 @@ namespace DefaultNamespace
         public readonly SubscribableAction<EncounterType> OnMapButtonClick = new();
         public SubscribableAction<int> OnExitFromGame = new();
         public SubscribableAction OnEnterGame = new();
-
+        
+        public SubscribableAction<SkillCommandHandler> OnCommandSelect = new ();
         public void Init()
         {
  

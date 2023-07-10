@@ -1,14 +1,14 @@
 ﻿using System;
 using RedBjorn.ProtoTiles;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
-namespace DefaultNamespace.Battle
+namespace Game.Battle.Skills
 {
-    public abstract class CommandHandler:MonoBehaviour
+    public abstract class SkillCommandHandler:MonoBehaviour
     {
-        public abstract Action onHandlerEnd { get; set; }
-
+        public float Range;
+        public  Action onHandlerEnd { get; set; }
+        public Action<TileEntity> OnTileOccupied;
         public abstract void Init(MapEntity mapEntity);
         
         public abstract void Activate();

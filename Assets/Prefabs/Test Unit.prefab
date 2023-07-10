@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4687581113591587633}
   - component: {fileID: 370370983025366786}
   - component: {fileID: 6598323108609139614}
+  - component: {fileID: 7810213689241046088}
   m_Layer: 0
   m_Name: Test Unit
   m_TagString: Untagged
@@ -28,12 +29,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 428763125843706624}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 0.995, z: -15.79}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 6, y: 0.7834, z: -15.79}
+  m_LocalScale: {x: 1, y: 0.7884, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6363336570323927401
 MeshFilter:
@@ -97,10 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97c85707df0c49cb800b7de1359e1161, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 2
   Range: 3
-  RotationNode: {fileID: 0}
-  AreaPrefab: {fileID: 114964435729023602, guid: fe2319e9d6e840f409af77b3e7a85259,
+  AreaPrefab: {fileID: 5833766206117704680, guid: 47eab58c9fc05de4c86dfadf24f18e9b,
     type: 3}
   PathPrefab: {fileID: 114413117004689456, guid: 4eac60a74696c8142b18f93d4453e87d,
     type: 3}
@@ -116,6 +115,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c12ce03c29dd47de9366020ec632d556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 100
   InitiativeTest: 1
   ActionPoints: 20
-  Handler: {fileID: 370370983025366786}
+  TestStandPrefab: {fileID: 4559261688835780803, guid: 76367258c722a224b9321d5081bb320e,
+    type: 3}
+--- !u!114 &7810213689241046088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 428763125843706624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7041c41161c502a4ba8946e039f303d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Range: 1
+  Damage: 5
+  AreaPrefab: {fileID: 887056117504064987, guid: c0c658b7df7af4f479429ed399c4f53a,
+    type: 3}
+  PathPrefab: {fileID: 114413117004689456, guid: 4eac60a74696c8142b18f93d4453e87d,
+    type: 3}

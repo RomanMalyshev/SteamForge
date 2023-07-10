@@ -1,4 +1,5 @@
 ﻿using System;
+using DefaultNamespace.Player;
 using UnityEngine;
 
 namespace RedBjorn.ProtoTiles
@@ -21,11 +22,11 @@ namespace RedBjorn.ProtoTiles
                 {
                     return true;
                 }
-                return Rules.IsMovable.IsMet(this) && ObstacleCount == 0 && !Occupied;
+                return Rules.IsMovable.IsMet(this) && ObstacleCount == 0 && Occupant == null;
             }
         }
 
-        public bool Occupied { get; set; }
+        public Unit Occupant { get; set; }
         public bool Visited { get; set; }
         public bool Considered { get; set; }
         public float Depth { get; set; }

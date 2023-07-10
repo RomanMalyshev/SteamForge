@@ -412,6 +412,12 @@ namespace RedBjorn.ProtoTiles
             var origin = Tile(tilePosition);
             return WalkableBorder(origin, range);
         }
+        
+        public List<Vector3> Border(Vector3Int tilePosition, float range)
+        {
+            var origin = Tile(tilePosition);
+            return AllAreaBorder(origin, range);
+        }
 
         /// <summary>
         /// Get positions of border of walkable area
@@ -423,6 +429,12 @@ namespace RedBjorn.ProtoTiles
         {
             var origin = Tile(worldPosition);
             return WalkableBorder(origin, range);
+        }
+        
+        public List<Vector3> Border(Vector3 worldPosition, float range)
+        {
+            var origin = Tile(worldPosition);
+            return AllAreaBorder(origin, range);
         }
 
         /// <summary>
@@ -436,6 +448,18 @@ namespace RedBjorn.ProtoTiles
             var borderPoints = new List<Vector3>();
             var walkable = NodePathFinder.WalkableAreaPositions(this, origin, range);
             var borderedAreas = MapBorder.FindBorderPositions(this, walkable);
+            foreach (var point in borderedAreas)
+            {
+                borderPoints.Add(WorldPosition(point.TilePos) + Vertices[point.VerticeIndex] * TileSize);
+            }
+            return borderPoints;
+        }
+        
+        public List<Vector3> AllAreaBorder(TileEntity origin, float range)
+        {
+            var borderPoints = new List<Vector3>();
+            var all = NodePathFinder.AreaPosition(this, origin, range);
+            var borderedAreas = MapBorder.FindBorderPositions(this, all);
             foreach (var point in borderedAreas)
             {
                 borderPoints.Add(WorldPosition(point.TilePos) + Vertices[point.VerticeIndex] * TileSize);
