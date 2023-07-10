@@ -1,69 +1,100 @@
 using DefaultNamespace;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI.Map
-{
-    [RequireComponent(typeof(Button))]
+{    
     public class EncounterButton : MonoBehaviour
     {
-        [SerializeField] private EncounterType _type;        
-
-        private Button _button;
+        [SerializeField] private EncounterType _type;
+        
         private View _view;
-        private bool _isActive = false;
-        private RectTransform _rectTransform;
-        private Image _image;
+        private bool _isReechable = false;
+        private Transform _transform;
+        private Renderer _renderer;
         private Color _color;
+        private bool _isActive = true;
 
         public int Column;
 
-        public SubscribableAction<RectTransform, int> OnEncounterSelect = new();
+        public SubscribableAction<Transform, int> OnEncounterSelect = new();
 
         private void Start()
-        {
-            _button = GetComponent<Button>();
-            _rectTransform = GetComponent<RectTransform>();
-            _button.onClick.AddListener(OnButtonClick);
+        {            
+            _transform = GetComponent<Transform>();            
             _view = Globals.Global.View;
-            _image = GetComponent<Image>();
-            _color = _image.color;
+            _renderer = GetComponent<Renderer>();
+            _color = _renderer.material.color;
 
             if ((Column == 0) || (Column == 1))
             {
-                _isActive = true;
+                _isReechable = true;
             }
 
-            if (!_isActive)
+            if (!_isReechable)
             {
-                _image.color = Color.grey;
+                _renderer.material.color = Color.grey;
             }
+        }
+
+        private void OnMouseDown()
+        {
+            OnButtonClick();
         }
 
         private void OnButtonClick()
         {
             if (_isActive)
             {
-                _view.OnMapButtonClick.Invoke(_type);
-                OnEncounterSelect.Invoke(_rectTransform, Column);
-            }                
+                if (_isReechable)
+                {
+                    _view.OnMapButtonClick.Invoke(_type);
+                    OnEncounterSelect.Invoke(_transform, Column);
+                }
+            }                     
         }
+         
+        private void OnMouseOver()
+        {
+            if (_isActive)
+            {
+                GetComponent<Renderer>().material.color = _color + new Color(10f, 10f, 10f);
+            }
+        }
+
+        private void OnMouseExit()
+         {
+            if (_isActive)
+            {
+                if (_isReechable)
+                {
+                    _renderer.material.color = _color;
+                }
+                else _renderer.material.color = Color.grey;
+            }            
+         } 
 
         private void OnApplicationQuit()
         {
             _view.OnExitFromGame.Invoke(10);
         }
 
+        public void SetReeachable(bool isReeachable)
+        {
+            _isReechable = isReeachable;
+
+            if (_isReechable)
+            {
+                _renderer.material.color = _color;
+            }
+            else _renderer.material.color = Color.grey;
+        }
+
         public void SetActive(bool isActive)
         {
             _isActive = isActive;
-
-            if (_isActive)
-            {
-                _image.color = _color;
-            }
-            else _image.color = Color.grey;
         }
     }
 }

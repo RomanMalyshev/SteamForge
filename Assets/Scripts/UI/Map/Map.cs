@@ -11,11 +11,17 @@ namespace UI.Map
     {
         [FormerlySerializedAs("_enconterOrder")][SerializeField] public List<EncounterColumn> _encounterOrder;
         [SerializeField] private PlayerFigure _playerFigure;
+        [SerializeField] private CameraConroller _cameraController;
         [SerializeField] private int _currentColumn;
-
 
         private void Start()
         {
+            _cameraController.FindPlayerFigure(_playerFigure);
+            _playerFigure.OnNewEncounterEnter.Subscribe( (column)=>
+            {
+                PlayerFigireMoved(column);
+            });
+
             for (var index = 0; index < _encounterOrder.Count; index++)
             {
                 var encounter = _encounterOrder[index];
@@ -26,30 +32,44 @@ namespace UI.Map
             {
                 foreach (var encounter1 in column.encounter)
                 {
-                    encounter1.OnEncounterSelect.Subscribe((rectTransform, column1) =>
+                    encounter1.OnEncounterSelect.Subscribe((transform, column1) =>
                     {
-                        MovePlayerFigure(rectTransform, column1);
+                        MovePlayerFigure(transform, column1);
                     });
                 }
             }
         }
 
-        private void MovePlayerFigure(RectTransform rectTransform, int column)
+        private void MovePlayerFigure(Transform transform, int column)
         {
-            _playerFigure.MoveToEncounter(rectTransform);
+            _playerFigure.MoveToEncounter(transform, column);
+
+            foreach (var column1 in _encounterOrder)
+            {
+                foreach (var encounter in column1.encounter)
+                {
+                    encounter.SetActive(false);                    
+                }
+            }
+        }
+
+        private void PlayerFigireMoved(int column)
+        {
             _currentColumn = column;
 
             foreach (var column1 in _encounterOrder)
             {
-                foreach (var encounter1 in column1.encounter)
+                foreach (var encounter in column1.encounter)
                 {
-                    if ((encounter1.Column - _currentColumn > 1) || (encounter1.Column - _currentColumn < -1))
+                    encounter.SetActive(true);
+
+                    if ((encounter.Column - _currentColumn > 1) || (encounter.Column - _currentColumn < -1))
                     {
-                        encounter1.SetActive(false);
+                        encounter.SetReeachable(false);
                     }
-                    else encounter1.SetActive(true);
+                    else encounter.SetReeachable(true);
                 }
-            }
+            }           
         }
     }
 
