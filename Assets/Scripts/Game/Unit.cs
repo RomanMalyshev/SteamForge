@@ -16,6 +16,8 @@ namespace DefaultNamespace.Player
 
         public Action OnActionPointsEnd;
 
+        public GameObject TestStandPrefab;
+
         private int _currentActionPoints;
         private Model _model;
 
@@ -27,6 +29,7 @@ namespace DefaultNamespace.Player
 
         private List<SkillCommandHandler> _handlers = new();
         private SkillCommandHandler _currentHandler;
+        private GameObject _stand;
 
         public void Init(MapEntity battleFieldFieldEntity)
         {
@@ -40,7 +43,7 @@ namespace DefaultNamespace.Player
                 handler.Deactivate();
             }
 
-            Debug.Log($"Init {gameObject.name}. AP - {_currentActionPoints}");
+            Debug.Log($"Init {gameObject.name}.");
 
             //TODO: bug here with position 
             OccupyTile(battleFieldFieldEntity.Tile(transform.position));
@@ -62,8 +65,23 @@ namespace DefaultNamespace.Player
 
         private void OccupyTile(TileEntity tile)
         {
+            
+            Debug.LogWarning($"Occupy tile - {tile.Position} by - {gameObject.name}");
+
+            if (_occupiedTile != null)
+            {
+                Debug.LogWarning($"Deoccupy tile - {_occupiedTile.Position} by - {gameObject.name}!!");
+                _occupiedTile.Occupant = null;
+            }
+
+
+            if (_stand != null)
+                Destroy(_stand);
+
             _occupiedTile = tile;
             _occupiedTile.Occupant = this;
+
+            _stand = Instantiate(TestStandPrefab, transform);
         }
 
         public void Activate()
@@ -73,8 +91,6 @@ namespace DefaultNamespace.Player
             _model.OnChangeUnitActionPoints.Invoke(_currentActionPoints);
 
             _isActiveState = true;
-
-
             Debug.Log($"Activate {gameObject.name}. AP - {_currentActionPoints}");
         }
 
@@ -101,6 +117,8 @@ namespace DefaultNamespace.Player
 
             Debug.Log($"Dead - {gameObject.name}");
             transform.rotation = Quaternion.Euler(0, 90, 90);
+            transform.position -= new Vector3(0, 1.2f, 0);
+            _occupiedTile.Occupant = null;
             OnUnitDead?.Invoke(this);
         }
     }

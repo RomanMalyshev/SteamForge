@@ -99,6 +99,37 @@ namespace RedBjorn.ProtoTiles
             }
             return closed;
         }
+        
+        public static HashSet<Vector3Int> AreaPosition(IMapNode map, INode origin, float range)
+        {
+            map.Reset(Mathf.CeilToInt(range), origin);
+            origin.Depth = 0f;
+            var open = new Queue<INode>();
+            var closed = new HashSet<Vector3Int>();
+
+            open.Enqueue(origin);
+            var index = 0;
+            while (open.Count > 0 && index < 100000)
+            {
+                var current = open.Dequeue();
+                current.Considered = true;
+                foreach (var n in map.NeighborsMovable(current).Where(neigh => neigh != null))
+                {
+                    var currentDistance = current.Depth + map.Distance(current, n);
+                    if (!n.Considered && currentDistance <= range)
+                    {
+                        n.Considered = true;
+                        n.Depth = currentDistance;
+                        open.Enqueue(n);
+                        index++;
+                    }
+                }
+                current.Visited = true;
+                closed.Add(current.Position);
+
+            }
+            return closed;
+        }
 
         public static List<INode> Path(IMapNode map, INode start, INode finish, float range)
         {

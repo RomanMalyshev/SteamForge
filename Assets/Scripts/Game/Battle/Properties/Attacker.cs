@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using RedBjorn.ProtoTiles;
 using RedBjorn.ProtoTiles.Example;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
+using UnityEngine.WSA;
 
 namespace Game.Battle.Skills
 {
@@ -18,6 +20,7 @@ namespace Game.Battle.Skills
         private MapEntity _fieldEntity;
         private bool _active;
 
+        
         public override void Init(MapEntity mapEntity)
         {
             _fieldEntity = mapEntity;
@@ -31,8 +34,9 @@ namespace Game.Battle.Skills
             _area.gameObject.SetActive(true);
 
             _area.Hide();
-            _area.Show(_fieldEntity.WalkableBorder(transform.position, Range), _fieldEntity);
-
+            _area.Show(_fieldEntity.Border(transform.position, Range), _fieldEntity);
+            
+            _area.InactiveState();
             _path.Show(new List<Vector3>() { }, _fieldEntity);
             _path.InactiveState();
             _path.IsEnabled = true;
@@ -43,13 +47,18 @@ namespace Game.Battle.Skills
         public override void Handle()
         {
             var clickPos = MyInput.GroundPosition(_fieldEntity.Settings.Plane());
-            var tile = _fieldEntity.Tile(clickPos);
-            if (tile != null && tile.Occupant != null)
-            {
-                //attack logic
-                tile.Occupant.GetHit(Damage);
-                onHandlerEnd?.Invoke();
-            }
+            var targetTile = _fieldEntity.Tile(clickPos);
+
+            if (targetTile == null) return;
+            if (targetTile.Occupant == null) return;
+            
+            var currentTile = _fieldEntity.Tile(transform.position);
+
+            if (_fieldEntity.IsSameTile(targetTile, currentTile.Position)) return;
+            if (_fieldEntity.Distance(currentTile, targetTile) > Range) return;
+            
+            targetTile.Occupant.GetHit(Damage);
+            onHandlerEnd?.Invoke();
         }
 
         public override void Deactivate()

@@ -71,10 +71,6 @@ namespace Game.Battle.Skills
                 var path = _fieldEntity.PathTiles(transform.position, clickPos, Range);
                 if (path != null)
                 {
-                    var startMoveTile = _fieldEntity.Tile(transform.position);
-                    if (startMoveTile != null)
-                        startMoveTile.Occupant = null;
-
                     _path.Hide();
                     var endPoint = _fieldEntity.WorldPosition(path[^1]);
                     transform.position = new Vector3(endPoint.x, transform.position.y, endPoint.z);
