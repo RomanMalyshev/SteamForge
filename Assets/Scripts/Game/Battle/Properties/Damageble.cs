@@ -1,12 +1,10 @@
 ﻿using System;
-using DefaultNamespace.Battle;
 using RedBjorn.ProtoTiles;
 
-namespace Game.Battle.Properties
+namespace Game.Battle.Skills
 {
-    public class Damageable:CommandHandler
+    public class Damageable : SkillCommandHandler
     {
-        public override Action onHandlerEnd { get; set; }
         public override void Init(MapEntity mapEntity)
         {
             throw new NotImplementedException();
