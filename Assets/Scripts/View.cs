@@ -9,6 +9,8 @@ namespace DefaultNamespace
         public SubscribableAction OnEnterGame = new();
         
         public SubscribableAction<SkillCommandHandler> OnCommandSelect = new ();
+        public SubscribableAction OnRestartBattle =  new ();
+
         public void Init()
         {
  

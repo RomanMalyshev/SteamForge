@@ -30,9 +30,13 @@ namespace DefaultNamespace.Player
         private List<SkillCommandHandler> _handlers = new();
         private SkillCommandHandler _currentHandler;
         private GameObject _stand;
-
+        private MapEntity _mapEntity;
+        private int  _currentHealth;
+        private Vector3 _startPosition;
         public void Init(MapEntity battleFieldFieldEntity)
         {
+            _startPosition = transform.position;
+            _mapEntity = battleFieldFieldEntity;
             _handlers = GetComponentsInChildren<SkillCommandHandler>().ToList();
             _model = Globals.Global.Model;
             foreach (var handler in _handlers)
@@ -46,7 +50,7 @@ namespace DefaultNamespace.Player
             Debug.Log($"Init {gameObject.name}.");
 
             //TODO: bug here with position 
-            OccupyTile(battleFieldFieldEntity.Tile(transform.position));
+            OccupyTile(_mapEntity.Tile(transform.position));
 
             Globals.Global.View.OnCommandSelect.Subscribe(ActivateCommand);
         }
@@ -86,6 +90,7 @@ namespace DefaultNamespace.Player
 
         public void Activate()
         {
+            _currentHealth = Health;
             _currentActionPoints = ActionPoints;
             _model.OnNewUnitTern.Invoke(gameObject.name, _handlers);
             _model.OnChangeUnitActionPoints.Invoke(_currentActionPoints);
@@ -112,14 +117,30 @@ namespace DefaultNamespace.Player
 
         public void GetHit(int damage)
         {
-            Health -= damage;
-            if (Health > 0) return;
+            _currentHealth -= damage;
+            if (_currentHealth > 0) return;
 
             Debug.Log($"Dead - {gameObject.name}");
             transform.rotation = Quaternion.Euler(0, 90, 90);
             transform.position -= new Vector3(0, 1.2f, 0);
             _occupiedTile.Occupant = null;
             OnUnitDead?.Invoke(this);
+        }
+
+        public void Reset()
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+            transform.position += new Vector3(0, 1.2f, 0);
+            transform.position = _startPosition;
+            
+            _currentHealth = Health;
+            
+            foreach (var handler in _handlers)
+            {
+                handler.Deactivate();
+            }
+
+            OccupyTile(_mapEntity.Tile(transform.position));
         }
     }
 }

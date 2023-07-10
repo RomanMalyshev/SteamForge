@@ -13,16 +13,29 @@ namespace Game.Battle.Skills
         public List<Unit> Units;
         private Unit _currentUnitMove;
 
-        private List<Unit> _unitTurnOrder;
+        private List<Unit> _unitTurnOrder = new ();
         private Model _model;
         private int _round;
 
         private void Start()
         {
             _model = Globals.Global.Model;
+            Globals.Global.View.OnRestartBattle.Subscribe(Reset);
             DebugBattleUI.Init();
             BattleField.OnFieldReady += InitUnits;
             BattleField.TestInitField();
+        }
+
+        private void Reset()
+        {
+            BattleField.Reset();
+            foreach (var unit in Units)
+                unit.Reset();
+
+            _round = 0;
+            _currentUnitMove = null;
+            _unitTurnOrder.Clear();
+            StartBattle();
         }
 
         private void InitUnits()
@@ -40,6 +53,11 @@ namespace Game.Battle.Skills
                 unit.OnUnitDead += RemoveUnit;
             }
 
+            StartBattle();
+        }
+
+        private void StartBattle()
+        {
             _unitTurnOrder = Units.OrderBy(unit => unit.InitiativeTest).ToList();
             _currentUnitMove = _unitTurnOrder[0];
             _currentUnitMove.Activate();

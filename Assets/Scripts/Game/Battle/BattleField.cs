@@ -31,4 +31,9 @@ public class BattleField : MonoBehaviour
     {
         InitField(Field);
     }
+
+    public void Reset()
+    {
+        //TestInitField();
+    }
 }
