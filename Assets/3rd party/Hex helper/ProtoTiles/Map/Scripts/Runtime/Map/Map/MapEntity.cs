@@ -10,7 +10,7 @@ namespace RedBjorn.ProtoTiles
     public partial class MapEntity : IMapNode, IMapDirectional
     {
         float TileSize = 1f;
-        TileDictionary Tiles = new TileDictionary();
+        public TileDictionary Tiles = new TileDictionary();
         Vector3 Eps;
         Vector3[] Vertices;
         public Vector3[] VerticesInner;

@@ -83,5 +83,14 @@ namespace Game.Battle.Skills
                 Handle();
             }
         }
+        
+        private void OnDestroy()
+        {
+            if (_area != null)
+                Destroy(_area.gameObject);
+            
+            if (_path != null)
+                Destroy(_path.gameObject);
+        }
     }
 }

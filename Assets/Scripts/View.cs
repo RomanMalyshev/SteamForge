@@ -1,4 +1,5 @@
 ﻿using Game.Battle.Skills;
+using RedBjorn.ProtoTiles;
 
 namespace DefaultNamespace
 {
@@ -10,7 +11,7 @@ namespace DefaultNamespace
         
         public SubscribableAction<SkillCommandHandler> OnCommandSelect = new ();
         public SubscribableAction OnRestartBattle =  new ();
-
+        public SubscribableField<MapSettings> ActiveBattle = new(null);
         public void Init()
         {
  

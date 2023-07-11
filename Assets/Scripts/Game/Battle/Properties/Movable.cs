@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using RedBjorn.ProtoTiles;
 using RedBjorn.ProtoTiles.Example;
 using UnityEngine;
@@ -14,7 +15,6 @@ namespace Game.Battle.Skills
         private AreaOutline _area;
         private MapEntity _fieldEntity;
         private bool _active;
-
 
         public override void Init(MapEntity fieldEntity)
         {
@@ -73,9 +73,11 @@ namespace Game.Battle.Skills
                 {
                     _path.Hide();
                     var endPoint = _fieldEntity.WorldPosition(path[^1]);
+
+                    OnTileOccupied?.Invoke(path[^1]);
+
                     transform.position = new Vector3(endPoint.x, transform.position.y, endPoint.z);
 
-                    OnTileOccupied?.Invoke(tile);
                     onHandlerEnd?.Invoke();
                 }
 
@@ -101,6 +103,15 @@ namespace Game.Battle.Skills
 
             _path.InactiveState();
             _area.InactiveState();
+        }
+
+        private void OnDestroy()
+        {
+            if (_area != null)
+                Destroy(_area.gameObject);
+            
+            if (_path != null)
+                Destroy(_path.gameObject);
         }
     }
 }

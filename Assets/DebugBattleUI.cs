@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
-using DefaultNamespace.Player;
+using RedBjorn.ProtoTiles;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +12,13 @@ public class DebugBattleUI : MonoBehaviour
     public TMP_Text AP;
     public Button Prefab; 
     public Button Restart; 
+    public Button RunTestField1; 
+    public Button RunTestField2; 
+    public Button RunTestField3; 
+   
+    public MapSettings Field1;
+    public MapSettings Field2;
+    public MapSettings Field3;
     public Transform ButtonsParents;
     
     private Model _model;
@@ -44,5 +49,9 @@ public class DebugBattleUI : MonoBehaviour
         _model.OnChangeUnitActionPoints.Subscribe(ap => { AP.text = $"AP: {ap}"; });
 
         Restart.onClick.AddListener(() => { _view.OnRestartBattle.Invoke(); });
+        
+        RunTestField1.onClick.AddListener(() => {_view.ActiveBattle.Value = Field1;});
+        RunTestField2.onClick.AddListener(() => {_view.ActiveBattle.Value = Field2;});
+        RunTestField3.onClick.AddListener(() => {_view.ActiveBattle.Value = Field3;});
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DefaultNamespace;
+using RedBjorn.ProtoTiles;
 using UnityEngine;
 using Unit = DefaultNamespace.Player.Unit;
 
@@ -10,47 +11,70 @@ namespace Game.Battle.Skills
     {
         public DebugBattleUI DebugBattleUI;
         public BattleField BattleField;
-        public List<Unit> Units;
+        public Unit UnitsPrefab;
         private Unit _currentUnitMove;
 
-        private List<Unit> _unitTurnOrder = new ();
+        private readonly List<Unit> _units = new ();
+        private List<Unit> _unitTurnOrder = new();
         private Model _model;
+        private View _view;
         private int _round;
+        private MapSettings _mapSettings;
 
         private void Start()
         {
             _model = Globals.Global.Model;
-            Globals.Global.View.OnRestartBattle.Subscribe(Reset);
+            _view = Globals.Global.View;
+
             DebugBattleUI.Init();
+
+            _view.ActiveBattle.Subscribe(mapSettings =>
+            {
+                if (mapSettings == null) return;
+                Reset();
+                _mapSettings = mapSettings;
+                BattleField.InitField(_mapSettings);
+            });
+
             BattleField.OnFieldReady += InitUnits;
-            BattleField.TestInitField();
+
+            Globals.Global.View.OnRestartBattle.Subscribe(() =>
+            {
+                if (_mapSettings == null) return;
+                Reset();
+                BattleField.InitField(_mapSettings);
+            });
         }
 
         private void Reset()
         {
-            BattleField.Reset();
-            foreach (var unit in Units)
-                unit.Reset();
-
+            foreach (var unit in _units)
+            {
+                unit.OnActionPointsEnd -= NextUnitMove;
+                unit.OnUnitDead -= RemoveUnit;
+                Destroy(unit.gameObject);
+            }
+            _units.Clear();
+            
             _round = 0;
             _currentUnitMove = null;
             _unitTurnOrder.Clear();
-            StartBattle();
         }
 
-        private void InitUnits()
+        private void InitUnits(MapEntity mapEntity, List<List<TileEntity>> opponentsTiles)
         {
-            if (Units.Count == 0)
+            foreach (var opponentTiles in opponentsTiles)
             {
-                Debug.LogWarning("No unit on field!");
-                return;
-            }
-
-            foreach (var unit in Units)
-            {
-                unit.Init(BattleField.FieldEntity);
-                unit.OnActionPointsEnd += NextUnitMove;
-                unit.OnUnitDead += RemoveUnit;
+                foreach (var tile in opponentTiles)
+                {
+                    var position = new Vector3(mapEntity.WorldPosition(tile).x, UnitsPrefab.transform.position.y,
+                        mapEntity.WorldPosition(tile).z);
+                    var unit = Instantiate(UnitsPrefab,position ,Quaternion.identity);
+                    unit.Init(mapEntity);
+                    unit.OnActionPointsEnd += NextUnitMove;
+                    unit.OnUnitDead += RemoveUnit;
+                    _units.Add(unit);
+                }
             }
 
             StartBattle();
@@ -58,18 +82,11 @@ namespace Game.Battle.Skills
 
         private void StartBattle()
         {
-            _unitTurnOrder = Units.OrderBy(unit => unit.InitiativeTest).ToList();
+            _unitTurnOrder = _units.OrderBy(unit => unit.InitiativeTest).ToList();
             _currentUnitMove = _unitTurnOrder[0];
             _currentUnitMove.Activate();
             _round++;
             _model.OnNewBattleRound.Invoke(_round);
-        }
-
-        private void RemoveUnit(Unit unit)
-        {
-            _unitTurnOrder.Remove(unit);
-            if (_currentUnitMove == unit)
-                NextUnitMove();
         }
 
         private void NextUnitMove()
@@ -87,6 +104,14 @@ namespace Game.Battle.Skills
                 _round++;
                 _model.OnNewBattleRound.Invoke(_round);
             }
+        }
+
+        private void RemoveUnit(Unit unit)
+        {
+            _unitTurnOrder.Remove(unit);
+            
+            if (_currentUnitMove == unit)
+                NextUnitMove();
         }
     }
 }
