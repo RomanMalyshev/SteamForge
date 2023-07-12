@@ -224,7 +224,12 @@ LineRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Positions: []
+  m_Positions:
+  - {x: 1, y: 0, z: 0}
+  - {x: 2, y: 0, z: 0}
+  - {x: 3, y: 0, z: 0}
+  - {x: 4, y: 0, z: 0}
+  - {x: 5, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -233,7 +238,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
+        value: 0.14150238
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -241,8 +246,8 @@ LineRenderer:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.11873909
-        value: 0
+        time: 0.15044686
+        value: 0.16036987
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -251,7 +256,7 @@ LineRenderer:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 0
+        value: 0.2547226
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -272,7 +277,7 @@ LineRenderer:
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
-      ctime1: 36237
+      ctime1: 20046
       ctime2: 0
       ctime3: 0
       ctime4: 0

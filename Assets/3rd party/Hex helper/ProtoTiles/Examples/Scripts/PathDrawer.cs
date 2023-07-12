@@ -5,6 +5,7 @@ namespace RedBjorn.ProtoTiles.Example
 {
     public class PathDrawer : MonoBehaviour
     {
+        public float Yoffset = 0.01f;
         public LineDrawer Line;
         public SpriteRenderer Tail;
         public Sprite ActiveSprite;
@@ -21,7 +22,7 @@ namespace RedBjorn.ProtoTiles.Example
         {
             Tail.sprite = InactiveSprite;
         }
-        
+
         public void Show(List<Vector3> points, MapEntity map)
         {
             var offset = map.Settings.VectorCreateOrthogonal(0.01f);
@@ -36,7 +37,7 @@ namespace RedBjorn.ProtoTiles.Example
             else
             {
                 var tailPos = points[points.Count - 1];
-                Tail.transform.localPosition = map.Settings.Projection(tailPos, 0.01f);
+                Tail.transform.localPosition = map.Settings.Projection(tailPos, Yoffset);
                 Tail.gameObject.SetActive(true);
                 if (points.Count > 1)
                 {
@@ -52,6 +53,17 @@ namespace RedBjorn.ProtoTiles.Example
                 }
             }
         }
+
+        public void Show(Vector3 point, MapEntity map)
+        {
+            var offset = map.Settings.VectorCreateOrthogonal(0.01f);
+            Tail.transform.localPosition = offset;
+            Tail.transform.rotation = map.Settings.RotationPlane();
+            
+            Tail.transform.localPosition = map.Settings.Projection(point, Yoffset);
+            Tail.gameObject.SetActive(true);
+        }
+
 
         public void Hide()
         {

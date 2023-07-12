@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using RedBjorn.ProtoTiles;
 using RedBjorn.ProtoTiles.Example;
-using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
-using UnityEngine.WSA;
 
 namespace Game.Battle.Skills
 {
@@ -78,6 +76,16 @@ namespace Game.Battle.Skills
             if (!_active) return;
             if (_fieldEntity == null) return;
 
+            var mouthPos = MyInput.GroundPosition(_fieldEntity.Settings.Plane());
+            var targetTile = _fieldEntity.Tile(mouthPos);
+
+            if (targetTile != null && targetTile.Occupant != null)
+            {
+                _path.IsEnabled = true;
+                _path.Show(_fieldEntity.WorldPosition(targetTile), _fieldEntity);
+                _path.ActiveState();
+            }
+            
             if (MyInput.GetOnWorldUp(_fieldEntity.Settings.Plane()))
             {
                 Handle();
