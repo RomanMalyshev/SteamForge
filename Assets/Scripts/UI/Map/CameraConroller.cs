@@ -13,7 +13,10 @@ public class CameraConroller : MonoBehaviour
     
     void Update()
     {
-        transform.position = new Vector3(_playerFigure.transform.position.x - _distance, _playerFigure.transform.position.y + _height, transform.position.z);        
+        if (!(_playerFigure == null))
+        {
+            transform.position = new Vector3(_playerFigure.transform.position.x - _distance, _playerFigure.transform.position.y + _height, transform.position.z);
+        }        
     }
 
     public void FindPlayerFigure(PlayerFigure playerFigure)

@@ -11,9 +11,10 @@ namespace UI.Map
     public class PlayerFigure : MonoBehaviour
     {
         [SerializeField] private float _speed;
-        
+        [SerializeField] private float _vertSpeed;
+
         private Transform _transform;
-        [SerializeField] private bool _isMooving;
+        private bool _isMooving;
 
         public SubscribableAction<int> OnNewEncounterEnter = new();
 
@@ -28,6 +29,8 @@ namespace UI.Map
             {
                 _isMooving = true;
                 StartCoroutine(MovingBetveenEncounters(transform, column));
+                float dist = Vector3.Distance(transform.position, _transform.position);
+               // StartCoroutine(JumpAnimation(_transform, dist));
             }            
         }
 
@@ -42,5 +45,23 @@ namespace UI.Map
             OnNewEncounterEnter.Invoke(column);
             _isMooving = false;
         }
+
+        /*private IEnumerator JumpAnimation(Transform Position, float dist)
+        {
+            float zeroYPosition = Position.position.y;
+            while (_isMooving)
+            {
+                if (_transform.position.y == zeroYPosition)
+                {
+                    _transform.position = Vector3.MoveTowards(_transform.position, new Vector3(_transform.position.x, zeroYPosition + 5f, _transform.position.z), 5f);
+                }
+                else
+                {
+                    _transform.position = Vector3.MoveTowards(_transform.position, new Vector3(_transform.position.x, zeroYPosition - 5f, _transform.position.z), 5f);
+                }
+                
+                yield return null;
+            }
+        }*/
     }
 }

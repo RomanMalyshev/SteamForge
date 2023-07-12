@@ -16,7 +16,9 @@ namespace UI.Map
 
         private void Start()
         {
+            if (!(_cameraController == null))
             _cameraController.FindPlayerFigure(_playerFigure);
+
             _playerFigure.OnNewEncounterEnter.Subscribe( (column)=>
             {
                 PlayerFigireMoved(column);
