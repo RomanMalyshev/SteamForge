@@ -7,27 +7,21 @@ namespace RedBjorn.ProtoTiles.Example
     {
         public LineDrawer Line;
         public SpriteRenderer Tail;
-        public Color ActiveColor;
-        public Color InactiveColor;
+        public Sprite ActiveSprite;
+        public Sprite InactiveSprite;
 
         public bool IsEnabled { get; set; }
 
         public void ActiveState()
         {
-            SetColor(ActiveColor);
+            Tail.sprite = ActiveSprite;
         }
 
         public void InactiveState()
         {
-            SetColor(InactiveColor);
+            Tail.sprite = InactiveSprite;
         }
-
-        void SetColor(Color color)
-        {
-            Line.Line.material.color = color;
-            Tail.color = color;
-        }
-
+        
         public void Show(List<Vector3> points, MapEntity map)
         {
             var offset = map.Settings.VectorCreateOrthogonal(0.01f);

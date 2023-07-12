@@ -15,10 +15,7 @@ namespace DefaultNamespace.Player
         public int ActionPoints = 20;
 
         public Action OnActionPointsEnd;
-
-        public GameObject TestStandPrefab;
-        public Transform Root;
-
+        
         private int _currentActionPoints;
         private Model _model;
 
@@ -77,22 +74,10 @@ namespace DefaultNamespace.Player
                 Debug.LogWarning($"Deoccupy tile - {_occupiedTile.Position} by - {gameObject.name}!!");
                 _occupiedTile.Occupant = null;
             }
-
-            if (_stand != null)
-                Destroy(_stand);
-
+            
             _occupiedTile = tile;
             _occupiedTile.Occupant = this;
-
-            var targetPoint = new Vector3(
-                _mapEntity.WorldPosition(_occupiedTile).x,
-                transform.position.y,
-                _mapEntity.WorldPosition(_occupiedTile).z);
-
-            var stepDir = (targetPoint - transform.position);
-            Root.rotation = Quaternion.LookRotation(stepDir, Vector3.up);
-
-            _stand = Instantiate(TestStandPrefab, transform);
+            
         }
 
         public void Activate()
