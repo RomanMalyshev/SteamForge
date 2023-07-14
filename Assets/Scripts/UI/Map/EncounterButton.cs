@@ -20,6 +20,8 @@ namespace UI.Map
         public int Column;
 
         public SubscribableAction<Transform, int> OnEncounterSelect = new();
+        
+        
 
         private void Start()
         {            
@@ -53,7 +55,9 @@ namespace UI.Map
                     _view.OnMapButtonClick.Invoke(_type);
                     OnEncounterSelect.Invoke(_transform, Column);
                 }
-            }                     
+            }
+
+            _view.OnCameraTargetSelect.Invoke(_transform);
         }
          
         private void OnMouseOver()

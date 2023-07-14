@@ -11,7 +11,7 @@ namespace UI.Map
     {
         [FormerlySerializedAs("_enconterOrder")][SerializeField] public List<EncounterColumn> _encounterOrder;
         [SerializeField] private PlayerFigure _playerFigure;
-        [SerializeField] private CameraConroller _cameraController;
+        [SerializeField] private BattleCameracontroller _cameraController;
         [SerializeField] private int _currentColumn;
 
         private void Start()
