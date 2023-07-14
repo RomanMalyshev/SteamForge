@@ -2,6 +2,7 @@ using DefaultNamespace;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static RedBjorn.ProtoTiles.MapBorder;
 using static UnityEngine.GraphicsBuffer;
 
@@ -11,7 +12,7 @@ namespace UI.Map
     public class PlayerFigure : MonoBehaviour
     {
         [SerializeField] private float _speed;
-        [SerializeField] private float _vertSpeed;
+        [SerializeField] private float _jumpHeight;
 
         private Transform _transform;
         private bool _isMooving;
@@ -29,13 +30,15 @@ namespace UI.Map
             {
                 _isMooving = true;
                 StartCoroutine(MovingBetveenEncounters(transform, column));
-                float dist = Vector3.Distance(transform.position, _transform.position);
-               // StartCoroutine(JumpAnimation(_transform, dist));
+                float dist = Vector3.Distance(transform.position, _transform.position);               
             }            
         }
 
         private IEnumerator MovingBetveenEncounters(Transform movingPosition, int column)
         {
+            //Vector3 jumpPoint = new Vector3(_transform.position.x, _transform.position.y + _jumpHeight, _transform.position.z);
+           // _transform.position = Vector3.MoveTowards(_transform.position, jumpPoint, _jumpHeight);            
+
             while (!(_transform.position.x == movingPosition.position.x) || !(_transform.position.z == movingPosition.position.z))
             {
                 _transform.position = Vector3.MoveTowards(_transform.position, movingPosition.position, _speed);               
@@ -46,22 +49,6 @@ namespace UI.Map
             _isMooving = false;
         }
 
-        /*private IEnumerator JumpAnimation(Transform Position, float dist)
-        {
-            float zeroYPosition = Position.position.y;
-            while (_isMooving)
-            {
-                if (_transform.position.y == zeroYPosition)
-                {
-                    _transform.position = Vector3.MoveTowards(_transform.position, new Vector3(_transform.position.x, zeroYPosition + 5f, _transform.position.z), 5f);
-                }
-                else
-                {
-                    _transform.position = Vector3.MoveTowards(_transform.position, new Vector3(_transform.position.x, zeroYPosition - 5f, _transform.position.z), 5f);
-                }
-                
-                yield return null;
-            }
-        }*/
+        
     }
 }

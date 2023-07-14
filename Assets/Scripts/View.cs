@@ -6,7 +6,11 @@ namespace DefaultNamespace
 {
     public class View
     {
-        public readonly SubscribableAction<EncounterType> OnMapButtonClick = new();
+        public SubscribableAction<EncounterType> OnMapButtonClick = new();
+        public SubscribableAction<MapSettings> OnMapBattleClick = new();
+        public SubscribableAction OnMapTradeClick = new();
+        public SubscribableAction<MapSettings> OnMapCampClick = new();
+
         public SubscribableAction<int> OnExitFromGame = new();
         public SubscribableAction OnEnterGame = new();
         

@@ -79,6 +79,6 @@ namespace UI.Map
     public class EncounterColumn
     {
         [HideInInspector]public string name;
-        public List<EncounterButton> encounter;
+        public List<Encounter> encounter;
     }
 }

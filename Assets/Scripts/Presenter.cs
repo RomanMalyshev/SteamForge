@@ -13,6 +13,20 @@ namespace DefaultNamespace
                 Debug.Log($"{encounter} - on click!");
             });
 
+            Globals.Global.View.OnMapBattleClick.Subscribe(encounter =>
+            {
+                Debug.Log($"{encounter} - on click!");
+            });
+
+            Globals.Global.View.OnMapCampClick.Subscribe(encounter =>
+            {
+                Debug.Log($"{encounter} - on click!");
+            });
+
+            Globals.Global.View.OnMapTradeClick.Subscribe(() =>
+            {
+                Debug.Log($"Camp - on click!");
+            });
 
             Globals.Global.View.OnExitFromGame.Subscribe(count =>
             {
