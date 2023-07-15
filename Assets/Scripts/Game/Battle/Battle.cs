@@ -14,7 +14,7 @@ namespace Game.Battle.Skills
         public Unit UnitsPrefab;
         private Unit _currentUnitMove;
 
-        private readonly List<Unit> _units = new ();
+        private readonly List<Unit> _units = new();
         private List<Unit> _unitTurnOrder = new();
         private Model _model;
         private View _view;
@@ -26,7 +26,11 @@ namespace Game.Battle.Skills
             _model = Globals.Global.Model;
             _view = Globals.Global.View;
 
-            DebugBattleUI.Init();
+            //TODO:remake init from globals
+            if (DebugBattleUI != null)
+                DebugBattleUI.Init();
+            else
+                Debug.LogWarning("no debug element!");
 
             _view.ActiveBattle.Subscribe(mapSettings =>
             {
@@ -54,8 +58,9 @@ namespace Game.Battle.Skills
                 unit.OnUnitDead -= RemoveUnit;
                 Destroy(unit.gameObject);
             }
+
             _units.Clear();
-            
+
             _round = 0;
             _currentUnitMove = null;
             _unitTurnOrder.Clear();
@@ -69,7 +74,7 @@ namespace Game.Battle.Skills
                 {
                     var position = new Vector3(mapEntity.WorldPosition(tile).x, UnitsPrefab.transform.position.y,
                         mapEntity.WorldPosition(tile).z);
-                    var unit = Instantiate(UnitsPrefab,position ,Quaternion.identity);
+                    var unit = Instantiate(UnitsPrefab, position, Quaternion.identity);
                     unit.Init(mapEntity);
                     unit.OnActionPointsEnd += NextUnitMove;
                     unit.OnUnitDead += RemoveUnit;
@@ -109,7 +114,7 @@ namespace Game.Battle.Skills
         private void RemoveUnit(Unit unit)
         {
             _unitTurnOrder.Remove(unit);
-            
+
             if (_currentUnitMove == unit)
                 NextUnitMove();
         }

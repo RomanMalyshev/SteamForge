@@ -23,6 +23,10 @@ namespace DefaultNamespace
 
         private void Start()
         {
+            
+            
+            
+            
             View.Init();
             Model.Init();
             Presenter.Init();           
