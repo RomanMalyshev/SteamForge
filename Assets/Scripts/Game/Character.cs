@@ -6,19 +6,19 @@ namespace DefaultNamespace.Player
 {
     public class Character
     {
-        public Stat Health;
-        public Stat MoveRange;
-        public Stat ActionPoints;
-        public Stat Damage;
-        public Stat AttackRange;
-        public Stat Initiative;
-        public Stat Armor;
+        public Stat Health = new();
+        public Stat MoveRange= new();
+        public Stat ActionPoints= new();
+        public Stat Damage= new();
+        public Stat AttackRange= new();
+        public Stat Initiative= new();
+        public Stat Armor= new();
 
-        public Attribute Hull;
-        public Attribute Strength;
-        public Attribute Luck;
-        public Attribute Speed;
-        public Attribute Balance;
+        public Attribute Hull = new();
+        public Attribute Strength = new();
+        public Attribute Luck = new();
+        public Attribute Speed = new();
+        public Attribute Balance = new();
 
         public string Name;
 
@@ -35,6 +35,7 @@ namespace DefaultNamespace.Player
 
         public List<Stat> GetAllStats()
         {
+            _stats = new();
             _stats.Add(Health);
             _stats.Add(MoveRange);
             _stats.Add(Damage);
@@ -47,6 +48,8 @@ namespace DefaultNamespace.Player
 
         public List<Attribute> GetAllAttributes()
         {
+            //TODO: fix
+            _attributes = new();
             _attributes.Add(Hull);
             _attributes.Add(Strength);
             _attributes.Add(Luck);
@@ -57,14 +60,14 @@ namespace DefaultNamespace.Player
         }
     }
 
-    public class Stat
+    public struct Stat
     {
         public int Value;
         public string Name;
         public string Description;
     }
 
-    public class Attribute
+    public struct Attribute
     {
         public int Value;
         public string Name;

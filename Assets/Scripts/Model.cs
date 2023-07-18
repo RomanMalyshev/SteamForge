@@ -10,11 +10,11 @@ namespace DefaultNamespace
         public SubscribableAction<string, List<SkillCommandHandler>> OnNewUnitTern = new();
         public SubscribableAction<int> OnChangeUnitActionPoints = new();
 
-        private SubscribableField<Player.Player> _plyer = new();
+        public SubscribableField<Player.Player> Plyer = new();
 
         public void Init()
         {
-            _plyer.Value = new Player.Player()
+            Plyer.Value = new Player.Player()
             {
                 Currency = 1000,
                 Gears = 10000,
