@@ -32,7 +32,7 @@ public class DebugBattleUI : MonoBehaviour
         _model.OnNewBattleRound.Subscribe(round => { Round.text = $"Round: {round}"; });
         _model.OnNewUnitTern.Subscribe((unitName,commands )=>
         {
-            //TODO:remake on pool
+           
             foreach (var unitCommand in _unitCommands)
                 Destroy(unitCommand.gameObject);
             

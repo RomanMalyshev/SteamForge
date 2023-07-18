@@ -4,25 +4,30 @@ using System.Linq;
 using Game.Battle.Skills;
 using RedBjorn.ProtoTiles;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DefaultNamespace.Player
 {
     public class Unit : MonoBehaviour
     {
+        public bool Enemy;
+        
+        
         public int Health = 100;
 
         public int InitiativeTest = 1;
         public int ActionPoints = 20;
 
         public Action OnActionPointsEnd;
+        public Action<Unit> OnUnitDead;
+
+        public Game.Battle.TargetSelector Selector;
         
         private int _currentActionPoints;
         private Model _model;
 
         private TileEntity _occupiedTile;
-
-        public Action<Unit> OnUnitDead;
-
+        
         private bool _isActiveState;
 
         private List<SkillCommandHandler> _handlers = new();
@@ -31,13 +36,16 @@ namespace DefaultNamespace.Player
         private MapEntity _mapEntity;
         private int _currentHealth;
         private Vector3 _startPosition;
-
+        
         public void Init(MapEntity battleFieldFieldEntity)
         {
+            Selector.Init(battleFieldFieldEntity);
+            
             _startPosition = transform.position;
             _mapEntity = battleFieldFieldEntity;
             _handlers = GetComponentsInChildren<SkillCommandHandler>().ToList();
             _model = Globals.Global.Model;
+            
             foreach (var handler in _handlers)
             {
                 handler.onHandlerEnd += OnHandlerEnd;
@@ -45,9 +53,7 @@ namespace DefaultNamespace.Player
                 handler.Init(battleFieldFieldEntity);
                 handler.Deactivate();
             }
-
-            Debug.Log($"Init {gameObject.name}.");
-
+            
             OccupyTile(_mapEntity.Tile(transform.position));
 
             Globals.Global.View.OnCommandSelect.Subscribe(ActivateCommand);
@@ -63,17 +69,14 @@ namespace DefaultNamespace.Player
 
             _currentHandler = skillCommand;
             _currentHandler.Activate();
+            
+            Selector.Activate(skillCommand);
         }
 
         private void OccupyTile(TileEntity tile)
         {
-            Debug.LogWarning($"Occupy tile - {tile.Position} by - {gameObject.name}");
-
             if (_occupiedTile != null)
-            {
-                Debug.LogWarning($"Deoccupy tile - {_occupiedTile.Position} by - {gameObject.name}!!");
                 _occupiedTile.Occupant = null;
-            }
             
             _occupiedTile = tile;
             _occupiedTile.Occupant = this;
@@ -88,12 +91,11 @@ namespace DefaultNamespace.Player
             _model.OnChangeUnitActionPoints.Invoke(_currentActionPoints);
 
             _isActiveState = true;
-            Debug.Log($"Activate {gameObject.name}. AP - {_currentActionPoints}");
         }
 
         public void Deactivate()
         {
-            Debug.Log($"Deactivate {gameObject.name}. AP - {_currentActionPoints}");
+            Selector.Deactivate();
             _isActiveState = false;
             _currentHandler.Deactivate();
         }
@@ -102,7 +104,7 @@ namespace DefaultNamespace.Player
         {
             _currentActionPoints -= 5;
             _model.OnChangeUnitActionPoints.Invoke(_currentActionPoints);
-            Debug.Log($"End handle {gameObject.name}. AP - {_currentActionPoints}");
+            
             if (_currentActionPoints <= 0)
                 OnActionPointsEnd?.Invoke();
         }

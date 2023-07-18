@@ -44,6 +44,7 @@ namespace Game.Battle.Skills
             _path.IsEnabled = true;
         }
 
+
         public override void Deactivate()
         {
             _active = false;
@@ -55,38 +56,30 @@ namespace Game.Battle.Skills
             _area.gameObject.SetActive(false);
         }
 
-        private void Update()
+        public override void OverTarget(TileEntity tile)
         {
-            if (!_active) return;
-            if (_fieldEntity == null) return;
-
-            if (MyInput.GetOnWorldUp(_fieldEntity.Settings.Plane()))
-            {
-                Handle();
-            }
-
             PathUpdate();
         }
 
-        public override void Handle()
+        public override void SelectTarget(TileEntity tile)
         {
-            var clickPos = MyInput.GroundPosition(_fieldEntity.Settings.Plane());
-            var tile = _fieldEntity.Tile(clickPos);
-            if (tile != null && tile.Vacant)
-            {
-                var path = _fieldEntity.PathTiles(transform.position, clickPos, Range);
-                if (path != null)
-                {
-                    _path.IsEnabled = false;
-                    _path.Hide();
-                    _area.Hide();
-                    if (_moveRoutine != null)
-                        StopCoroutine(_moveRoutine);
-                    path.RemoveAt(0);
-                    _moveRoutine = StartCoroutine(Move(path));
-                }
+            if (!tile.Vacant) return;
 
-            }
+            var tileWorldPosition = _fieldEntity.WorldPosition(tile);
+            var path = _fieldEntity.PathTiles(transform.position, tileWorldPosition, Range);
+           
+            if (path == null) return;
+
+            _path.IsEnabled = false;
+            _path.Hide();
+            _area.Hide();
+            
+            //TODO: fix figure infinity fly
+            if (_moveRoutine != null)
+                StopCoroutine(_moveRoutine);
+            
+            path.RemoveAt(0);
+            _moveRoutine = StartCoroutine(Move(path));
         }
 
         private IEnumerator Move(List<TileEntity> path)
@@ -95,30 +88,30 @@ namespace Game.Battle.Skills
             while (nexTileIndex < path.Count)
             {
                 var tile = path[nexTileIndex];
-                
+
                 OnTileOccupied?.Invoke(tile);
-                
+
                 var startPointXZ = transform.position;
                 var endPointXZ = _fieldEntity.WorldPosition(tile);
                 var positionY = transform.position.y;
-                
+
                 var targetPoint = new Vector3(endPointXZ.x, transform.position.y, endPointXZ.z);
                 var stepDir = (targetPoint - transform.position);
-                
+
                 _rotationNode.rotation = Quaternion.LookRotation(stepDir, Vector3.up);
-                
+
                 var time = 0f;
                 while (time < 0.5f)
                 {
                     var currentPositionXZ = Vector3.Lerp(startPointXZ, endPointXZ, time / 0.5f);
 
                     float currentYPosition;
-                    
+
                     if (time < 0.25f)
-                         currentYPosition = Mathf.Lerp(positionY, positionY + 0.7f, time / 0.25f);
+                        currentYPosition = Mathf.Lerp(positionY, positionY + 0.7f, time / 0.25f);
                     else
                         currentYPosition = Mathf.Lerp(positionY + 0.7f, positionY, time / 0.5f);
-                    
+
                     transform.position = new Vector3(currentPositionXZ.x, currentYPosition, currentPositionXZ.z);
                     time += Time.deltaTime;
                     yield return null;

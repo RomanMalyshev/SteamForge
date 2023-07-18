@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 722147980791254710}
   - component: {fileID: 6104546114703522346}
   - component: {fileID: 7153181071941162492}
+  - component: {fileID: 5397963071067117351}
   m_Layer: 0
   m_Name: Bot
   m_TagString: Untagged
@@ -47,6 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97c85707df0c49cb800b7de1359e1161, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Weight: 0
   Range: 3
   AreaPrefab: {fileID: 5833766206117704680, guid: 47eab58c9fc05de4c86dfadf24f18e9b,
     type: 3}
@@ -68,6 +70,7 @@ MonoBehaviour:
   Health: 100
   InitiativeTest: 1
   ActionPoints: 20
+  Selector: {fileID: 5397963071067117351}
 --- !u!114 &7153181071941162492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,12 +83,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7041c41161c502a4ba8946e039f303d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Weight: 0
   Range: 1
   Damage: 5
   AreaPrefab: {fileID: 887056117504064987, guid: c0c658b7df7af4f479429ed399c4f53a,
     type: 3}
   PathPrefab: {fileID: 114413117004689456, guid: 4eac60a74696c8142b18f93d4453e87d,
     type: 3}
+--- !u!114 &5397963071067117351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780532841492617908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0554d778efac4846b3b82cf3c3f23226, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2449723393752376368
 GameObject:
   m_ObjectHideFlags: 0
