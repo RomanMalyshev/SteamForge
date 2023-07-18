@@ -1,11 +1,15 @@
 ﻿using System;
 using RedBjorn.ProtoTiles;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game.Battle.Skills
 {
     public abstract class SkillCommandHandler:MonoBehaviour
     {
+        
+        public int Weight;
+        [Space(2)]
         public float Range;
         public  Action onHandlerEnd { get; set; }
         public Action<TileEntity> OnTileOccupied;
