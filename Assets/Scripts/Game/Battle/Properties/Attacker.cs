@@ -18,7 +18,7 @@ namespace Game.Battle.Skills
         private MapEntity _fieldEntity;
         private bool _active;
 
-        
+
         public override void Init(MapEntity mapEntity)
         {
             _fieldEntity = mapEntity;
@@ -33,7 +33,7 @@ namespace Game.Battle.Skills
 
             _area.Hide();
             _area.Show(_fieldEntity.Border(transform.position, Range), _fieldEntity);
-            
+
             _area.InactiveState();
             _path.Show(new List<Vector3>() { }, _fieldEntity);
             _path.InactiveState();
@@ -42,20 +42,25 @@ namespace Game.Battle.Skills
             _active = true;
         }
 
-        public override void Handle()
+        public override void OverTarget(TileEntity tile)
         {
-            var clickPos = MyInput.GroundPosition(_fieldEntity.Settings.Plane());
-            var targetTile = _fieldEntity.Tile(clickPos);
+            if (tile.Occupant == null) return;
 
-            if (targetTile == null) return;
-            if (targetTile.Occupant == null) return;
-            
+            _path.IsEnabled = true;
+            _path.Show(_fieldEntity.WorldPosition(tile), _fieldEntity);
+            _path.ActiveState();
+        }
+
+        public override void SelectTarget(TileEntity tile)
+        {
+            if (tile.Occupant == null) return;
+
             var currentTile = _fieldEntity.Tile(transform.position);
 
-            if (_fieldEntity.IsSameTile(targetTile, currentTile.Position)) return;
-            if (_fieldEntity.Distance(currentTile, targetTile) > Range) return;
-            
-            targetTile.Occupant.GetHit(Damage);
+            if (_fieldEntity.IsSameTile(tile, currentTile.Position)) return;
+            if (_fieldEntity.Distance(currentTile, tile) > Range) return;
+
+            tile.Occupant.GetHit(Damage);
             onHandlerEnd?.Invoke();
         }
 
@@ -70,33 +75,11 @@ namespace Game.Battle.Skills
             _area.gameObject.SetActive(false);
         }
 
-
-        private void Update()
-        {
-            if (!_active) return;
-            if (_fieldEntity == null) return;
-
-            var mouthPos = MyInput.GroundPosition(_fieldEntity.Settings.Plane());
-            var targetTile = _fieldEntity.Tile(mouthPos);
-
-            if (targetTile != null && targetTile.Occupant != null)
-            {
-                _path.IsEnabled = true;
-                _path.Show(_fieldEntity.WorldPosition(targetTile), _fieldEntity);
-                _path.ActiveState();
-            }
-            
-            if (MyInput.GetOnWorldUp(_fieldEntity.Settings.Plane()))
-            {
-                Handle();
-            }
-        }
-        
         private void OnDestroy()
         {
             if (_area != null)
                 Destroy(_area.gameObject);
-            
+
             if (_path != null)
                 Destroy(_path.gameObject);
         }

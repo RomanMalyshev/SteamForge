@@ -16,7 +16,10 @@ namespace Game.Battle.Skills
         public abstract void Init(MapEntity mapEntity);
         
         public abstract void Activate();
-        public abstract void Handle();
+
+        public abstract void OverTarget(TileEntity tile);
+        public abstract void SelectTarget(TileEntity tile);
+
         public abstract void Deactivate();
     }
 }
