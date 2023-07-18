@@ -36,9 +36,6 @@ namespace UI.Map
 
         private IEnumerator MovingBetveenEncounters(Transform movingPosition, int column)
         {
-            //Vector3 jumpPoint = new Vector3(_transform.position.x, _transform.position.y + _jumpHeight, _transform.position.z);
-           // _transform.position = Vector3.MoveTowards(_transform.position, jumpPoint, _jumpHeight);            
-
             while (!(_transform.position.x == movingPosition.position.x) || !(_transform.position.z == movingPosition.position.z))
             {
                 _transform.position = Vector3.MoveTowards(_transform.position, movingPosition.position, _speed);               

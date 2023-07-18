@@ -24,7 +24,7 @@ namespace DefaultNamespace
                     {
                         Name = "Tank",
                         UpPoints = 100,
-                        Level = 1,
+                        Level = 1,                           
                     },
                     new Character()
                     {

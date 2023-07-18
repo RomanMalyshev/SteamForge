@@ -1,23 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
 using DefaultNamespace.Player;
 using TMPro;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class PartyUpgrade : MonoBehaviour
 {
+    [SerializeField] private List<AttributeLine> _attributeLines;
+    [SerializeField] private List<StatLine> _statLines;    
+    
+    [SerializeField] private TMP_InputField _playerStats;
+    [SerializeField] private TMP_InputField _playerMoney;
+    [SerializeField] private TMP_InputField _characterName;
+    [SerializeField] private TMP_Text _description;
+
+    [SerializeField] private Button _applyButton;
+    [SerializeField] private Button _cancelButton;
+    [SerializeField] private Button _nextCaracterButton;
+    [SerializeField] private Button _previosCaracterButton;
+
+    [SerializeField] private Button _startLevelUp;
+
     private Player _player;
 
-    public TMP_Text PartyStats;
-    public Button AllPArtyUpgrade;
-    public Button Confirm;
-    public Button Cancel;
-
-    private int _preUpgradePoints;
+    private int _currentCharacter;
+    private PreUpgradePlayer _preUpgradePlayer = new();
     
     private void Start()
     {
@@ -33,43 +46,173 @@ public class PartyUpgrade : MonoBehaviour
             SetupParty();
         }
 
+        for (var i = 0; i < _attributeLines.Count; i++)
+        {
+            var a = i;
+            _attributeLines[i]._upperAttributeButton.onClick.AddListener( () => RaiseAttribute(a));
+            _attributeLines[i]._lowerAttributeButton.onClick.AddListener( () => LowAttribute(a));
+        }
 
-        AllPArtyUpgrade.onClick.AddListener(UpgradeMyParty);
-        Confirm.onClick.AddListener(OnConfirm);
-        Cancel.onClick.AddListener(OnCancelButton);
+        _applyButton.onClick.AddListener(ApplyLevelUp);
+        _cancelButton.onClick.AddListener(CancelLevelUp);
+        _nextCaracterButton.onClick.AddListener(NextCharacter);
+        _previosCaracterButton.onClick.AddListener(PreviosCharacter);
+
+        _startLevelUp.onClick.AddListener(StartingLevelUping);
+
+        _currentCharacter = 0;        
     }
 
-    private void OnCancelButton()
+    private void CancelLevelUp()
     {
-        
-        Globals.Global.Model.Plyer.Value = _player;
+        /*_player.Party[_currentCharacter].UpPoints = _preUpgradePlayer._upPoints[_currentCharacter];             
+
+        for (var i = 0; i < _preUpgradePlayer._characterAtributes.Count; i++)
+        {
+            var atribute = _player.Party[_currentCharacter].GetAllAttributes()[i];
+            atribute.Value = _preUpgradePlayer._characterAtributes[_currentCharacter]._atributes[i];           
+        }*/
     }
 
-    private void OnConfirm()
+    private void ApplyLevelUp()
     {
-        Globals.Global.Model.Plyer.Value = _player;
+       /* _preUpgradePlayer._upPoints[_currentCharacter] = _player.Party[_currentCharacter].UpPoints;
+
+        var stats = _player.Party[_currentCharacter].GetAllAttributes();
+
+        for (var i = 0; i < stats.Count; i++)
+        {
+            _preUpgradePlayer._characterAtributes[_currentCharacter]._atributes[i] = stats[i].Value;
+        }*/
     }
 
+    private void RaiseAttribute(int attributeIndex)
+    {        
+        if (_player == null) return;
+        if (_player.Party.Count == 0) return;
+        if (_player.Party[_currentCharacter].UpPoints <= 0) return;
 
-    private void UpgradeMyParty()
+        var attribute = _player.Party[_currentCharacter].GetAllAttributes()[attributeIndex];        
+        attribute.Value++;
+        _player.Party[_currentCharacter].UpPoints--;
+
+        SetupParty();
+    }
+    
+    private void LowAttribute(int attributeIndex)
     {
         if (_player == null) return;
         if (_player.Party.Count == 0) return;
+
+        var attribute = _player.Party[_currentCharacter].GetAllAttributes()[attributeIndex];
         
-        
-        _player.Party[0].Balance.Value += _player.Party[0].UpPoints;
-        _player.Party[0].UpPoints = 0;
+        if (attribute.Value <= _preUpgradePlayer._characterAtributes[_currentCharacter]._atributes[attributeIndex]) return;
+        attribute.Value--;
+        _player.Party[_currentCharacter].UpPoints++;
+
+        SetupParty();
+    }
+
+    private void NextCharacter()
+    {
+        if (_currentCharacter == _player.Party.Count - 1)
+        {
+            _currentCharacter = 0;
+        }
+        else
+        {
+            _currentCharacter++;
+        }
+
+        SetupParty();
+    }
+    
+    private void PreviosCharacter()
+    {
+        if (_currentCharacter == 0)
+        {
+            _currentCharacter = _player.Party.Count - 1;
+        }
+        else
+        {
+            _currentCharacter--;
+        }
 
         SetupParty();
     }
 
     private void SetupParty()
     {
-        PartyStats.text = "";
-        for (var i = 0; i < _player.Party.Count; i++)
+        _characterName.text = _player.Party[_currentCharacter].Name;
+        _playerMoney.text = $"Currency: {_player.Currency}\nGears: {_player.Gears}";
+        _playerStats.text = $"AP: {_player.Party[_currentCharacter].UpPoints}";
+
+        var stats = _player.Party[_currentCharacter].GetAllStats();
+        var atributes = _player.Party[_currentCharacter].GetAllAttributes();
+
+        for (var i = 0; i < stats.Count; i++)
         {
-            PartyStats.text +=
-                $"Name: {_player.Party[i].Name} Level:{_player.Party[i].Level} AP: {_player.Party[i].UpPoints} Balance: {_player.Party[i].Balance.Value}\n";
+            _statLines[i]._statName.text = stats[i].Name;
+            _statLines[i]._statValue.text =  stats[i].Value.ToString();            
         }
+
+        for (var i = 0; i < atributes.Count; i++)
+        {
+            _attributeLines[i]._attributeName.text = atributes[i].Name;
+            _attributeLines[i]._attributeValue.text = atributes[i].Value.ToString();
+        }        
     }
+
+    public void StartingLevelUping()
+    {
+        /*for (var i = 0; i < _player.Party.Count; i++)
+        {
+            Debug.Log(i);
+            _preUpgradePlayer._upPoints.Add(_player.Party[i].UpPoints);
+
+            PreUpgradeAttributes d = new ();           
+
+            var stats = _player.Party[i].GetAllAttributes();
+
+            for  (var a = 0; a < stats.Count; a++)
+            {
+                d.Add(stats[a].Value);
+                //_preUpgradePlayer._characterAtributes.Add(_player.Party[i]);
+                //_preUpgradePlayer._characterAtributes[i]._atributes.Add(stats[a].Value);
+            }
+            _preUpgradePlayer._characterAtributes.Add(d);
+        }*/
+        
+    }
+}
+
+[Serializable]
+public class AttributeLine
+{
+    public TMP_Text _attributeName;
+    public TMP_Text _attributeValue;
+    public Button _upperAttributeButton;
+    public Button _lowerAttributeButton;
+
+}
+
+[Serializable]
+public class StatLine
+{
+    public TMP_Text _statName;
+    public TMP_Text _statValue;
+}
+
+[Serializable]
+public class PreUpgradePlayer
+{
+    public List<PreUpgradeAttributes> _characterAtributes = new List<PreUpgradeAttributes>();
+    public List<int> _upPoints = new List<int>();
+}
+
+[Serializable]
+public class PreUpgradeAttributes
+{
+    public List<int> _atributes = new List<int>();
+    
 }

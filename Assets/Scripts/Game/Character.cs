@@ -6,19 +6,57 @@ namespace DefaultNamespace.Player
 {
     public class Character
     {
-        public Stat Health = new();
-        public Stat MoveRange= new();
-        public Stat ActionPoints= new();
-        public Stat Damage= new();
-        public Stat AttackRange= new();
-        public Stat Initiative= new();
-        public Stat Armor= new();
+        public Stat Health = new()
+        {
+            Name = "Health"
+        };
+        public Stat MoveRange= new()
+        {
+            Name = "MoveRange"
+        };
 
-        public Attribute Hull = new();
-        public Attribute Strength = new();
-        public Attribute Luck = new();
-        public Attribute Speed = new();
-        public Attribute Balance = new();
+        public Stat ActionPoints= new()
+        {
+            Name = "ActionPoints"
+        };
+        public Stat Damage= new()
+        {
+            Name = "Damage"
+        };
+        public Stat AttackRange= new()
+        {
+            Name = "AttackRange"
+        };
+        public Stat Initiative= new()
+        {
+            Name = "Initiative"
+        };
+        public Stat Armor= new()
+        {
+            Name = "Armor"
+        };
+
+
+        public Attribute Hull = new()
+        {
+            Name = "Hull"
+        };
+        public Attribute Strength = new()
+        {
+            Name = "Strength"
+        };
+        public Attribute Luck = new()
+        {
+            Name = "Luck"
+        };
+        public Attribute Speed = new()
+        {
+            Name = "Speed"
+        };
+        public Attribute Balance = new()
+        {
+            Name = "Balance"
+        };
 
         public string Name;
 
@@ -60,14 +98,14 @@ namespace DefaultNamespace.Player
         }
     }
 
-    public struct Stat
+    public class Stat
     {
         public int Value;
         public string Name;
         public string Description;
     }
 
-    public struct Attribute
+    public class Attribute
     {
         public int Value;
         public string Name;
