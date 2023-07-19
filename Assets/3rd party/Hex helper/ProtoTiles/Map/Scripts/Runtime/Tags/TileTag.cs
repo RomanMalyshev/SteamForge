@@ -6,7 +6,7 @@ namespace RedBjorn.ProtoTiles
     [CreateAssetMenu(menuName = "RedBjorn/ProtoTiles/Tiles/Tag")]
     public class TileTag : Tag
     {
-
+        public string UseDescription;
     }
 }
 

@@ -9,9 +9,16 @@ namespace Game.Battle.Skills
 {
     public class Battle : MonoBehaviour
     {
-        public DebugBattleUI DebugBattleUI;
+        [Header("Tags")] public TileTag PlayerTag;
+        public TileTag EnemyTag;
+
+
+        [Header("Refs")] public DebugBattleUI DebugBattleUI;
         public BattleField BattleField;
         public Unit UnitsPrefab;
+        public Unit UnitsEnemyPrefab;
+        public AISkillsSelector _aiSelector;
+
         private Unit _currentUnitMove;
 
         private readonly List<Unit> _units = new();
@@ -31,6 +38,9 @@ namespace Game.Battle.Skills
                 DebugBattleUI.Init();
             else
                 Debug.LogWarning("no debug element!");
+
+            //TODO:remake init from globals
+            _aiSelector.Init();
 
             _view.ActiveBattle.Subscribe(mapSettings =>
             {
@@ -60,24 +70,36 @@ namespace Game.Battle.Skills
             }
 
             _units.Clear();
-
             _round = 0;
             _currentUnitMove = null;
             _unitTurnOrder.Clear();
+
+            //TODO:call from globals
+            DebugBattleUI.Reset();
         }
 
         private void InitUnits(MapEntity mapEntity, List<List<TileEntity>> opponentsTiles)
         {
-            foreach (var opponentTiles in opponentsTiles)
+            _aiSelector.InitNewMap(mapEntity);
+
+            for (var i = 0; i < opponentsTiles.Count; i++)
             {
-                foreach (var tile in opponentTiles)
+                for (var j = 0; j < opponentsTiles[i].Count; j++)
                 {
+                    var tile = opponentsTiles[i][j];
+
                     var position = new Vector3(mapEntity.WorldPosition(tile).x, UnitsPrefab.transform.position.y,
                         mapEntity.WorldPosition(tile).z);
-                    var unit = Instantiate(UnitsPrefab, position, Quaternion.identity);
-                    unit.Init(mapEntity);
+
+                    var isPlayer = tile.Preset.Tags.Contains(PlayerTag);
+                    var prefab = isPlayer ? UnitsPrefab : UnitsEnemyPrefab;
+                    var unit = Instantiate(prefab, position, Quaternion.identity);
+
+                    var side = isPlayer ? UnitSide.Player : UnitSide.Enemy;
+                    unit.Init(mapEntity, side);
                     unit.OnActionPointsEnd += NextUnitMove;
                     unit.OnUnitDead += RemoveUnit;
+
                     _units.Add(unit);
                 }
             }
@@ -88,6 +110,8 @@ namespace Game.Battle.Skills
         private void StartBattle()
         {
             _unitTurnOrder = _units.OrderBy(unit => unit.InitiativeTest).ToList();
+            _model.UnitBattleOrder.Value = _unitTurnOrder;
+
             _currentUnitMove = _unitTurnOrder[0];
             _currentUnitMove.Activate();
             _round++;
@@ -97,6 +121,8 @@ namespace Game.Battle.Skills
         private void NextUnitMove()
         {
             _currentUnitMove.Deactivate();
+            _model.OnUnitEndTern.Invoke(_currentUnitMove);
+
             var currentUnitIndex = _unitTurnOrder.IndexOf(_currentUnitMove);
             var nexUnitIndex = currentUnitIndex + 1 < _unitTurnOrder.Count
                 ? currentUnitIndex + 1

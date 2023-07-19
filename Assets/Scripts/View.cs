@@ -1,4 +1,5 @@
-﻿using Game.Battle.Skills;
+﻿using DefaultNamespace.Player;
+using Game.Battle.Skills;
 using RedBjorn.ProtoTiles;
 using UnityEngine;
 
@@ -20,6 +21,10 @@ namespace DefaultNamespace
 
         public SubscribableAction<Transform> OnCameraTargetSelect = new();
         public SubscribableAction<bool> OnCameraStateChange = new();
+        
+        public SubscribableAction<Unit> OnUnitInBattleSelect = new();
+        
+        
         public void Init()
         {
  

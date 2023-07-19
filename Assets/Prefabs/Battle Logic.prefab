@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6262616772917522792}
   - component: {fileID: 275880790637803725}
+  - component: {fileID: 1527410131892564415}
   m_Layer: 0
   m_Name: Battle Logic
   m_TagString: Untagged
@@ -45,10 +46,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 592050b40304a704f96011ae3bece650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerTag: {fileID: 11400000, guid: 3db489084e599b0419eab1353055b876, type: 2}
+  EnemyTag: {fileID: 11400000, guid: bf4f87dafca508c4686b2a769a3e48b6, type: 2}
   DebugBattleUI: {fileID: 0}
   BattleField: {fileID: 4890270536397966336}
   UnitsPrefab: {fileID: 6598323108609139614, guid: 1c9ba055ea94aa64096dd83811c55d32,
     type: 3}
+  UnitsEnemyPrefab: {fileID: 6104546114703522346, guid: 380fd29cf630e6c4d9439fffa7d21c9f,
+    type: 3}
+  _aiSelector: {fileID: 1527410131892564415}
+--- !u!114 &1527410131892564415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996490173171945712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e00e09592e024decb4ecb71cb2584b55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8622650886907538337
 GameObject:
   m_ObjectHideFlags: 0

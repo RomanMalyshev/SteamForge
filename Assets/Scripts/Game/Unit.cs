@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.Battle;
 using Game.Battle.Skills;
 using RedBjorn.ProtoTiles;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 namespace DefaultNamespace.Player
 {
     public class Unit : MonoBehaviour
     {
-        public bool Enemy;
-        
+        public UnitSide UnitSide { get; private set; }
         
         public int Health = 100;
 
@@ -22,12 +23,12 @@ namespace DefaultNamespace.Player
         public Action<Unit> OnUnitDead;
 
         public Game.Battle.TargetSelector Selector;
-        
+
         private int _currentActionPoints;
         private Model _model;
 
         private TileEntity _occupiedTile;
-        
+
         private bool _isActiveState;
 
         private List<SkillCommandHandler> _handlers = new();
@@ -36,16 +37,21 @@ namespace DefaultNamespace.Player
         private MapEntity _mapEntity;
         private int _currentHealth;
         private Vector3 _startPosition;
-        
-        public void Init(MapEntity battleFieldFieldEntity)
+
+        public void Init(MapEntity battleFieldFieldEntity, UnitSide side)
         {
+            UnitSide = side;
             Selector.Init(battleFieldFieldEntity);
+
+            InitiativeTest = Random.Range(0, 3);
+            transform.rotation = Quaternion.Euler(0, UnitSide == UnitSide.Player ? 180 : 0, 0);
+            
             
             _startPosition = transform.position;
             _mapEntity = battleFieldFieldEntity;
             _handlers = GetComponentsInChildren<SkillCommandHandler>().ToList();
             _model = Globals.Global.Model;
-            
+
             foreach (var handler in _handlers)
             {
                 handler.onHandlerEnd += OnHandlerEnd;
@@ -53,7 +59,7 @@ namespace DefaultNamespace.Player
                 handler.Init(battleFieldFieldEntity);
                 handler.Deactivate();
             }
-            
+
             OccupyTile(_mapEntity.Tile(transform.position));
 
             Globals.Global.View.OnCommandSelect.Subscribe(ActivateCommand);
@@ -69,7 +75,7 @@ namespace DefaultNamespace.Player
 
             _currentHandler = skillCommand;
             _currentHandler.Activate();
-            
+
             Selector.Activate(skillCommand);
         }
 
@@ -77,17 +83,16 @@ namespace DefaultNamespace.Player
         {
             if (_occupiedTile != null)
                 _occupiedTile.Occupant = null;
-            
+
             _occupiedTile = tile;
             _occupiedTile.Occupant = this;
-            
         }
 
         public void Activate()
         {
             _currentHealth = Health;
             _currentActionPoints = ActionPoints;
-            _model.OnNewUnitTern.Invoke(gameObject.name, _handlers);
+            _model.OnUnitStartTern.Invoke(this, _handlers);
             _model.OnChangeUnitActionPoints.Invoke(_currentActionPoints);
 
             _isActiveState = true;
@@ -104,7 +109,7 @@ namespace DefaultNamespace.Player
         {
             _currentActionPoints -= 5;
             _model.OnChangeUnitActionPoints.Invoke(_currentActionPoints);
-            
+
             if (_currentActionPoints <= 0)
                 OnActionPointsEnd?.Invoke();
         }
@@ -131,10 +136,9 @@ namespace DefaultNamespace.Player
 
             foreach (var handler in _handlers)
                 handler.Deactivate();
-            
+
             if (_mapEntity != null)
                 OccupyTile(_mapEntity.Tile(transform.position));
-            
         }
 
         public void OnDestroy()
@@ -144,7 +148,7 @@ namespace DefaultNamespace.Player
                 handler.onHandlerEnd -= OnHandlerEnd;
                 handler.OnTileOccupied -= OccupyTile;
             }
-            
+
             Globals.Global.View.OnCommandSelect.Unsubscribe(ActivateCommand);
         }
     }

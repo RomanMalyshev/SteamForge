@@ -7,8 +7,10 @@ namespace DefaultNamespace
     public class Model
     {
         public SubscribableAction<int> OnNewBattleRound = new();
-        public SubscribableAction<string, List<SkillCommandHandler>> OnNewUnitTern = new();
+        public SubscribableAction<Unit, List<SkillCommandHandler>> OnUnitStartTern = new();
+        public SubscribableAction<Unit> OnUnitEndTern = new();
         public SubscribableAction<int> OnChangeUnitActionPoints = new();
+        public SubscribableField<List<Unit>> UnitBattleOrder = new();
 
         public SubscribableField<Player.Player> Plyer = new();
 

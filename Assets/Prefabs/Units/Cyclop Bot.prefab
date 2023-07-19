@@ -94,7 +94,7 @@ PrefabInstance:
     - target: {fileID: 780532841492617908, guid: 380fd29cf630e6c4d9439fffa7d21c9f,
         type: 3}
       propertyPath: m_Name
-      value: Enemy Bot
+      value: Cyclop Bot
       objectReference: {fileID: 0}
     - target: {fileID: 1053069983996712520, guid: 380fd29cf630e6c4d9439fffa7d21c9f,
         type: 3}
@@ -151,6 +151,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.093
       objectReference: {fileID: 0}
+    - target: {fileID: 6104546114703522346, guid: 380fd29cf630e6c4d9439fffa7d21c9f,
+        type: 3}
+      propertyPath: Selector
+      value: 
+      objectReference: {fileID: 3928979934538734495}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3495912800064948232, guid: 380fd29cf630e6c4d9439fffa7d21c9f, type: 3}
@@ -161,6 +166,18 @@ PrefabInstance:
       addedObject: {fileID: 5641416712398605434}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 380fd29cf630e6c4d9439fffa7d21c9f, type: 3}
+--- !u!114 &3928979934538734495 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4152545211946582571, guid: 380fd29cf630e6c4d9439fffa7d21c9f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1091638787097942452}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e1eab47b19bb0e49a8127d367f63f6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6512542188730356840 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6145009051899416028, guid: 380fd29cf630e6c4d9439fffa7d21c9f,
