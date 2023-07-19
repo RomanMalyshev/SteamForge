@@ -24,36 +24,41 @@ public class DebugBattleUI : MonoBehaviour
     public MapSettings Field1;
     public MapSettings Field2;
     public MapSettings Field3;
-    
+
     public Transform ButtonsParents;
 
-    [Header("Battle line")]
-    public UIUnitLine UnitLinePrefab;
+    [Header("Battle line")] public UIUnitLine UnitLinePrefab;
     public Transform Content;
 
-    [Header("Result")] 
-    public GameObject ResultPopup;
+    [Header("Result")] public GameObject ResultPopup;
     public Button RestartResult;
     public Button Next;
     public TMP_Text ResultLabel;
 
-    private readonly Dictionary<Unit,UIUnitLine> _unitsLine = new();
+    private readonly Dictionary<Unit, UIUnitLine> _unitsLine = new();
 
     private Model _model;
     private View _view;
     private readonly List<Button> _unitCommands = new();
 
-    private readonly List<MapSettings> _testMapsOrder = new ();
+    private readonly List<MapSettings> _testMapsOrder = new();
+
     public void Init()
     {
         _model = Globals.Global.Model;
         _view = Globals.Global.View;
-        
-        _testMapsOrder.Add(Field1);   
-        _testMapsOrder.Add(Field2);   
+
+        _testMapsOrder.Add(Field1);
+        _testMapsOrder.Add(Field2);
         //_testMapsOrder.Add(Field3);   
-        
-        _model.OnNewBattleRound.Subscribe(round => { Round.text = $"Round: {round}"; });
+
+        _model.OnNewBattleRound.Subscribe(round =>
+        {
+            foreach (var unitLine in _unitsLine)
+                unitLine.Value.gameObject.SetActive(true);
+
+            Round.text = $"Round: {round}";
+        });
 
         _model.OnUnitStartTern.Subscribe((unit, commands) =>
         {
@@ -81,12 +86,12 @@ public class DebugBattleUI : MonoBehaviour
             {
                 var unitLine = Instantiate(UnitLinePrefab, Content);
                 var unit = units[i];
-                
+
                 unitLine.Button.onClick.AddListener(() => _view.OnUnitInBattleSelect.Invoke(unit));
                 unitLine.Background.color = unit.UnitSide == UnitSide.Player ? Color.green : Color.red;
                 unitLine.Label.text = unit.UnitSide.ToString();
                 unitLine.Health.text = unit.Health.ToString();
-                _unitsLine.Add(unit,unitLine);
+                _unitsLine.Add(unit, unitLine);
                 unit.OnUnitDead += deadUnit =>
                 {
                     _unitsLine.Remove(deadUnit);
@@ -94,7 +99,7 @@ public class DebugBattleUI : MonoBehaviour
                 };
             }
         });
-        
+
         _model.OnUnitHealthChange.Subscribe(unit =>
         {
             if (_unitsLine.TryGetValue(unit, out var value))
@@ -104,33 +109,30 @@ public class DebugBattleUI : MonoBehaviour
             else
                 Debug.LogWarning("Unit has not line prefab on battle UI!");
         });
-        
+
         _model.OnUnitEndTern.Subscribe(unit =>
         {
             if (_unitsLine.TryGetValue(unit, out var value))
-            {
-                Destroy(value.gameObject);
-                _unitsLine.Remove(unit);
-            }
+                value.gameObject.SetActive(false);
             else
                 Debug.LogWarning("Unit has not line prefab on battle UI!");
         });
 
         _model.OnChangeUnitActionPoints.Subscribe(ap => { AP.text = $"AP: {ap}"; });
-        
+
         ResultPopup.gameObject.SetActive(false);
         RestartResult.onClick.AddListener(() =>
         {
             ResultPopup.gameObject.SetActive(false);
             _view.OnRestartBattle.Invoke();
         });
-        
+
         Next.onClick.AddListener(() =>
         {
             ResultPopup.gameObject.SetActive(false);
-            _view.ActiveBattle.Value = _testMapsOrder[Random.Range(0,_testMapsOrder.Count-1)];
+            _view.ActiveBattle.Value = _testMapsOrder[Random.Range(0, _testMapsOrder.Count - 1)];
         });
-        
+
         _model.OnBattleEnd.Subscribe(winSide =>
         {
             Debug.LogWarning(winSide);
@@ -139,7 +141,7 @@ public class DebugBattleUI : MonoBehaviour
             ResultLabel.text = winSide == UnitSide.Player ? "Win!" : "Lose!";
             ResultPopup.gameObject.SetActive(true);
         });
-        
+
         Restart.onClick.AddListener(() => { _view.OnRestartBattle.Invoke(); });
 
         RunTestField1.onClick.AddListener(() => { _view.ActiveBattle.Value = Field1; });

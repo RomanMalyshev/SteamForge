@@ -15,11 +15,12 @@ public class BattleCameracontroller : MonoBehaviour
     [SerializeField] private float _maxHeight = 25f;
     [SerializeField] private float _minHeight = 1f;
     [SerializeField] private Transform _target;
-    [SerializeField] private bool _isOnMap = true;
+    [SerializeField] private bool _isOnMap;
     [SerializeField] private float _onMapHeight;
     [SerializeField] private float _onMapDistance;
 
     private View _view;
+    private Model _model;
     private Vector3 _newPosition;
     private Vector2 _rotateStartPoint;
     private Vector2 _rotateEndPoint;
@@ -32,16 +33,14 @@ public class BattleCameracontroller : MonoBehaviour
     private void Start()
     {
         _view = Globals.Global.View;
-        _view.OnCameraTargetSelect.Subscribe((target) =>
-        {
-            GetTarget(target);
-        });
+        _model = Globals.Global.Model;
+        _view.OnCameraTargetSelect.Subscribe((target) => { GetTarget(target); });
 
-        _view.OnCameraStateChange.Subscribe((state) =>
-        {
-            SetCameraState(state);
-        });
+        _view.OnCameraStateChange.Subscribe((state) => { SetCameraState(state); });
 
+        _model.OnUnitStartTern.Subscribe((unit, skills) => { GetTarget(unit.transform); });
+
+        _view.OnUnitInBattleSelect.Subscribe(unit => { GetTarget(unit.transform); });
         _newPosition = transform.position;
         _newZoom = _cameraTransform.localPosition;
         _onMapCameraTransform = transform;
@@ -65,7 +64,6 @@ public class BattleCameracontroller : MonoBehaviour
             else
             {
                 GetCameraMovement();
-
             }
 
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -121,15 +119,15 @@ public class BattleCameracontroller : MonoBehaviour
 
     private void GetCameraZoom()
     {
-        Vector3 zoomAmount = new Vector3(0, -_zoomSpeed * Input.GetAxis("Mouse ScrollWheel"), _zoomSpeed * Input.GetAxis("Mouse ScrollWheel"));
+        Vector3 zoomAmount = new Vector3(0, -_zoomSpeed * Input.GetAxis("Mouse ScrollWheel"),
+            _zoomSpeed * Input.GetAxis("Mouse ScrollWheel"));
         _newZoom = zoomAmount;
 
-        if (((_cameraTransform.localPosition.y + _newZoom.y) >= _minHeight) && ((_cameraTransform.localPosition.y + _newZoom.y) <= _maxHeight))
+        if (((_cameraTransform.localPosition.y + _newZoom.y) >= _minHeight) &&
+            ((_cameraTransform.localPosition.y + _newZoom.y) <= _maxHeight))
         {
             _cameraTransform.localPosition += _newZoom;
         }
-
-
     }
 
     private void GetCameraRotation()
@@ -147,15 +145,28 @@ public class BattleCameracontroller : MonoBehaviour
             float dy = (_rotateEndPoint - _rotateStartPoint).y * _rotateSpeed;
 
             transform.rotation *= Quaternion.Euler(new Vector3(0, dx, 0));
-            transform.GetChild(0).transform.rotation *= Quaternion.Euler(new Vector3(-dy, 0, 0));
 
+            var rotation = transform.GetChild(0).transform.rotation * Quaternion.Euler(new Vector3(-dy, 0, 0));
+            
+            if (rotation.eulerAngles.x > 0 && rotation.eulerAngles.x < 40)
+                transform.GetChild(0).transform.rotation *= Quaternion.Euler(new Vector3(-dy, 0, 0));
+
+            if (rotation.eulerAngles.x > -40 && rotation.eulerAngles.x <= 0)
+                transform.GetChild(0).transform.rotation *= Quaternion.Euler(new Vector3(-dy, 0, 0));
+            
+            if (rotation.eulerAngles.x > 320 && rotation.eulerAngles.x <= 360)
+                transform.GetChild(0).transform.rotation *= Quaternion.Euler(new Vector3(-dy, 0, 0));
+            
+            
             _rotateStartPoint = _rotateEndPoint;
         }
     }
 
     private void OnMapCameraMovement()
     {
-        transform.position = new Vector3(_playerFigure.transform.position.x - _onMapDistance, _playerFigure.transform.position.y + _onMapHeight, 50);
+        if (_playerFigure == null) return;
+        transform.position = new Vector3(_playerFigure.transform.position.x - _onMapDistance,
+            _playerFigure.transform.position.y + _onMapHeight, 50);
     }
 
     private void GetTarget(Transform target)
@@ -173,7 +184,7 @@ public class BattleCameracontroller : MonoBehaviour
         _isOnMap = state;
 
         if (_isOnMap)
-        {            
+        {
             transform.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
             transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
             _cameraTransform.localPosition = new Vector3(0, _minHeight, -_minHeight);
