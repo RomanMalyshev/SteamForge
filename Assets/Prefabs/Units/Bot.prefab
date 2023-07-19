@@ -49,10 +49,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c12ce03c29dd47de9366020ec632d556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UnitSide: 0
   Health: 100
   InitiativeTest: 1
   ActionPoints: 20
   Selector: {fileID: 6889361376583660376}
+  _handlers:
+  - {fileID: 722147980791254710}
+  - {fileID: 7153181071941162492}
 --- !u!114 &722147980791254710
 MonoBehaviour:
   m_ObjectHideFlags: 0

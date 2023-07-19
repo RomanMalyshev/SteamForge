@@ -1,9 +1,5 @@
-﻿using System;
-using Cinemachine.Examples;
-using RedBjorn.ProtoTiles;
+﻿using RedBjorn.ProtoTiles;
 using RedBjorn.ProtoTiles.Example;
-using Unity.VisualScripting;
-using UnityEngine;
 
 namespace Game.Battle.Skills
 {
@@ -35,7 +31,6 @@ namespace Game.Battle.Skills
             if (targetOverTile == null) return;
 
             _skill.OverTarget(targetOverTile);
-            Debug.LogWarning($"{targetOverTile.Position} - dragTile");
 
             if (MyInput.GetOnWorldUp(_fieldEntity.Settings.Plane()))
             {
@@ -43,11 +38,7 @@ namespace Game.Battle.Skills
                 var targetClickTile = _fieldEntity.Tile(clickPos);
 
                 if (targetClickTile != null)
-                {
-                    Debug.LogWarning($"{targetClickTile.Position} - clickTile");
                     _skill.SelectTarget(targetClickTile);
-                }
-
             }
         }
     }

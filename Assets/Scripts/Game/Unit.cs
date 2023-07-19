@@ -12,7 +12,7 @@ namespace DefaultNamespace.Player
 {
     public class Unit : MonoBehaviour
     {
-        public UnitSide UnitSide { get; private set; }
+        public UnitSide UnitSide;
         
         public int Health = 100;
 
@@ -24,6 +24,7 @@ namespace DefaultNamespace.Player
 
         public Game.Battle.TargetSelector Selector;
 
+        public List<SkillCommandHandler> _handlers = new();
         private int _currentActionPoints;
         private Model _model;
 
@@ -31,11 +32,11 @@ namespace DefaultNamespace.Player
 
         private bool _isActiveState;
 
-        private List<SkillCommandHandler> _handlers = new();
         private SkillCommandHandler _currentHandler;
         private GameObject _stand;
         private MapEntity _mapEntity;
-        private int _currentHealth;
+        public int _currentHealth { get; private set; }
+    
         private Vector3 _startPosition;
 
         public void Init(MapEntity battleFieldFieldEntity, UnitSide side)
@@ -45,11 +46,11 @@ namespace DefaultNamespace.Player
 
             InitiativeTest = Random.Range(0, 3);
             transform.rotation = Quaternion.Euler(0, UnitSide == UnitSide.Player ? 180 : 0, 0);
-            
+
+            _currentHealth = Health;
             
             _startPosition = transform.position;
             _mapEntity = battleFieldFieldEntity;
-            _handlers = GetComponentsInChildren<SkillCommandHandler>().ToList();
             _model = Globals.Global.Model;
 
             foreach (var handler in _handlers)
@@ -90,12 +91,14 @@ namespace DefaultNamespace.Player
 
         public void Activate()
         {
-            _currentHealth = Health;
+            _isActiveState = true;
+            
+            
             _currentActionPoints = ActionPoints;
             _model.OnUnitStartTern.Invoke(this, _handlers);
             _model.OnChangeUnitActionPoints.Invoke(_currentActionPoints);
 
-            _isActiveState = true;
+            Debug.Log("Activate " + UnitSide.ToString());
         }
 
         public void Deactivate()
@@ -112,11 +115,14 @@ namespace DefaultNamespace.Player
 
             if (_currentActionPoints <= 0)
                 OnActionPointsEnd?.Invoke();
+            
+            Debug.Log(" HANDLE END " +gameObject.name + " "+ gameObject.transform.GetSiblingIndex());
         }
 
         public void GetHit(int damage)
         {
             _currentHealth -= damage;
+           _model.OnUnitHealthChange.Invoke(this);
             if (_currentHealth > 0) return;
 
             Debug.Log($"Dead - {gameObject.name}");

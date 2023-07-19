@@ -143,6 +143,21 @@ namespace Game.Battle.Skills
 
             if (_currentUnitMove == unit)
                 NextUnitMove();
+
+            var enemyUnitsCount = _unitTurnOrder.Count(unitTurn => unitTurn.UnitSide == UnitSide.Enemy);
+            var playerUnitsCount = _unitTurnOrder.Count(unitTurn => unitTurn.UnitSide == UnitSide.Player);
+            
+            if (enemyUnitsCount <= 0)
+            {
+                _model.OnBattleEnd.Invoke(UnitSide.Player);
+                Reset();
+            }
+            
+            if (playerUnitsCount <= 0){
+                _model.OnBattleEnd.Invoke(UnitSide.Enemy); 
+                Reset();
+            }
+            
         }
     }
 }

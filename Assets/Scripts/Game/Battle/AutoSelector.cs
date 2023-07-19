@@ -16,6 +16,8 @@ namespace Game.Battle
         {
             _skill = skill;
             SearchRandomTarget();
+            
+            Debug.Log("Activate");
         }
 
         public override void Deactivate()

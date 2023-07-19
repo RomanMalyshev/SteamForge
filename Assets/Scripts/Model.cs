@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using DefaultNamespace.Player;
+using Game.Battle;
 using Game.Battle.Skills;
 
 namespace DefaultNamespace
@@ -11,6 +12,8 @@ namespace DefaultNamespace
         public SubscribableAction<Unit> OnUnitEndTern = new();
         public SubscribableAction<int> OnChangeUnitActionPoints = new();
         public SubscribableField<List<Unit>> UnitBattleOrder = new();
+        public SubscribableAction<UnitSide> OnBattleEnd = new();
+        public SubscribableAction<Unit> OnUnitHealthChange = new();
 
         public SubscribableField<Player.Player> Plyer = new();
 

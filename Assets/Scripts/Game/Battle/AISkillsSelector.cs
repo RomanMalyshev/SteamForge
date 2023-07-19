@@ -4,7 +4,6 @@ using DefaultNamespace.Player;
 using Game.Battle.Skills;
 using RedBjorn.ProtoTiles;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Game.Battle
 {
@@ -18,7 +17,7 @@ namespace Game.Battle
         private MapEntity _mapEntity;
 
         private SkillCommandHandler _selectedSkill;
-        
+
         public void Init()
         {
             _model = Globals.Global.Model;
@@ -26,29 +25,36 @@ namespace Game.Battle
 
             _model.OnUnitStartTern.Subscribe((unit, skills) =>
             {
+                if (_unit != null)
+                    ResetSelecting(_unit);
+                
                 if (unit.UnitSide == UnitSide.Player) return;
 
                 _skills = skills;
                 _unit = unit;
-                _unit.OnActionPointsEnd += DisableAI;
                 _unit.OnUnitDead += ResetSelecting;
 
                 SelectSkill();
             });
         }
 
-        public void InitNewMap(MapEntity fieldEntity)
+        public void InitNewMap(MapEntity mapEntity)
         {
             if (_unit != null)
                 ResetSelecting(_unit);
+
+            _mapEntity = mapEntity;
         }
 
         private void SelectSkill()
         {
+            if(_skills == null)return;
+            
             if (_selectedSkill != null)
                 _selectedSkill.onHandlerEnd -= SelectSkill;
 
-            _selectedSkill = _skills[Random.Range(0, _skills.Count - 1)];
+            _selectedSkill = _skills[0];
+            
             _selectedSkill.onHandlerEnd += SelectSkill;
             _view.OnCommandSelect.Invoke(_selectedSkill);
         }
@@ -57,8 +63,7 @@ namespace Game.Battle
         {
             ResetSelecting(_unit);
         }
-
-
+        
         private void ResetSelecting(Unit unit)
         {
             if (_selectedSkill != null)

@@ -9,5 +9,6 @@ public class UIUnitLine : MonoBehaviour
     public Outline Outline;
     public Button Button;
     public TMP_Text Label;
+    public TMP_Text Health;
   
 }
