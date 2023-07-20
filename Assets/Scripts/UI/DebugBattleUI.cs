@@ -29,20 +29,22 @@ public class DebugBattleUI : MonoBehaviour
 
     [Header("Battle line")] public UIUnitLine UnitLinePrefab;
     public Transform Content;
-
+    public GameObject RoundSeparator;
+    
     [Header("Result")] public GameObject ResultPopup;
     public Button RestartResult;
     public Button Next;
     public TMP_Text ResultLabel;
 
     private readonly Dictionary<Unit, UIUnitLine> _unitsLine = new();
+    private readonly Dictionary<Unit, UIUnitLine> _unitsNextRoundLine = new();
 
     private Model _model;
     private View _view;
     private readonly List<Button> _unitCommands = new();
 
     private readonly List<MapSettings> _testMapsOrder = new();
-
+    private GameObject _separator;
     public void Init()
     {
         _model = Globals.Global.Model;
@@ -82,30 +84,20 @@ public class DebugBattleUI : MonoBehaviour
 
         _model.UnitBattleOrder.Subscribe(units =>
         {
-            for (var i = 0; i < units.Count; i++)
-            {
-                var unitLine = Instantiate(UnitLinePrefab, Content);
-                var unit = units[i];
-
-                unitLine.Button.onClick.AddListener(() => _view.OnUnitInBattleSelect.Invoke(unit));
-                unitLine.Background.color = unit.UnitSide == UnitSide.Player ? Color.green : Color.red;
-                unitLine.Label.text = unit.UnitSide.ToString();
-                unitLine.Health.text = unit.Health.ToString();
-                _unitsLine.Add(unit, unitLine);
-                unit.OnUnitDead += deadUnit =>
-                {
-                    _unitsLine.Remove(deadUnit);
-                    Destroy(unitLine.gameObject);
-                };
-            }
+            LineInstance(units,_unitsLine);
+            _separator = Instantiate(RoundSeparator, Content);
+            LineInstance(units,_unitsNextRoundLine);
         });
 
         _model.OnUnitHealthChange.Subscribe(unit =>
         {
-            if (_unitsLine.TryGetValue(unit, out var value))
-            {
-                value.Health.text = unit.CurrentHealth.ToString();
-            }
+            if (_unitsLine.TryGetValue(unit, out var unitLine))
+                unitLine.Health.text = unit.CurrentHealth.ToString();
+            else
+                Debug.LogWarning("Unit has not line prefab on battle UI!");
+            
+            if (_unitsNextRoundLine.TryGetValue(unit, out var nexRoundUnitLine))
+                nexRoundUnitLine.Health.text = unit.CurrentHealth.ToString();
             else
                 Debug.LogWarning("Unit has not line prefab on battle UI!");
         });
@@ -149,13 +141,43 @@ public class DebugBattleUI : MonoBehaviour
         RunTestField3.onClick.AddListener(() => { _view.ActiveBattle.Value = Field3; });
     }
 
+    private void LineInstance(List<Unit> units,Dictionary<Unit,UIUnitLine> unitLines)
+    {
+        for (var i = 0; i < units.Count; i++)
+        {
+            var unitLine = Instantiate(UnitLinePrefab, Content);
+            var unit = units[i];
+
+            unitLine.Button.onClick.AddListener(() => _view.OnUnitInBattleSelect.Invoke(unit));
+            unitLine.Background.color = unit.UnitSide == UnitSide.Player ? Color.green : Color.red;
+            unitLine.Label.text = unit.UnitSide.ToString();
+            unitLine.Health.text = unit.Health.ToString();
+
+            unit.OnUnitDead += deadUnit =>
+            {
+                unitLines.Remove(deadUnit);
+                Destroy(unitLine.gameObject);
+            };
+
+            unitLines.Add(unit, unitLine);
+        }
+    }
+
     public void Reset()
     {
         foreach (var unitsLine in _unitsLine)
         {
             Destroy(unitsLine.Value.gameObject);
         }
-
+        
+        foreach (var unitsLine in _unitsNextRoundLine)
+        {
+            Destroy(unitsLine.Value.gameObject);
+        }
+        
+        _unitsNextRoundLine.Clear();
         _unitsLine.Clear();
+        
+        Destroy(_separator);
     }
 }

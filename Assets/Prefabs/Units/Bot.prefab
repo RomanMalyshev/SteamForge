@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UnitSide: 0
-  Health: 100
+  Health: 150
   InitiativeTest: 0
   ActionPoints: 20
   Selector: {fileID: 6889361376583660376}
@@ -92,7 +92,7 @@ MonoBehaviour:
   TargetSide: 0
   Weight: 1
   Range: 1
-  Damage: 5
+  Damage: 26
   AreaPrefab: {fileID: 887056117504064987, guid: c0c658b7df7af4f479429ed399c4f53a,
     type: 3}
   PathPrefab: {fileID: 114413117004689456, guid: 4eac60a74696c8142b18f93d4453e87d,

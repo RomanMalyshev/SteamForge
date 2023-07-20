@@ -17,7 +17,6 @@ namespace Game.Battle.Skills
         private PathDrawer _path;
         private AreaOutline _area;
         private MapEntity _fieldEntity;
-        private bool _active;
 
         private Coroutine _moveRoutine;
 
@@ -30,8 +29,8 @@ namespace Game.Battle.Skills
 
         public override void Activate()
         {
-            _active = true;
 
+            _skillInProcces = false;
             _path.gameObject.SetActive(true);
             _area.gameObject.SetActive(true);
 
@@ -46,7 +45,8 @@ namespace Game.Battle.Skills
 
         public override void Deactivate()
         {
-            _active = false;
+            
+            _skillInProcces = false;
             _area.Hide();
             _path.Hide();
             _path.IsEnabled = false;
@@ -62,6 +62,7 @@ namespace Game.Battle.Skills
 
         public override void SelectTarget(TileEntity tile)
         {
+            if (_skillInProcces) return;
             if (!tile.Vacant) return;
 
             var tileWorldPosition = _fieldEntity.WorldPosition(tile);
@@ -76,7 +77,8 @@ namespace Game.Battle.Skills
             //TODO: fix figure infinity fly
             if (_moveRoutine != null)
                 StopCoroutine(_moveRoutine);
-            
+
+            _skillInProcces = true;
             path.RemoveAt(0);
             _moveRoutine = StartCoroutine(Move(path));
         }
@@ -124,6 +126,7 @@ namespace Game.Battle.Skills
             _path.ActiveState();
             _path.IsEnabled = true;
             onHandlerEnd?.Invoke();
+            _skillInProcces = false;
         }
 
         private void PathUpdate()

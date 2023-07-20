@@ -19,7 +19,6 @@ namespace Game.Battle.Skills
         private AreaOutline _area;
 
         private MapEntity _fieldEntity;
-        private bool _active;
         private UnitSide _side;
         private TileEntity _tile;
 
@@ -37,6 +36,8 @@ namespace Game.Battle.Skills
 
         public override void Activate()
         {
+            _skillInProcces = false;
+            
             _path.gameObject.SetActive(true);
             _area.gameObject.SetActive(true);
 
@@ -48,13 +49,14 @@ namespace Game.Battle.Skills
             _path.InactiveState();
             _path.IsEnabled = true;
 
-            _active = true;
         }
 
         public override void OverTarget(TileEntity tile)
         {
+            if (_skillInProcces) return;
             if (tile.Occupant == null) return;
             if (_side == tile.Occupant.UnitSide) return;
+            
             _path.IsEnabled = true;
             _path.Show(_fieldEntity.WorldPosition(tile), _fieldEntity);
             _path.ActiveState();
@@ -62,6 +64,7 @@ namespace Game.Battle.Skills
 
         public override void SelectTarget(TileEntity tile)
         {
+            if (_skillInProcces) return;
             if (tile.Occupant == null) return;
             if (_side == tile.Occupant.UnitSide) return;
 
@@ -70,11 +73,14 @@ namespace Game.Battle.Skills
             if (_fieldEntity.IsSameTile(tile, currentTile.Position)) return;
             if (_fieldEntity.Distance(currentTile, tile) > Range) return;
 
+            _skillInProcces = true;
+            
             //Rotate in target direction
             var targetPosition = _fieldEntity.WorldPosition(tile);
             var targetPoint = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
             var stepDir = (targetPoint - transform.position);
             _rotationNode.rotation = Quaternion.LookRotation(stepDir, Vector3.up);
+            
             _tile = tile;
             AnimationHandler.PlayMeleeAttackAnimation();
         }
@@ -94,12 +100,13 @@ namespace Game.Battle.Skills
         {
             _tile = null;
             onHandlerEnd?.Invoke();
+            _skillInProcces = false;
         }
 
 
         public override void Deactivate()
         {
-            _active = false;
+            _skillInProcces = false;
             _area.Hide();
             _path.Hide();
             _path.IsEnabled = false;

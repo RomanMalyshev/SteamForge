@@ -65,14 +65,12 @@ namespace Game.Battle
                 .ToList();
 
             var orderedSkills = _skills.OrderByDescending(skill => skill.Weight).ToList();
-            Debug.LogWarning("SelectSkill orderedSkills " + orderedSkills.Count);
             TileEntity targetTile = null;
             while (_selectedSkill == null && orderedSkills.Count > 0)
             {
                 var skill = orderedSkills.First();
                 
                 
-                Debug.LogWarning($"orderedSkills {orderedSkills.Count};  {skill.GetType().Name} " );
                 orderedSkills.RemoveAt(0);
 
                 var range = skill.Range;
@@ -122,7 +120,6 @@ namespace Game.Battle
                 return;
             }
 
-            Debug.LogWarning($"_selectedSkill {targetTile.Position};  {_selectedSkill.GetType().Name} " );
             _selectedSkill.onHandlerEnd += SelectSkill;
             _view.OnCommandSelect.Invoke(_selectedSkill);
             _selectedSkill.SelectTarget(targetTile);

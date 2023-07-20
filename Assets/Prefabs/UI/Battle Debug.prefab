@@ -938,6 +938,8 @@ MonoBehaviour:
   UnitLinePrefab: {fileID: 3115707471359371123, guid: af2a9b3330243244696b9d27bf709d7d,
     type: 3}
   Content: {fileID: 2580111758423847067}
+  RoundSeparator: {fileID: 1618014522510345202, guid: 9cb56c8dd2694ef4db0cb52306843497,
+    type: 3}
   ResultPopup: {fileID: 6994907581631833909}
   RestartResult: {fileID: 8641008776694330130}
   Next: {fileID: 4352065323475277915}

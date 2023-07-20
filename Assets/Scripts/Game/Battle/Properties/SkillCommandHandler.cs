@@ -9,10 +9,13 @@ namespace Game.Battle.Skills
     {
         public UnitSide TargetSide;
         public int Weight;
-        [Space(2)]
         public float Range;
+
         public  Action onHandlerEnd { get; set; }
         public Action<TileEntity> OnTileOccupied;
+
+        internal bool _skillInProcces;
+        
         public abstract void Init(MapEntity mapEntity, UnitSide unitSide);
         
         public abstract void Activate();

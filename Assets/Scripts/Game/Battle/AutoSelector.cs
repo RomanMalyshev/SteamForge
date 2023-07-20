@@ -7,6 +7,7 @@ namespace Game.Battle
 {
     public class AutoSelector:TargetSelector
     {
+        //TODO: remove this
         public override void Init(MapEntity fieldEntity)
         {
             _fieldEntity = fieldEntity;
