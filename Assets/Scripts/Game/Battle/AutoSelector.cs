@@ -14,15 +14,14 @@ namespace Game.Battle
 
         public override void Activate(SkillCommandHandler skill)
         {
-            _skill = skill;
-            SearchRandomTarget();
+           // _skill = skill;
+           // SearchRandomTarget();
             
-            Debug.Log("Activate");
         }
 
         public override void Deactivate()
         {
-            _skill = null;
+            //_skill = null;
         }
 
         private void SearchRandomTarget()

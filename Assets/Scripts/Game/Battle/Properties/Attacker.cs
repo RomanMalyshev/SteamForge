@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using RedBjorn.ProtoTiles;
 using RedBjorn.ProtoTiles.Example;
@@ -11,20 +12,28 @@ namespace Game.Battle.Skills
 
         public AreaOutline AreaPrefab;
         public PathDrawer PathPrefab;
+        public Transform _rotationNode;
+        public AnimationEventHandler AnimationHandler;
 
         private PathDrawer _path;
         private AreaOutline _area;
 
         private MapEntity _fieldEntity;
         private bool _active;
+        private UnitSide _side;
+        private TileEntity _tile;
 
-
-        public override void Init(MapEntity mapEntity)
+        public override void Init(MapEntity mapEntity, UnitSide unitSide)
         {
+            _side = unitSide;
             _fieldEntity = mapEntity;
             _area = Instantiate(AreaPrefab, Vector3.zero, Quaternion.identity);
             _path = Instantiate(PathPrefab, Vector3.zero, Quaternion.identity);
+
+            AnimationHandler.Attack += ReduceHealth;
+            AnimationHandler.AttackAnimationEnd += EndSkill;
         }
+
 
         public override void Activate()
         {
@@ -45,7 +54,7 @@ namespace Game.Battle.Skills
         public override void OverTarget(TileEntity tile)
         {
             if (tile.Occupant == null) return;
-
+            if (_side == tile.Occupant.UnitSide) return;
             _path.IsEnabled = true;
             _path.Show(_fieldEntity.WorldPosition(tile), _fieldEntity);
             _path.ActiveState();
@@ -54,15 +63,39 @@ namespace Game.Battle.Skills
         public override void SelectTarget(TileEntity tile)
         {
             if (tile.Occupant == null) return;
+            if (_side == tile.Occupant.UnitSide) return;
 
             var currentTile = _fieldEntity.Tile(transform.position);
 
             if (_fieldEntity.IsSameTile(tile, currentTile.Position)) return;
             if (_fieldEntity.Distance(currentTile, tile) > Range) return;
 
-            tile.Occupant.GetHit(Damage);
+            //Rotate in target direction
+            var targetPosition = _fieldEntity.WorldPosition(tile);
+            var targetPoint = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
+            var stepDir = (targetPoint - transform.position);
+            _rotationNode.rotation = Quaternion.LookRotation(stepDir, Vector3.up);
+            _tile = tile;
+            AnimationHandler.PlayMeleeAttackAnimation();
+        }
+
+        private void ReduceHealth()
+        {
+            if (_tile == null)
+            {
+                Debug.LogWarning($"Try to reduce null tile! {gameObject.name} {gameObject.transform.GetSiblingIndex()}");
+                return;
+            }
+
+            _tile.Occupant.GetHit(Damage);
+        }
+
+        private void EndSkill()
+        {
+            _tile = null;
             onHandlerEnd?.Invoke();
         }
+
 
         public override void Deactivate()
         {

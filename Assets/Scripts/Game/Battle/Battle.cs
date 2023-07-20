@@ -52,7 +52,7 @@ namespace Game.Battle.Skills
 
             BattleField.OnFieldReady += InitUnits;
 
-            Globals.Global.View.OnRestartBattle.Subscribe(() =>
+            _view.OnRestartBattle.Subscribe(() =>
             {
                 if (_mapSettings == null) return;
                 Reset();

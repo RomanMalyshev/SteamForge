@@ -515,6 +515,28 @@ namespace RedBjorn.ProtoTiles
             var tilePos = origin.Position;
             return AreaExistedPositions(tilePos, range);
         }
+        
+        /// <summary>
+        /// Get  existed tiles around origin at max range
+        /// </summary>
+        /// <param name="origin">Origin tile</param>
+        /// <param name="range"></param>
+        /// <returns>Positions in the space of world coordinates</returns>
+        public List<TileEntity> AreaExistedTiles(TileEntity origin, float range)
+        {
+            if (origin == null)
+            {
+                return null;
+            }
+            var tilesPos =  AreaExistedPositions(origin.Position, range);
+
+            List<TileEntity> tiles = new();
+
+            for (var i = 0; i < tilesPos.Count; i++)
+                tiles.Add(Tile(tilesPos[i]));
+            
+            return tiles;
+        }
 
         /// <summary>
         /// Get area world space positions of existed tiles around origin at max range

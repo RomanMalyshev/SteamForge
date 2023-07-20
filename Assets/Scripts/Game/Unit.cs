@@ -12,6 +12,10 @@ namespace DefaultNamespace.Player
 {
     public class Unit : MonoBehaviour
     {
+        
+        public TileEntity OccupiedTile { get; private set; }
+        public int CurrentHealth { get; private set; }
+        
         public UnitSide UnitSide;
         
         public int Health = 100;
@@ -22,20 +26,17 @@ namespace DefaultNamespace.Player
         public Action OnActionPointsEnd;
         public Action<Unit> OnUnitDead;
 
-        public Game.Battle.TargetSelector Selector;
-
+        public TargetSelector Selector;
         public List<SkillCommandHandler> _handlers = new();
+        
         private int _currentActionPoints;
         private Model _model;
-
-        private TileEntity _occupiedTile;
-
+        
         private bool _isActiveState;
 
         private SkillCommandHandler _currentHandler;
         private GameObject _stand;
         private MapEntity _mapEntity;
-        public int _currentHealth { get; private set; }
     
         private Vector3 _startPosition;
 
@@ -44,10 +45,9 @@ namespace DefaultNamespace.Player
             UnitSide = side;
             Selector.Init(battleFieldFieldEntity);
 
-            InitiativeTest = Random.Range(0, 3);
             transform.rotation = Quaternion.Euler(0, UnitSide == UnitSide.Player ? 180 : 0, 0);
 
-            _currentHealth = Health;
+            CurrentHealth = Health;
             
             _startPosition = transform.position;
             _mapEntity = battleFieldFieldEntity;
@@ -57,7 +57,7 @@ namespace DefaultNamespace.Player
             {
                 handler.onHandlerEnd += OnHandlerEnd;
                 handler.OnTileOccupied += OccupyTile;
-                handler.Init(battleFieldFieldEntity);
+                handler.Init(battleFieldFieldEntity,UnitSide);
                 handler.Deactivate();
             }
 
@@ -82,11 +82,11 @@ namespace DefaultNamespace.Player
 
         private void OccupyTile(TileEntity tile)
         {
-            if (_occupiedTile != null)
-                _occupiedTile.Occupant = null;
+            if (OccupiedTile != null)
+                OccupiedTile.Occupant = null;
 
-            _occupiedTile = tile;
-            _occupiedTile.Occupant = this;
+            OccupiedTile = tile;
+            OccupiedTile.Occupant = this;
         }
 
         public void Activate()
@@ -114,21 +114,26 @@ namespace DefaultNamespace.Player
             _model.OnChangeUnitActionPoints.Invoke(_currentActionPoints);
 
             if (_currentActionPoints <= 0)
+            {
                 OnActionPointsEnd?.Invoke();
+                Debug.Log("OnActionPointsEnd " +gameObject.name + " "+ gameObject.transform.GetSiblingIndex());
+                return;
+            }
+
             
             Debug.Log(" HANDLE END " +gameObject.name + " "+ gameObject.transform.GetSiblingIndex());
         }
 
         public void GetHit(int damage)
         {
-            _currentHealth -= damage;
+            CurrentHealth -= damage;
            _model.OnUnitHealthChange.Invoke(this);
-            if (_currentHealth > 0) return;
+            if (CurrentHealth > 0) return;
 
             Debug.Log($"Dead - {gameObject.name}");
             transform.rotation = Quaternion.Euler(0, 90, 90);
             transform.position -= new Vector3(0, 1.2f, 0);
-            _occupiedTile.Occupant = null;
+            OccupiedTile.Occupant = null;
             OnUnitDead?.Invoke(this);
         }
 
@@ -138,7 +143,7 @@ namespace DefaultNamespace.Player
             transform.position += new Vector3(0, 1.2f, 0);
             transform.position = _startPosition;
 
-            _currentHealth = Health;
+            CurrentHealth = Health;
 
             foreach (var handler in _handlers)
                 handler.Deactivate();

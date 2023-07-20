@@ -104,7 +104,7 @@ public class DebugBattleUI : MonoBehaviour
         {
             if (_unitsLine.TryGetValue(unit, out var value))
             {
-                value.Health.text = unit._currentHealth.ToString();
+                value.Health.text = unit.CurrentHealth.ToString();
             }
             else
                 Debug.LogWarning("Unit has not line prefab on battle UI!");

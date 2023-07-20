@@ -7,13 +7,13 @@ namespace Game.Battle.Skills
 {
     public abstract class SkillCommandHandler:MonoBehaviour
     {
-        
+        public UnitSide TargetSide;
         public int Weight;
         [Space(2)]
         public float Range;
         public  Action onHandlerEnd { get; set; }
         public Action<TileEntity> OnTileOccupied;
-        public abstract void Init(MapEntity mapEntity);
+        public abstract void Init(MapEntity mapEntity, UnitSide unitSide);
         
         public abstract void Activate();
 

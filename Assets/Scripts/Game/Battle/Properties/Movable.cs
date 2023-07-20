@@ -20,9 +20,8 @@ namespace Game.Battle.Skills
         private bool _active;
 
         private Coroutine _moveRoutine;
-        private static readonly int IsMoving = Animator.StringToHash("IsMoving");
 
-        public override void Init(MapEntity fieldEntity)
+        public override void Init(MapEntity fieldEntity, UnitSide unitSide)
         {
             _fieldEntity = fieldEntity;
             _area = Instantiate(AreaPrefab, Vector3.zero, Quaternion.identity);
