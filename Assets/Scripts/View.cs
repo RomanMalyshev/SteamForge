@@ -10,7 +10,8 @@ namespace DefaultNamespace
         public SubscribableAction<EncounterType> OnMapButtonClick = new();
         public SubscribableAction<MapSettings> OnMapBattleClick = new();
         public SubscribableAction OnMapTradeClick = new();
-        public SubscribableAction<MapSettings> OnMapCampClick = new();
+        public SubscribableAction OnMapCampClick = new();
+        public SubscribableAction<Encounter> OnEncounterClick = new();
 
         public SubscribableAction<int> OnExitFromGame = new();
         public SubscribableAction OnEnterGame = new();
@@ -20,11 +21,10 @@ namespace DefaultNamespace
         public SubscribableField<MapSettings> ActiveBattle = new(null);
 
         public SubscribableAction<Transform> OnCameraTargetSelect = new();
-        public SubscribableAction<bool> OnCameraStateChange = new();
         
         public SubscribableAction<Unit> OnUnitInBattleSelect = new();
-        
-        
+
+        public SubscribableAction ReturnToMap = new();
         public void Init()
         {
  

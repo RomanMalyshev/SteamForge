@@ -48,6 +48,7 @@ namespace UI.Map
 
         private void OnButtonClick()
         {
+            //Map.SetCurrentEncounter(this);
             if (_isActive)
             {
                 if (_isReechable)

@@ -4,10 +4,7 @@ using System.Collections.Generic;
 using DefaultNamespace;
 using DefaultNamespace.Player;
 using TMPro;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class PartyUpgrade : MonoBehaviour
@@ -15,17 +12,15 @@ public class PartyUpgrade : MonoBehaviour
     [SerializeField] private List<AttributeLine> _attributeLines;
     [SerializeField] private List<StatLine> _statLines;
 
-    [SerializeField] private TMP_InputField _playerStats;
-    [SerializeField] private TMP_InputField _playerMoney;
-    [SerializeField] private TMP_InputField _characterName;
-    [SerializeField] private TMP_Text _description;
+    [SerializeField] private TMP_Text _characterAP;
+    [SerializeField] private TMP_Text _characterName;
 
     [SerializeField] private Button _applyButton;
     [SerializeField] private Button _cancelButton;
     [SerializeField] private Button _nextCaracterButton;
     [SerializeField] private Button _previosCaracterButton;
+    [SerializeField] private Button _returnToMapButton;
 
-    [SerializeField] private Button _startLevelUp;
 
     private Player _player;
 
@@ -39,6 +34,8 @@ public class PartyUpgrade : MonoBehaviour
             _player = player;
             SetupParty();
         });
+        
+        _returnToMapButton.onClick.AddListener(() => Globals.Global.View.ReturnToMap.Invoke());
 
         if (Globals.Global.Model.Plyer.Value != null && Globals.Global.Model.Plyer.Value.Party.Count > 0)
         {
@@ -70,8 +67,6 @@ public class PartyUpgrade : MonoBehaviour
         _cancelButton.onClick.AddListener(CancelLevelUp);
         _nextCaracterButton.onClick.AddListener(NextCharacter);
         _previosCaracterButton.onClick.AddListener(PreviosCharacter);
-
-        _startLevelUp.onClick.AddListener(StartingLevelUping);
 
         _currentCharacter = 0;
 
@@ -167,8 +162,7 @@ public class PartyUpgrade : MonoBehaviour
     private void SetupParty()
     {
         _characterName.text = _player.Party[_currentCharacter].Name;
-        _playerMoney.text = $"Currency: {_player.Currency}\nGears: {_player.Gears}";
-        _playerStats.text = $"AP: {_player.Party[_currentCharacter].UpPoints}";
+        _characterAP.text = $"AP: {_player.Party[_currentCharacter].UpPoints}";
 
         var stats = _player.Party[_currentCharacter].GetAllStats();
         var atributes = _player.Party[_currentCharacter].GetAllAttributes();
@@ -185,7 +179,7 @@ public class PartyUpgrade : MonoBehaviour
             _attributeLines[i]._attributeValue.text = atributes[i].Value.ToString();
         }
     }
-
+    
     public void StartingLevelUping()
     {
         for (var i = 0; i < _player.Party.Count; i++)

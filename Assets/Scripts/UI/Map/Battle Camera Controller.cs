@@ -1,11 +1,13 @@
 using DefaultNamespace;
 using System.Collections;
 using System.Collections.Generic;
+using Game.Battle;
 using UI.Map;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
+//TODO: rename
 public class BattleCameracontroller : MonoBehaviour
 {
     [SerializeField] private Transform _cameraTransform;
@@ -18,6 +20,13 @@ public class BattleCameracontroller : MonoBehaviour
     [SerializeField] private bool _isOnMap;
     [SerializeField] private float _onMapHeight;
     [SerializeField] private float _onMapDistance;
+    [SerializeField] private Map _map;
+
+    [SerializeField] private Vector3 _battlePoint;
+    [SerializeField] private Vector3 _campPoint;
+    [SerializeField] private Vector3 _mapPoint;
+    
+    
 
     private View _view;
     private Model _model;
@@ -32,12 +41,38 @@ public class BattleCameracontroller : MonoBehaviour
 
     private void Start()
     {
+        _mapPoint = new Vector3(29, -31, 220);
+        //_campPoint = new Vector3(-6.3f, 10.2f, -317.82f);
+        //_battlePoint = new Vector3(-6.3f, -10.2f, -317.82f);
+
+        
+        
         _view = Globals.Global.View;
         _model = Globals.Global.Model;
         _view.OnCameraTargetSelect.Subscribe((target) => { GetTarget(target); });
-
-        _view.OnCameraStateChange.Subscribe((state) => { SetCameraState(state); });
-
+        
+        
+        _view.ReturnToMap.Subscribe(() =>
+        {
+            SetCameraOnMapState(true);
+        });
+        
+        _view.ActiveBattle.Subscribe(value =>
+        {
+            SetCameraOnMapState(false);
+        });
+        
+        _view.OnMapCampClick.Subscribe(() =>
+        {
+            GetCampCameraPosition();
+        });
+        
+        _model.OnBattleEnd.Subscribe(winSide =>
+        {
+            if(winSide == UnitSide.Player)
+                SetCameraOnMapState(true);
+        });
+        
         _model.OnUnitStartTern.Subscribe((unit, skills) => { GetTarget(unit.transform); });
 
         _view.OnUnitInBattleSelect.Subscribe(unit => { GetTarget(unit.transform); });
@@ -46,6 +81,8 @@ public class BattleCameracontroller : MonoBehaviour
         _onMapCameraTransform = transform;
 
         _cameraTransform.localPosition = new Vector3(0, _minHeight, -_minHeight);
+
+        SetCameraOnMapState(true);
     }
 
 
@@ -166,7 +203,14 @@ public class BattleCameracontroller : MonoBehaviour
     {
         if (_playerFigure == null) return;
         transform.position = new Vector3(_playerFigure.transform.position.x - _onMapDistance,
-            _playerFigure.transform.position.y + _onMapHeight, 50);
+            _playerFigure.transform.position.y + _onMapHeight, _mapPoint.z);
+    }
+
+    private void GetCampCameraPosition()
+    {
+        SetCameraOnMapState(false);
+        transform.position = _campPoint;
+        transform.rotation = Quaternion.Euler(new Vector3(0, -180, 0));
     }
 
     private void GetTarget(Transform target)
@@ -179,7 +223,7 @@ public class BattleCameracontroller : MonoBehaviour
         _playerFigure = playerFigure;
     }
 
-    public void SetCameraState(bool state)
+    public void SetCameraOnMapState(bool state)
     {
         _isOnMap = state;
 
@@ -194,4 +238,6 @@ public class BattleCameracontroller : MonoBehaviour
             _target = null;
         }
     }
+    
+    
 }

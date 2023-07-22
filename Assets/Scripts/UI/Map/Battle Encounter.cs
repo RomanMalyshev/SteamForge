@@ -1,16 +1,14 @@
 using DefaultNamespace;
 using RedBjorn.ProtoTiles;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleEncounter : Encounter
 {
     [SerializeField] private MapSettings _battleground;
 
-    public override void EncounterSelected()
+    public override void Activate()
     {
-        Globals.Global.View.OnMapBattleClick.Invoke(_battleground);
+        Globals.Global.View.ActiveBattle.Value = _battleground;
     }
 }
 

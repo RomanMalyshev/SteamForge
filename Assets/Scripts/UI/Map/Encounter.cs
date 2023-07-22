@@ -1,6 +1,7 @@
 using DefaultNamespace;
 using System.Collections;
 using System.Collections.Generic;
+using UI.Map;
 using UnityEngine;
 
 public abstract class Encounter : MonoBehaviour
@@ -43,11 +44,11 @@ public abstract class Encounter : MonoBehaviour
 
     private void OnButtonClick()
     {
+        _view.OnEncounterClick.Invoke(this);
         if (_isActive)
         {
             if (_isReechable)
             {
-                EncounterSelected();
                 //_view.OnMapButtonClick.Invoke(_type);
                 OnEncounterSelect.Invoke(_transform, Column);
             }
@@ -56,7 +57,6 @@ public abstract class Encounter : MonoBehaviour
         _view.OnCameraTargetSelect.Invoke(_transform);
     }
 
-    public abstract void EncounterSelected();    
 
     private void OnMouseOver()
     {
@@ -98,4 +98,6 @@ public abstract class Encounter : MonoBehaviour
     {
         _isActive = isActive;
     }
+
+    public abstract void Activate();
 }

@@ -13,15 +13,25 @@ namespace UI.Map
         [SerializeField] private PlayerFigure _playerFigure;
         [SerializeField] private BattleCameracontroller _cameraController;
         [SerializeField] private int _currentColumn;
+        [SerializeField] private Encounter _currentEncounter;
+        
+        private View _view;
 
         private void Start()
         {
+            _view = Globals.Global.View;
+            
             if (!(_cameraController == null))
-            _cameraController.FindPlayerFigure(_playerFigure);
+                _cameraController.FindPlayerFigure(_playerFigure);
 
             _playerFigure.OnNewEncounterEnter.Subscribe( (column)=>
             {
                 PlayerFigireMoved(column);
+            });
+            
+            _view.OnEncounterClick.Subscribe( (currentEncounter)=>
+            {
+                SetCurrentEncounter(currentEncounter);
             });
 
             for (var index = 0; index < _encounterOrder.Count; index++)
@@ -57,7 +67,9 @@ namespace UI.Map
 
         private void PlayerFigireMoved(int column)
         {
+            
             _currentColumn = column;
+            _currentEncounter.Activate();
 
             foreach (var column1 in _encounterOrder)
             {
@@ -72,6 +84,11 @@ namespace UI.Map
                     else encounter.SetReeachable(true);
                 }
             }           
+        }
+
+        private void SetCurrentEncounter(Encounter currentEncounter)
+        {
+            _currentEncounter = currentEncounter;
         }
     }
 

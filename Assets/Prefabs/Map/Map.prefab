@@ -150,6 +150,7 @@ MonoBehaviour:
   _playerFigure: {fileID: 4685431053013885172}
   _cameraController: {fileID: 0}
   _currentColumn: 0
+  _currentEncounter: {fileID: 0}
 --- !u!1001 &1000502481639479276
 PrefabInstance:
   m_ObjectHideFlags: 0

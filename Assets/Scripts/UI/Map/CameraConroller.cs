@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UI.Map;
 using UnityEngine;
 
+//TODO: delete this
 public class CameraConroller : MonoBehaviour
 {
     [SerializeField] private float _height;

@@ -1,16 +1,10 @@
 using DefaultNamespace;
-using RedBjorn.ProtoTiles;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class CampEncounter : Encounter
 {
-    [SerializeField] private MapSettings _camp;
-
-    public override void EncounterSelected()
+    
+    public override void Activate()
     {
-        Globals.Global.View.OnMapCampClick.Invoke(_camp);
+        Globals.Global.View.OnMapCampClick.Invoke();
     }
-
 }

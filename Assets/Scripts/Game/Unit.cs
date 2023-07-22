@@ -34,7 +34,7 @@ namespace DefaultNamespace.Player
         
         private bool _isActiveState;
 
-        private SkillCommandHandler _currentHandler;
+        private SkillCommandHandler _currentSkill;
         private GameObject _stand;
         private MapEntity _mapEntity;
     
@@ -71,11 +71,11 @@ namespace DefaultNamespace.Player
             if (!_isActiveState) return;
             if (!_handlers.Contains(skillCommand)) return;
 
-            if (_currentHandler != null)
-                _currentHandler.Deactivate();
+            if (_currentSkill != null)
+                _currentSkill.Deactivate();
 
-            _currentHandler = skillCommand;
-            _currentHandler.Activate();
+            _currentSkill = skillCommand;
+            _currentSkill.Activate();
 
             Selector.Activate(skillCommand);
         }
@@ -105,7 +105,8 @@ namespace DefaultNamespace.Player
         {
             Selector.Deactivate();
             _isActiveState = false;
-            _currentHandler.Deactivate();
+            //TODO: fix bug tut
+            _currentSkill.Deactivate();
         }
 
         private void OnHandlerEnd()

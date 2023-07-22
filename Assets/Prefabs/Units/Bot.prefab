@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UnitSide: 0
-  Health: 150
+  Health: 20
   InitiativeTest: 0
   ActionPoints: 20
   Selector: {fileID: 6889361376583660376}

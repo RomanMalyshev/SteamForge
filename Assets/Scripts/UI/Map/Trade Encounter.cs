@@ -7,7 +7,8 @@ using UnityEngine;
 public class TradeEncounter : Encounter
 {   
 
-    public override void EncounterSelected()
+
+    public override void Activate()
     {
         Globals.Global.View.OnMapTradeClick.Invoke();
     }

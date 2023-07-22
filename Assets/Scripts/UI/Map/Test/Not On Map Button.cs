@@ -12,9 +12,5 @@ public class NotOnMapButton : MonoBehaviour
     {
         _view = Globals.Global.View;
     }
-
-    public void Click()
-    {
-        _view.OnCameraStateChange.Invoke(false);
-    }
+    
 }
