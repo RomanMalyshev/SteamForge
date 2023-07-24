@@ -188,10 +188,14 @@ MonoBehaviour:
   _rotateSpeed: 0.1
   _maxHeight: 40
   _minHeight: 4
+  _cameraState: 0
   _target: {fileID: 0}
-  _isOnMap: 1
   _onMapHeight: 6
   _onMapDistance: 9
+  _map: {fileID: 0}
+  _battlePoint: {x: 0, y: 0, z: 0}
+  _campPoint: {x: -5.1, y: 0.39, z: -322.75}
+  _mapPoint: {x: 29, y: -31, z: 220}
 --- !u!1 &7665153843976055664
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,11 +1,10 @@
-using DefaultNamespace;
 using System.Collections;
 using System.Collections.Generic;
-using UI.Map;
+using DefaultNamespace;
 using UnityEngine;
 
 public abstract class Encounter : MonoBehaviour
-{    
+{
     private View _view;
     private bool _isReechable = false;
     private Transform _transform;
@@ -14,10 +13,9 @@ public abstract class Encounter : MonoBehaviour
     private bool _isActive = true;
 
     public int Column;
+    public EncounterState EncounterState;
 
     public SubscribableAction<Transform, int> OnEncounterSelect = new();
-
-
 
     private void Start()
     {
@@ -49,14 +47,12 @@ public abstract class Encounter : MonoBehaviour
         {
             if (_isReechable)
             {
-                //_view.OnMapButtonClick.Invoke(_type);
                 OnEncounterSelect.Invoke(_transform, Column);
             }
         }
 
         _view.OnCameraTargetSelect.Invoke(_transform);
     }
-
 
     private void OnMouseOver()
     {
@@ -98,6 +94,12 @@ public abstract class Encounter : MonoBehaviour
     {
         _isActive = isActive;
     }
+
+    public void SetEncounterState(EncounterState encounterState)
+    {
+        EncounterState = encounterState;
+    }
+
 
     public abstract void Activate();
 }

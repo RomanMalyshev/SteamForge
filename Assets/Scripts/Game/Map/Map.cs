@@ -5,20 +5,20 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace UI.Map
+namespace GameMap
 {
     public class Map : MonoBehaviour
     {
         [FormerlySerializedAs("_enconterOrder")][SerializeField] public List<EncounterColumn> _encounterOrder;
         [SerializeField] private PlayerFigure _playerFigure;
-        [SerializeField] private BattleCameracontroller _cameraController;
+        [SerializeField] private CameraController _cameraController;
         [SerializeField] private int _currentColumn;
         [SerializeField] private Encounter _currentEncounter;
         
         private View _view;
 
         private void Start()
-        {
+        {            
             _view = Globals.Global.View;
             
             if (!(_cameraController == null))
@@ -50,6 +50,10 @@ namespace UI.Map
                     });
                 }
             }
+
+            _currentEncounter = _encounterOrder[0].encounter[0];
+            _playerFigure.SetCurrentEncounter(_currentEncounter);
+            _playerFigure.GetStartingPoint();
         }
 
         private void MovePlayerFigure(Transform transform, int column)
@@ -67,7 +71,6 @@ namespace UI.Map
 
         private void PlayerFigireMoved(int column)
         {
-            
             _currentColumn = column;
             _currentEncounter.Activate();
 
@@ -77,7 +80,7 @@ namespace UI.Map
                 {
                     encounter.SetActive(true);
 
-                    if ((encounter.Column - _currentColumn > 1) || (encounter.Column - _currentColumn < -1))
+                    if ((encounter.Column - _currentColumn > 1) || (encounter.Column <= _currentColumn))
                     {
                         encounter.SetReeachable(false);
                     }
@@ -89,6 +92,7 @@ namespace UI.Map
         private void SetCurrentEncounter(Encounter currentEncounter)
         {
             _currentEncounter = currentEncounter;
+            _playerFigure.SetCurrentEncounter(currentEncounter);
         }
     }
 

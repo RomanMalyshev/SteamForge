@@ -8,11 +8,6 @@ namespace DefaultNamespace
         private int cashAction;
         public void Init()
         {
-            Globals.Global.View.OnMapButtonClick.Subscribe(encounter =>
-            {
-                Debug.Log($"{encounter} - on click!");
-            });
-
             Globals.Global.View.OnMapBattleClick.Subscribe(encounter =>
             {
                 Debug.Log($"{encounter} - on click!");

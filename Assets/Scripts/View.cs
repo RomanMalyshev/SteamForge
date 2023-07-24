@@ -6,8 +6,7 @@ using UnityEngine;
 namespace DefaultNamespace
 {
     public class View
-    {
-        public SubscribableAction<EncounterType> OnMapButtonClick = new();
+    {        
         public SubscribableAction<MapSettings> OnMapBattleClick = new();
         public SubscribableAction OnMapTradeClick = new();
         public SubscribableAction OnMapCampClick = new();
