@@ -187,8 +187,8 @@ public class CameraController : MonoBehaviour
     private void OnMapCameraMovement()
     {
         if (_playerFigure == null) return;
-        transform.position = new Vector3(_playerFigure.transform.position.x - _onMapDistance,
-            _playerFigure.transform.position.y + _onMapHeight, _mapPoint.z);
+        transform.position = new Vector3(_playerFigure.transform.position.x,
+            _playerFigure.transform.position.y + _onMapHeight, _mapPoint.z - _onMapDistance);
     }       
 
     public void SetCameraOnMapState(CameraState state)
@@ -198,18 +198,20 @@ public class CameraController : MonoBehaviour
         if (_cameraState == CameraState.OnMap)
         {
             _target = null;
-            transform.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
-            transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
             _cameraTransform.localPosition = new Vector3(0, _minHeight, -_minHeight);
         }            
         else if (_cameraState == CameraState.InBattle)
         {
             transform.position = _target.position;
+            transform.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
             _cameraTransform.localPosition = new Vector3(0, _minHeight * 2 , -_minHeight * 2);
         }
         else if (_cameraState == CameraState.InCamp)
         {
             transform.position = _campPoint;
+            _cameraTransform.localPosition = new Vector3(0, _minHeight * 2, -_minHeight * 2);
             transform.rotation = Quaternion.Euler(new Vector3(0, -180, 0));
         }
     }
