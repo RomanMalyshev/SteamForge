@@ -4,6 +4,8 @@ namespace DefaultNamespace.Player
 {
     public class Player
     {
+        public int PeopleMoral;
+        public int MachineMoral;
         public int Currency;
         public int Gears;
         public List<Character> Party;

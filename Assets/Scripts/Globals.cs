@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.Battle;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -26,7 +27,8 @@ namespace DefaultNamespace
             
             View.Init();
             Model.Init();
-            Presenter.Init();           
+            Presenter.Init();
+         
         }
     }
 }

@@ -61,7 +61,7 @@ namespace DefaultNamespace.Player
         public string Name;
 
         public int UpPoints;
-
+        public int Exp;
         public int Level;
 
         public List<Equipment> Equipments;

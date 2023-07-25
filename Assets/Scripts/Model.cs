@@ -28,25 +28,21 @@ namespace DefaultNamespace
                     new Character()
                     {
                         Name = "Tank",
-                        UpPoints = 100,
                         Level = 1,                           
                     },
                     new Character()
                     {
                         Name = "Bug",
-                        UpPoints = 90,
                         Level = 1,
                     },
                     new Character()
                     {
                         Name = "Caster",
-                        UpPoints = 80,
                         Level = 1,
                     },
                     new Character()
                     {
                         Name = "SteamMachine",
-                        UpPoints = 70,
                         Level = 1,
                     },
                 }

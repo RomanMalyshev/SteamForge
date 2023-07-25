@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.Battle;
+using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
 namespace DefaultNamespace
@@ -26,6 +27,30 @@ namespace DefaultNamespace
             Globals.Global.View.OnEnterGame.Subscribe(() =>
             {
                 Debug.Log("Enter game");
+            });
+            
+               
+            Globals.Global.Model.OnBattleEnd.Subscribe(side =>
+            {
+                
+                if(side != UnitSide.Player)return;
+
+                var party = Globals.Global.Model.Plyer.Value.Party;
+                Globals.Global.Model.Plyer.Value.PeopleMoral = +1;
+                foreach (var character in party)
+                {
+                    character.Exp += 100;
+                    if (character.Exp >= 100)
+                    {
+                        character.Level += 1;
+                        character.Exp = 0;
+                        character.UpPoints += 10;
+                        Debug.Log($"{character.Name} Level UP!now level {character.Level}");
+                    }
+                }
+                
+                Globals.Global.Model.Plyer.Invoke(Globals.Global.Model.Plyer.Value);
+
             });
         }        
     }
