@@ -5,6 +5,7 @@ using Game.Battle;
 using RedBjorn.ProtoTiles;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class DebugBattleUI : MonoBehaviour
@@ -33,7 +34,8 @@ public class DebugBattleUI : MonoBehaviour
     
     [Header("Result")] public GameObject ResultPopup;
     public Button RestartResult;
-    public Button Next;
+    public Button NextBattleTest;
+    public Button ReturnToMap;
     public TMP_Text ResultLabel;
 
     private readonly Dictionary<Unit, UIUnitLine> _unitsLine = new();
@@ -119,17 +121,23 @@ public class DebugBattleUI : MonoBehaviour
             _view.OnRestartBattle.Invoke();
         });
 
-        Next.onClick.AddListener(() =>
+        ReturnToMap.onClick.AddListener(() =>
+        {
+            ResultPopup.gameObject.SetActive(false);
+            _view.ReturnToMap.Invoke();
+        });
+
+        NextBattleTest.onClick.AddListener(() =>
         {
             ResultPopup.gameObject.SetActive(false);
             _view.ActiveBattle.Value = _testMapsOrder[Random.Range(0, _testMapsOrder.Count - 1)];
         });
-
+        
         _model.OnBattleEnd.Subscribe(winSide =>
         {
             Debug.LogWarning(winSide);
             RestartResult.gameObject.SetActive(winSide == UnitSide.Enemy);
-            Next.gameObject.SetActive(winSide == UnitSide.Player);
+            ReturnToMap.gameObject.SetActive(winSide == UnitSide.Player);
             ResultLabel.text = winSide == UnitSide.Player ? "Win!" : "Lose!";
             ResultPopup.gameObject.SetActive(true);
         });

@@ -54,13 +54,7 @@ public class CameraController : MonoBehaviour
         {
             SetCameraOnMapState(CameraState.InCamp);
         });
-        
-        _model.OnBattleEnd.Subscribe(winSide =>
-        {
-            if(winSide == UnitSide.Player)
-                SetCameraOnMapState(CameraState.OnMap);
-        });
-        
+
         _model.OnUnitStartTern.Subscribe((unit, skills) => { GetTarget(unit.transform); });
         _view.OnUnitInBattleSelect.Subscribe(unit => { GetTarget(unit.transform); });
 

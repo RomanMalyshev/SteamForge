@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnitSide: 0
   Health: 20
-  InitiativeTest: 0
+  InitiativeTest: 2
   ActionPoints: 20
   Selector: {fileID: 6889361376583660376}
   _handlers:

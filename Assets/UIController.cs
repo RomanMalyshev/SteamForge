@@ -12,22 +12,18 @@ public class UIController : MonoBehaviour
 
     private void Start()
     {
+        _debugBattleUI.gameObject.SetActive(false);
+        _upgradeUI.gameObject.SetActive(false);
         Globals.Global.View.ActiveBattle.Subscribe(map => { _debugBattleUI.gameObject.SetActive(true); });
 
-        Globals.Global.Model.OnBattleEnd.Subscribe(map =>
+        Globals.Global.View.ActiveBattle.Subscribe(map => { _debugBattleUI.gameObject.SetActive(true); });
+
+        Globals.Global.View.OnMapCampClick.Subscribe(() => { _upgradeUI.gameObject.SetActive(true); });
+
+        Globals.Global.View.ReturnToMap.Subscribe(() =>
         {
-            if (map == UnitSide.Player)
-                _debugBattleUI.gameObject.SetActive(false);
-        });
-        
-        Globals.Global.View.OnMapCampClick.Subscribe(() =>{
-            _upgradeUI.gameObject.SetActive(true);
-        });
-        
-        Globals.Global.View.ReturnToMap.Subscribe(() =>{
             _upgradeUI.gameObject.SetActive(false);
             _debugBattleUI.gameObject.SetActive(false);
         });
-        
     }
 }
