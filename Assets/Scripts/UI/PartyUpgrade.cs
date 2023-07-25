@@ -23,19 +23,28 @@ public class PartyUpgrade : MonoBehaviour
 
 
     private Player _player;
+    private View _view;
 
     private int _currentCharacter;
     private PreUpgradePlayer _preUpgradePlayer = new();
 
     private void Start()
     {
+        _view = Globals.Global.View;
+
         Globals.Global.Model.Plyer.Subscribe(player =>
         {
             _player = player;
             SetupParty();
         });
-        
+
         _returnToMapButton.onClick.AddListener(() => Globals.Global.View.ReturnToMap.Invoke());
+
+        _view.OnMapCampClick.Subscribe(() =>
+        {
+            StartingLevelUping();
+        });
+
 
         if (Globals.Global.Model.Plyer.Value != null && Globals.Global.Model.Plyer.Value.Party.Count > 0)
         {
@@ -179,7 +188,7 @@ public class PartyUpgrade : MonoBehaviour
             _attributeLines[i]._attributeValue.text = atributes[i].Value.ToString();
         }
     }
-    
+
     public void StartingLevelUping()
     {
         for (var i = 0; i < _player.Party.Count; i++)
@@ -196,33 +205,33 @@ public class PartyUpgrade : MonoBehaviour
     }
 }
 
-    [Serializable]
-    public class AttributeLine
-    {
-        public TMP_Text _attributeName;
-        public TMP_Text _attributeValue;
-        public Button _upperAttributeButton;
-        public Button _lowerAttributeButton;
+[Serializable]
+public class AttributeLine
+{
+    public TMP_Text _attributeName;
+    public TMP_Text _attributeValue;
+    public Button _upperAttributeButton;
+    public Button _lowerAttributeButton;
 
-    }
+}
 
-    [Serializable]
-    public class StatLine
-    {
-        public TMP_Text _statName;
-        public TMP_Text _statValue;
-    }
+[Serializable]
+public class StatLine
+{
+    public TMP_Text _statName;
+    public TMP_Text _statValue;
+}
 
-    [Serializable]
-    public class PreUpgradePlayer
-    {
-        public List<PreUpgradeAttributes> _characterAtributes = new();
-        public List<int> _upPoints = new();
-    }
+[Serializable]
+public class PreUpgradePlayer
+{
+    public List<PreUpgradeAttributes> _characterAtributes = new();
+    public List<int> _upPoints = new();
+}
 
-    [Serializable]
-    public class PreUpgradeAttributes
-    {
-        public List<int> _atributes = new();
+[Serializable]
+public class PreUpgradeAttributes
+{
+    public List<int> _atributes = new();
 
-    }
+}
