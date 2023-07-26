@@ -384,8 +384,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4437626255513006789}
-  - {fileID: 2064331968125801595}
   - {fileID: 3928393815687508161}
+  - {fileID: 2064331968125801595}
   - {fileID: 8978095108368747309}
   - {fileID: 3947159600152559283}
   - {fileID: 5155488524045162517}
@@ -582,7 +582,7 @@ GameObject:
   - component: {fileID: 2246055906103441874}
   - component: {fileID: 9203062589782304747}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: exp text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1083,6 +1083,8 @@ MonoBehaviour:
   NextBattleTest: {fileID: 4352065323475277915}
   ReturnToMap: {fileID: 3801927762144598811}
   ResultLabel: {fileID: 920915554072886806}
+  MoralResult: {fileID: 538113656754047122}
+  ExpResult: {fileID: 9203062589782304747}
 --- !u!1 &2786002010196635133
 GameObject:
   m_ObjectHideFlags: 0
@@ -2960,7 +2962,7 @@ GameObject:
   - component: {fileID: 2223958498097261061}
   - component: {fileID: 538113656754047122}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: moral text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

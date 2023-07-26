@@ -17,7 +17,7 @@ namespace DefaultNamespace
         
         public SubscribableAction<SkillCommandHandler> OnCommandSelect = new ();
         public SubscribableAction OnRestartBattle =  new ();
-        public SubscribableField<MapSettings> ActiveBattle = new(null);
+        public SubscribableField<(MapSettings battleMap,bool isHumanEnemy)> ActiveBattle = new();
 
         public SubscribableAction<Transform> OnCameraTargetSelect = new();
         

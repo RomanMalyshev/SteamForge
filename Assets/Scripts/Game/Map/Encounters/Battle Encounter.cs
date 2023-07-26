@@ -9,7 +9,7 @@ public class BattleEncounter : Encounter
 
     public override void Activate()
     {
-        Globals.Global.View.ActiveBattle.Value = _battleground;
+        Globals.Global.View.ActiveBattle.Value = (_battleground,_isHumanBattleEncounter);
         EncounterState = EncounterState.Visited;
     }
 }
