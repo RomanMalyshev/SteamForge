@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Game.Battle.Skills;
 using UnityEngine;
 
 namespace DefaultNamespace.Player
 {
+    [Serializable]
     public class Character
     {
         public Stat Health = new()
@@ -98,6 +100,7 @@ namespace DefaultNamespace.Player
         }
     }
 
+    [Serializable]
     public class Stat
     {
         public int Value;
@@ -105,6 +108,7 @@ namespace DefaultNamespace.Player
         public string Description;
     }
 
+    [Serializable]
     public class Attribute
     {
         public int Value;

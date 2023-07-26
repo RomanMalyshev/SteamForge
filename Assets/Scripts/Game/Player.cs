@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DefaultNamespace.Player
 {
+    [Serializable]
     public class Player
     {
         public int PeopleMoral;

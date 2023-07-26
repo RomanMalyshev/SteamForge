@@ -25,8 +25,8 @@ namespace DefaultNamespace
 
                 var party = Globals.Global.Model.Plyer.Value.Party;
                 var isHumanEnemy = Globals.Global.View.ActiveBattle.Value.isHumanEnemy;
-                Globals.Global.Model.Plyer.Value.Moral = isHumanEnemy ? -1 : +1;
-                Globals.Global.Model.ChangedPlayerExp.Value = 100;
+                Globals.Global.Model.Plyer.Value.Moral += isHumanEnemy ? -1 : +1;
+                Globals.Global.Model.ChangedPlayerExp.Value -= 100;
                 Globals.Global.Model.ChangedPlayerMoral.Value = isHumanEnemy ? -1 : +1;
                 
                 
