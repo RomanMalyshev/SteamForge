@@ -93,7 +93,6 @@ namespace DefaultNamespace.Player
         {
             _isActiveState = true;
             
-            
             _currentActionPoints = ActionPoints;
             _model.OnUnitStartTern.Invoke(this, _handlers);
             _model.OnChangeUnitActionPoints.Invoke(_currentActionPoints);
@@ -105,8 +104,15 @@ namespace DefaultNamespace.Player
         {
             Selector.Deactivate();
             _isActiveState = false;
-            //TODO: fix bug tut
+            
             _currentSkill.Deactivate();
+            //TODO: fix bug tut
+            if (_currentSkill == null)
+            {
+                Debug.LogWarning("some shit hap");
+                return;    
+            }
+
         }
 
         private void OnHandlerEnd()
@@ -115,9 +121,9 @@ namespace DefaultNamespace.Player
             _model.OnChangeUnitActionPoints.Invoke(_currentActionPoints);
 
             if (_currentActionPoints <= 0)
-            {
-                OnActionPointsEnd?.Invoke();
+            {  
                 Debug.Log("OnActionPointsEnd " +gameObject.name + " "+ gameObject.transform.GetSiblingIndex());
+                OnActionPointsEnd?.Invoke();
                 return;
             }
 

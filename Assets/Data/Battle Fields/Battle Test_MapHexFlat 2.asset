@@ -178,7 +178,7 @@ MonoBehaviour:
     - 0
     - 0
   - TilePos: {x: 3, y: -11, z: 8}
-    Id: 5390e32c44c15d348aa07be7a03d8adf
+    Id: 02af5d2568722a3489af82027085e593
     MovableArea: 1
     SideHeight:
     - 0
@@ -258,7 +258,7 @@ MonoBehaviour:
     - 0
     - 0
   - TilePos: {x: 1, y: -9, z: 8}
-    Id: 5390e32c44c15d348aa07be7a03d8adf
+    Id: 02af5d2568722a3489af82027085e593
     MovableArea: 1
     SideHeight:
     - 0

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using DefaultNamespace;
 using DefaultNamespace.Player;
@@ -30,15 +31,17 @@ namespace Game.Battle
 
             _model.OnUnitStartTern.Subscribe((unit, skills) =>
             {
+                Debug.Log(unit.gameObject.name);
+                if (unit.UnitSide == UnitSide.Player) return;
+                
                 if (_unit != null)
                     ResetSelecting(_unit);
-                
-                if (unit.UnitSide == UnitSide.Player) return;
                 
                 _skills = skills;
                 _unit = unit;
                 _unit.OnUnitDead += ResetSelecting;
-
+                _unit.OnActionPointsEnd += () =>  ResetSelecting(_unit);
+                Debug.LogWarning("OnUnitStartTern");
                 SelectSkill();
             });
         }
@@ -54,6 +57,12 @@ namespace Game.Battle
         private void SelectSkill()
         {
             if (_skills == null) return;
+            if (_unit.ActionPoints <= 0)
+            {
+                Debug.LogWarning("Some shit whith actions onHandlerEnd");
+                ResetSelecting(_unit);
+                return;
+            }
 
             if (_selectedSkill != null)
                 _selectedSkill.onHandlerEnd -= SelectSkill;
@@ -69,7 +78,6 @@ namespace Game.Battle
             while (_selectedSkill == null && orderedSkills.Count > 0)
             {
                 var skill = orderedSkills.First();
-                
                 
                 orderedSkills.RemoveAt(0);
 
@@ -120,9 +128,19 @@ namespace Game.Battle
                 return;
             }
 
+            
+            Debug.LogWarning(" Wait for Select skill");
+            StartCoroutine(WaitForSkillUse(targetTile));
+        }
+
+        private IEnumerator WaitForSkillUse(TileEntity tile)
+        {
+            yield return new WaitForSeconds(2f);
+            
+            Debug.LogWarning("Select skill");
             _selectedSkill.onHandlerEnd += SelectSkill;
             _view.OnCommandSelect.Invoke(_selectedSkill);
-            _selectedSkill.SelectTarget(targetTile);
+            _selectedSkill.SelectTarget(tile);
         }
 
         private void DisableAI()
@@ -132,9 +150,7 @@ namespace Game.Battle
 
         private void ResetSelecting(Unit unit)
         {
-            if (_selectedSkill != null)
-                _selectedSkill.onHandlerEnd -= SelectSkill;
-
+            _selectedSkill.onHandlerEnd -= SelectSkill;
             _unit.OnActionPointsEnd -= DisableAI;
             _unit.OnUnitDead -= ResetSelecting;
             _skills = null;
