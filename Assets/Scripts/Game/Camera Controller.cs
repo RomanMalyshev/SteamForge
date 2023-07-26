@@ -258,10 +258,10 @@ public class CameraController : MonoBehaviour
 
     private IEnumerator TarrgetSwapping(Transform target)
     {
-        while (!(transform.position.x == target.position.x) || !(transform.position.z == target.position.z))
+        while ((target != null) && ((transform.position.x != target.position.x) || (transform.position.z != target.position.z)))
         {
             transform.position = Vector3.MoveTowards(transform.position, target.position, _targetSwapSpeed);
-            yield return null;
+                yield return null;
         }
         
         _isMooving = false;

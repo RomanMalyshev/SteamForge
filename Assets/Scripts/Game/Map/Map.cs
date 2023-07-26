@@ -1,4 +1,5 @@
 ﻿using DefaultNamespace;
+using DefaultNamespace.Player;
 using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -14,22 +15,29 @@ namespace GameMap
         [SerializeField] private CameraController _cameraController;
         [SerializeField] private int _currentColumn;
         [SerializeField] private Encounter _currentEncounter;
-        
+
         private View _view;
+        private Model _model;
 
         private void Start()
-        {            
+        {
             _view = Globals.Global.View;
-            
+            _model = Globals.Global.Model;
+
             if (!(_cameraController == null))
                 _cameraController.FindPlayerFigure(_playerFigure);
 
-            _playerFigure.OnNewEncounterEnter.Subscribe( (column)=>
+            _model.Plyer.Subscribe((player) =>
+            {
+                FinalEncounterSelect(player);
+            });
+
+            _playerFigure.OnNewEncounterEnter.Subscribe((column) =>
             {
                 PlayerFigireMoved(column);
             });
-            
-            _view.OnEncounterClick.Subscribe( (currentEncounter)=>
+
+            _view.OnEncounterClick.Subscribe((currentEncounter) =>
             {
                 SetCurrentEncounter(currentEncounter);
             });
@@ -64,7 +72,7 @@ namespace GameMap
             {
                 foreach (var encounter in column1.encounter)
                 {
-                    encounter.SetActive(false);                    
+                    encounter.SetActive(false);
                 }
             }
         }
@@ -86,7 +94,7 @@ namespace GameMap
                     }
                     else encounter.SetReeachable(true);
                 }
-            }           
+            }
         }
 
         private void SetCurrentEncounter(Encounter currentEncounter)
@@ -94,12 +102,37 @@ namespace GameMap
             _currentEncounter = currentEncounter;
             _playerFigure.SetCurrentEncounter(currentEncounter);
         }
+
+        private void FinalEncounterSelect(Player player)
+        {
+            Debug.Log(player.Moral);
+            if (player.Moral > 0)
+            {
+                _encounterOrder[_encounterOrder.Capacity - 1].encounter[0].gameObject.SetActive(true);
+                _encounterOrder[_encounterOrder.Capacity - 1].encounter[1].gameObject.SetActive(false);
+                _encounterOrder[_encounterOrder.Capacity - 1].encounter[2].gameObject.SetActive(false);
+            }
+
+            if (player.Moral == 0)
+            {
+                _encounterOrder[_encounterOrder.Capacity - 1].encounter[0].gameObject.SetActive(false);
+                _encounterOrder[_encounterOrder.Capacity - 1].encounter[1].gameObject.SetActive(true);
+                _encounterOrder[_encounterOrder.Capacity - 1].encounter[2].gameObject.SetActive(false);
+            }
+
+            if (player.Moral < 0)
+            {
+                _encounterOrder[_encounterOrder.Capacity - 1].encounter[0].gameObject.SetActive(false);
+                _encounterOrder[_encounterOrder.Capacity - 1].encounter[1].gameObject.SetActive(false);
+                _encounterOrder[_encounterOrder.Capacity - 1].encounter[2].gameObject.SetActive(true);
+            }
+        }
     }
 
     [Serializable]
     public class EncounterColumn
     {
-        [HideInInspector]public string name;
+        [HideInInspector] public string name;
         public List<Encounter> encounter;
     }
 }
