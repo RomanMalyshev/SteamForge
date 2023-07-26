@@ -50,8 +50,6 @@ public abstract class Encounter : MonoBehaviour
                 OnEncounterSelect.Invoke(_transform, Column);
             }
         }
-
-        _view.OnCameraTargetSelect.Invoke(_transform);
     }
 
     private void OnMouseOver()

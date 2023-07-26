@@ -184,10 +184,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraTransform: {fileID: 9173622146406031256}
   _speed: 0.06
+  _targetSwapSpeed: 0.1
   _zoomSpeed: 10
   _rotateSpeed: 0.1
   _maxHeight: 40
   _minHeight: 4
+  _minX: -5
+  _maxX: 15
+  _minZ: -20
+  _maxZ: 3
   _cameraState: 0
   _target: {fileID: 0}
   _onMapHeight: 6
@@ -196,6 +201,8 @@ MonoBehaviour:
   _battlePoint: {x: 0, y: 0, z: 0}
   _campPoint: {x: -5.1, y: 0.39, z: -322.75}
   _mapPoint: {x: 9.66, y: 11.88, z: 209.73}
+  _isActiveControl: 0
+  _isMooving: 0
 --- !u!1 &7665153843976055664
 GameObject:
   m_ObjectHideFlags: 0

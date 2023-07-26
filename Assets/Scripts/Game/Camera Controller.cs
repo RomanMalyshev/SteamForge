@@ -4,16 +4,22 @@ using System.Collections.Generic;
 using Game.Battle;
 using GameMap;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform _cameraTransform;
     [SerializeField] private float _speed = 0.06f;
+    [SerializeField] private float _targetSwapSpeed = 0.01f;
     [SerializeField] private float _zoomSpeed = 10.0f;
     [SerializeField] private float _rotateSpeed = 0.1f;
     [SerializeField] private float _maxHeight = 25f;
     [SerializeField] private float _minHeight = 1f;
+    [SerializeField] private float _minX;
+    [SerializeField] private float _maxX;
+    [SerializeField] private float _minZ;
+    [SerializeField] private float _maxZ;
     [SerializeField] private CameraState _cameraState;
     [SerializeField] private Transform _target;    
     [SerializeField] private float _onMapHeight;
@@ -31,7 +37,8 @@ public class CameraController : MonoBehaviour
     private Vector3 _newZoom;
     private Vector3 _dragStartPoint;
     private Vector3 _dragStopPosition;
-    private bool _isActiveControl;
+    public bool _isActiveControl;
+    public bool _isMooving;
     private PlayerFigure _playerFigure;    
 
     private void Start()
@@ -77,7 +84,7 @@ public class CameraController : MonoBehaviour
         {
             OnMapCameraMovement();
         }
-        else if (_cameraState == CameraState.InBattle)
+        else if ((_cameraState == CameraState.InBattle) && !_isMooving)
         {
             if (_target != null && !_isActiveControl)
             {
@@ -131,6 +138,26 @@ public class CameraController : MonoBehaviour
 
         _newPosition = lateralMove + forwardMove + _dragStartPoint - _dragStopPosition;
 
+        if (transform.position.x + _newPosition.x >= _maxX)
+        {
+            _newPosition.x = 0;
+        }
+
+        if (transform.position.x + _newPosition.x < _minX)
+        {
+            _newPosition.x =0;
+        }
+
+        if (transform.position.z + _newPosition.z >= _maxZ)
+        {
+            _newPosition.z = 0;
+        }
+
+        if (transform.position.z + _newPosition.z < _minZ)
+        {
+            _newPosition.z = 0;
+        }
+
         transform.position += _newPosition;
     }
 
@@ -138,6 +165,7 @@ public class CameraController : MonoBehaviour
     {
         Vector3 zoomAmount = new Vector3(0, -_zoomSpeed * Input.GetAxis("Mouse ScrollWheel"),
             _zoomSpeed * Input.GetAxis("Mouse ScrollWheel"));
+
         _newZoom = zoomAmount;
 
         if (((_cameraTransform.localPosition.y + _newZoom.y) >= _minHeight) &&
@@ -212,15 +240,31 @@ public class CameraController : MonoBehaviour
 
     private void GetTarget(Transform target)
     {
-        _target = target;
-        _isActiveControl = false;
-        transform.position = _target.position;
-        _cameraTransform.localPosition = new Vector3(0, _minHeight * 2, -_minHeight * 2);
+        if (!_isMooving)
+        {
+            _target = target;
+            _isActiveControl = false;
+            _isMooving = true;
+            
+            StartCoroutine(TarrgetSwapping(_target));
+            _cameraTransform.localPosition = new Vector3(0, _minHeight * 2, -_minHeight * 2);
+        }        
     }
 
     public void FindPlayerFigure(PlayerFigure playerFigure)
     {
         _playerFigure = playerFigure;
+    }
+
+    private IEnumerator TarrgetSwapping(Transform target)
+    {
+        while (!(transform.position.x == target.position.x) || !(transform.position.z == target.position.z))
+        {
+            transform.position = Vector3.MoveTowards(transform.position, target.position, _targetSwapSpeed);
+            yield return null;
+        }
+        
+        _isMooving = false;
     }
 }
 
