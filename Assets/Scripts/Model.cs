@@ -17,6 +17,10 @@ namespace DefaultNamespace
 
         public SubscribableField<Player.Player> Plyer = new();
 
+        public SubscribableField<int> ChangedPlayerExp = new ();
+        public SubscribableField<int> ChangedPlayerMoral = new ();
+
+
         public void Init()
         {
             Plyer.Value = new Player.Player()

@@ -31,12 +31,14 @@ public class DebugBattleUI : MonoBehaviour
     [Header("Battle line")] public UIUnitLine UnitLinePrefab;
     public Transform Content;
     public GameObject RoundSeparator;
-    
+
     [Header("Result")] public GameObject ResultPopup;
     public Button RestartResult;
     public Button NextBattleTest;
     public Button ReturnToMap;
     public TMP_Text ResultLabel;
+    public TMP_Text MoralResult;
+    public TMP_Text ExpResult;
 
     private readonly Dictionary<Unit, UIUnitLine> _unitsLine = new();
     private readonly Dictionary<Unit, UIUnitLine> _unitsNextRoundLine = new();
@@ -47,6 +49,7 @@ public class DebugBattleUI : MonoBehaviour
 
     private readonly List<MapSettings> _testMapsOrder = new();
     private GameObject _separator;
+
     public void Init()
     {
         _model = Globals.Global.Model;
@@ -86,9 +89,9 @@ public class DebugBattleUI : MonoBehaviour
 
         _model.UnitBattleOrder.Subscribe(units =>
         {
-            LineInstance(units,_unitsLine);
+            LineInstance(units, _unitsLine);
             _separator = Instantiate(RoundSeparator, Content);
-            LineInstance(units,_unitsNextRoundLine);
+            LineInstance(units, _unitsNextRoundLine);
         });
 
         _model.OnUnitHealthChange.Subscribe(unit =>
@@ -97,7 +100,7 @@ public class DebugBattleUI : MonoBehaviour
                 unitLine.Health.text = unit.CurrentHealth.ToString();
             else
                 Debug.LogWarning("Unit has not line prefab on battle UI!");
-            
+
             if (_unitsNextRoundLine.TryGetValue(unit, out var nexRoundUnitLine))
                 nexRoundUnitLine.Health.text = unit.CurrentHealth.ToString();
             else
@@ -130,9 +133,9 @@ public class DebugBattleUI : MonoBehaviour
         NextBattleTest.onClick.AddListener(() =>
         {
             ResultPopup.gameObject.SetActive(false);
-            _view.ActiveBattle.Value = _testMapsOrder[Random.Range(0, _testMapsOrder.Count - 1)];
+            _view.ActiveBattle.Value = (_testMapsOrder[Random.Range(0, _testMapsOrder.Count - 1)], false);
         });
-        
+
         _model.OnBattleEnd.Subscribe(winSide =>
         {
             Debug.LogWarning(winSide);
@@ -141,15 +144,23 @@ public class DebugBattleUI : MonoBehaviour
             ResultLabel.text = winSide == UnitSide.Player ? "Win!" : "Lose!";
             ResultPopup.gameObject.SetActive(true);
         });
-
+        
+        _model.ChangedPlayerExp.Subscribe(value => { ExpResult.text = "Exp +" +value.ToString(); });
+        
+        _model.ChangedPlayerMoral.Subscribe(value =>
+        {
+            var symbol = value > 0 ? "+" : "";
+            MoralResult.text = "Moral " + symbol + value.ToString();
+        });
+        
         Restart.onClick.AddListener(() => { _view.OnRestartBattle.Invoke(); });
 
-        RunTestField1.onClick.AddListener(() => { _view.ActiveBattle.Value = Field1; });
-        RunTestField2.onClick.AddListener(() => { _view.ActiveBattle.Value = Field2; });
-        RunTestField3.onClick.AddListener(() => { _view.ActiveBattle.Value = Field3; });
+        RunTestField1.onClick.AddListener(() => { _view.ActiveBattle.Value = (Field1, false); });
+        RunTestField2.onClick.AddListener(() => { _view.ActiveBattle.Value = (Field2, false); });
+        RunTestField3.onClick.AddListener(() => { _view.ActiveBattle.Value = (Field3, false); });
     }
 
-    private void LineInstance(List<Unit> units,Dictionary<Unit,UIUnitLine> unitLines)
+    private void LineInstance(List<Unit> units, Dictionary<Unit, UIUnitLine> unitLines)
     {
         for (var i = 0; i < units.Count; i++)
         {
@@ -177,15 +188,15 @@ public class DebugBattleUI : MonoBehaviour
         {
             Destroy(unitsLine.Value.gameObject);
         }
-        
+
         foreach (var unitsLine in _unitsNextRoundLine)
         {
             Destroy(unitsLine.Value.gameObject);
         }
-        
+
         _unitsNextRoundLine.Clear();
         _unitsLine.Clear();
-        
+
         Destroy(_separator);
     }
 }

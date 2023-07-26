@@ -44,9 +44,9 @@ namespace Game.Battle.Skills
 
             _view.ActiveBattle.Subscribe(mapSettings =>
             {
-                if (mapSettings == null) return;
+                if (mapSettings.battleMap == null) return;
                 Reset();
-                _mapSettings = mapSettings;
+                _mapSettings = mapSettings.battleMap;
                 BattleField.InitField(_mapSettings);
             });
 
