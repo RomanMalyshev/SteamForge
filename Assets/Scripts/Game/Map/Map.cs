@@ -144,11 +144,23 @@ namespace GameMap
 
         private void SaveData()
         {
-            /*var encountersStateSaveData = new EncountersStateList();
-            encountersStateSaveData.EncountersState = _encounterOrder.Select(item => item.encounter.Select(enc => enc.EncounterState).ToList()).ToList();
+            var encountersStateSaveData = new EncountersStateList();
+
+            for (var i = 0; i < _encounterOrder.Count; i++)
+            {
+                EncounterCollumsStateList newCollum = new();
+                encountersStateSaveData.EncountersState.Add(newCollum);
+
+                for (var a = 0; a < _encounterOrder[i].encounter.Count; a++)
+                {
+                    EncounterState state = _encounterOrder[i].encounter[a].EncounterState;
+                    encountersStateSaveData.EncountersState[i].EncountersCollums.Add(state);
+                }
+            }
+            
             var outputEncountersStateString = JsonUtility.ToJson(encountersStateSaveData);
 
-            PlayerPrefs.SetString(_ecounterStatesSaveData, outputEncountersStateString);*/
+            PlayerPrefs.SetString(_ecounterStatesSaveData, outputEncountersStateString);
 
             var currentEncaunterIndex = _encounterOrder[_currentColumn].encounter.IndexOf(_currentEncounter, 0);
             var currentEncounterSaveData = new CurrentEncounterIndex();
@@ -162,16 +174,16 @@ namespace GameMap
 
         private void LoadData()
         {
-            /*var inputEncountersStateString = PlayerPrefs.GetString(_ecounterStatesSaveData);
+            var inputEncountersStateString = PlayerPrefs.GetString(_ecounterStatesSaveData);
             var encountersStateLoadData = JsonUtility.FromJson<EncountersStateList>(inputEncountersStateString);            
 
             for (var i = 0; i < _encounterOrder.Count; i++)
             {
-                for (var a = 0; i < _encounterOrder[i].encounter.Count; a++)
+                for (var a = 0; a < _encounterOrder[i].encounter.Count; a++)
                 {
-                    _encounterOrder[i].encounter[a].EncounterState = encountersStateLoadData.EncountersState[i][a];
+                    _encounterOrder[i].encounter[a].EncounterState = encountersStateLoadData.EncountersState[i].EncountersCollums[a];
                 }
-            }*/
+            }
 
             var inputCurrentEncounterString = PlayerPrefs.GetString(_currentEncounterSaveData);
             CurrentEncounterIndex currentEncounterLoadData = JsonUtility.FromJson<CurrentEncounterIndex>(inputCurrentEncounterString);
@@ -211,7 +223,13 @@ namespace GameMap
     [Serializable]
     public class EncountersStateList
     {
-        public List<List<EncounterState>> EncountersState;
+        public List<EncounterCollumsStateList> EncountersState = new();
+    }
+
+    [Serializable]
+    public class EncounterCollumsStateList
+    {
+        public List<EncounterState> EncountersCollums = new();
     }
 
     [Serializable]
