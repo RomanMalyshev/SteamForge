@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Game.Battle;
 using Game.Battle.Skills;
 using RedBjorn.ProtoTiles;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 namespace DefaultNamespace.Player
 {
     public class Unit : MonoBehaviour
     {
-        
         public TileEntity OccupiedTile { get; private set; }
         public int CurrentHealth { get; private set; }
 
@@ -38,8 +34,9 @@ namespace DefaultNamespace.Player
         public Material StandMaterial;
         public Material TurnStandMaterial;
         public MeshRenderer StandMeshRenderer;
-        
-        
+
+        public Animator Animator;
+
         private int _currentActionPoints;
         private Model _model;
 
@@ -49,8 +46,6 @@ namespace DefaultNamespace.Player
         private GameObject _stand;
         private MapEntity _mapEntity;
 
-        private Vector3 _startPosition;
-            
         public void Init(MapEntity battleFieldFieldEntity, UnitSide side, Character character)
         {
             UnitSide = side;
@@ -59,12 +54,11 @@ namespace DefaultNamespace.Player
             transform.rotation = Quaternion.Euler(0, UnitSide == UnitSide.Player ? 180 : 0, 0);
             Health = character.Health.Value;
             CurrentHealth = Health;
-            ActionPoints =  character.ActionPoints.Value;
-            InitiativeTest =  character.Initiative.Value;
-            
+            ActionPoints = character.ActionPoints.Value;
+            InitiativeTest = character.Initiative.Value;
+
             HealthBarParent.gameObject.SetActive(true);
-            HealthBar.fillAmount =  (float)CurrentHealth / Health;
-            _startPosition = transform.position;
+            HealthBar.fillAmount = (float)CurrentHealth / Health;
             _mapEntity = battleFieldFieldEntity;
             _model = Globals.Global.Model;
 
@@ -72,7 +66,7 @@ namespace DefaultNamespace.Player
             {
                 handler.onHandlerEnd += OnHandlerEnd;
                 handler.OnTileOccupied += OccupyTile;
-                handler.Init(battleFieldFieldEntity, UnitSide,character);
+                handler.Init(battleFieldFieldEntity, UnitSide, character);
                 handler.Deactivate();
             }
 
@@ -80,14 +74,17 @@ namespace DefaultNamespace.Player
             _mouseDetector.Init(this);
         }
 
-        private void SkipTurn()
+        public void Activate()
         {
-            if (!_isActiveState) return;
-            _currentActionPoints = 0;
+            _isActiveState = true;
+
+            _currentActionPoints = ActionPoints;
+            _model.OnUnitStartTern.Invoke(this, _handlers);
             _model.OnChangeUnitActionPoints.Invoke(_currentActionPoints);
-            Debug.Log("OnSkipTurn " + gameObject.name + " " + gameObject.transform.GetSiblingIndex());
-            Deactivate();
-            OnActionPointsEnd?.Invoke();
+
+            StandMeshRenderer.material = TurnStandMaterial;
+            Globals.Global.View.onBattleSkipTurn.Subscribe(SkipTurn);
+            Globals.Global.View.OnCommandSelect.Subscribe(ActivateCommand);
         }
 
         private void ActivateCommand(SkillCommandHandler skillCommand)
@@ -104,6 +101,16 @@ namespace DefaultNamespace.Player
             Selector.Activate(skillCommand);
         }
 
+        private void SkipTurn()
+        {
+            if (!_isActiveState) return;
+
+            _currentActionPoints = 0;
+            _model.OnChangeUnitActionPoints.Invoke(_currentActionPoints);
+            Deactivate();
+            OnActionPointsEnd?.Invoke();
+        }
+
         private void OccupyTile(TileEntity tile)
         {
             if (OccupiedTile != null)
@@ -113,39 +120,22 @@ namespace DefaultNamespace.Player
             OccupiedTile.Occupant = this;
         }
 
-        public void Activate()
+        private void Deactivate()
         {
-            _isActiveState = true;
-
-            _currentActionPoints = ActionPoints;
-            _model.OnUnitStartTern.Invoke(this, _handlers);
-            _model.OnChangeUnitActionPoints.Invoke(_currentActionPoints);
-
-
-            StandMeshRenderer.material = TurnStandMaterial;
-            Globals.Global.View.onBattleSkipTurn.Subscribe(SkipTurn);
-            Globals.Global.View.OnCommandSelect.Subscribe(ActivateCommand);
-            
-            Debug.Log("Activate " + UnitSide.ToString());
-        }
-
-        public void Deactivate()
-        {
-            
             Globals.Global.View.onBattleSkipTurn.Unsubscribe(SkipTurn);
             Globals.Global.View.OnCommandSelect.Unsubscribe(ActivateCommand);
-            
+
+            StandMeshRenderer.material = StandMaterial;
+
             Selector.Deactivate();
             _isActiveState = false;
 
-            //TODO: fix bug tut
             if (_currentSkill == null)
             {
                 Debug.LogWarning("some shit hap");
                 return;
             }
-            
-            StandMeshRenderer.material = StandMaterial;
+
             _currentSkill.Deactivate();
         }
 
@@ -153,29 +143,23 @@ namespace DefaultNamespace.Player
         {
             _currentActionPoints -= 5;
             _model.OnChangeUnitActionPoints.Invoke(_currentActionPoints);
-
-            if (_currentActionPoints <= 0)
-            {
-                Deactivate();
-                Debug.Log("OnActionPointsEnd " + gameObject.name + " " + gameObject.transform.GetSiblingIndex());
-                OnActionPointsEnd?.Invoke();
-                return;
-            }
-
-
             Debug.Log(" HANDLE END " + gameObject.name + " " + gameObject.transform.GetSiblingIndex());
+
+            if (_currentActionPoints > 0) return;
+            
+            Deactivate();
+            Debug.Log("OnActionPointsEnd " + gameObject.name + " " + gameObject.transform.GetSiblingIndex());
+            OnActionPointsEnd?.Invoke();
         }
 
         public void GetHit(int damage)
         {
             CurrentHealth -= damage;
             _model.OnUnitHealthChange.Invoke(this);
-            
-            HealthBar.fillAmount = (float)CurrentHealth / Health;
-            
-            if (CurrentHealth > 0) return;
 
-            Debug.Log($"Dead - {gameObject.name}");
+            HealthBar.fillAmount = (float)CurrentHealth / Health;
+
+            if (CurrentHealth > 0) return;
             SetDeadState();
         }
 
@@ -187,21 +171,9 @@ namespace DefaultNamespace.Player
             OnUnitDead?.Invoke(this);
             StandMeshRenderer.GameObject().SetActive(false);
             HealthBarParent.gameObject.SetActive(false);
-        }
 
-        public void Reset()
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-            transform.position += new Vector3(0, 1.2f, 0);
-            transform.position = _startPosition;
-
-            CurrentHealth = Health;
-
-            foreach (var handler in _handlers)
-                handler.Deactivate();
-
-            if (_mapEntity != null)
-                OccupyTile(_mapEntity.Tile(transform.position));
+            if (Animator != null)
+                Animator.enabled = false;
         }
 
         public void OnDestroy()
@@ -211,7 +183,7 @@ namespace DefaultNamespace.Player
                 handler.onHandlerEnd -= OnHandlerEnd;
                 handler.OnTileOccupied -= OccupyTile;
             }
-            
+
             Globals.Global.View.onBattleSkipTurn.Unsubscribe(SkipTurn);
             Globals.Global.View.OnCommandSelect.Unsubscribe(ActivateCommand);
         }

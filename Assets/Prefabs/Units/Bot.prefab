@@ -65,6 +65,7 @@ MonoBehaviour:
   StandMaterial: {fileID: 2100000, guid: 619ca4317657d2244b4d9c94333d5797, type: 2}
   TurnStandMaterial: {fileID: 2100000, guid: 82e3c8e4e17d21f4ca272bc1419f5180, type: 2}
   StandMeshRenderer: {fileID: 3697738087040993055}
+  Animator: {fileID: 3162373251092639185}
 --- !u!114 &722147980791254710
 MonoBehaviour:
   m_ObjectHideFlags: 0
