@@ -26,7 +26,10 @@ namespace DefaultNamespace
         public SubscribableAction ReturnToMap = new();
         public SubscribableAction onBattleSkipTurn = new();
         public SubscribableAction<Unit> mouseOverUnit = new();
-        
+
+        public SubscribableAction SaveButtonClick = new();
+        public SubscribableAction LoadButtonClick = new();
+
         public void Init()
         
         {
