@@ -62,6 +62,9 @@ MonoBehaviour:
   HealthBar: {fileID: 4794671517606412099}
   HealthBarParent: {fileID: 8930563138368411593}
   _mouseDetector: {fileID: 3136153318446971055}
+  StandMaterial: {fileID: 2100000, guid: 619ca4317657d2244b4d9c94333d5797, type: 2}
+  TurnStandMaterial: {fileID: 2100000, guid: 82e3c8e4e17d21f4ca272bc1419f5180, type: 2}
+  StandMeshRenderer: {fileID: 3697738087040993055}
 --- !u!114 &722147980791254710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -644,8 +647,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: -6469520578714824847, guid: c519c60884e76634d8b5b3f491cd2f01,
-        type: 3}
+      objectReference: {fileID: 2100000, guid: 619ca4317657d2244b4d9c94333d5797, type: 2}
     - target: {fileID: 4409241244387446061, guid: 76367258c722a224b9321d5081bb320e,
         type: 3}
       propertyPath: m_RootOrder
@@ -719,6 +721,12 @@ PrefabInstance:
 --- !u!4 &2639610986384964362 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4409241244387446061, guid: 76367258c722a224b9321d5081bb320e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1842268806496826919}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &3697738087040993055 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3080475935699661112, guid: 76367258c722a224b9321d5081bb320e,
     type: 3}
   m_PrefabInstance: {fileID: 1842268806496826919}
   m_PrefabAsset: {fileID: 0}
