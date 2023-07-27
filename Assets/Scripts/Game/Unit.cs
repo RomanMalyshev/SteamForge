@@ -4,6 +4,7 @@ using System.Linq;
 using Game.Battle;
 using Game.Battle.Skills;
 using RedBjorn.ProtoTiles;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -33,6 +34,12 @@ namespace DefaultNamespace.Player
         public Image HealthBar;
         public GameObject HealthBarParent;
         public UnitMoseDetector _mouseDetector;
+
+        public Material StandMaterial;
+        public Material TurnStandMaterial;
+        public MeshRenderer StandMeshRenderer;
+        
+        
         private int _currentActionPoints;
         private Model _model;
 
@@ -114,8 +121,8 @@ namespace DefaultNamespace.Player
             _model.OnUnitStartTern.Invoke(this, _handlers);
             _model.OnChangeUnitActionPoints.Invoke(_currentActionPoints);
 
-            
-            
+
+            StandMeshRenderer.material = TurnStandMaterial;
             Globals.Global.View.onBattleSkipTurn.Subscribe(SkipTurn);
             Globals.Global.View.OnCommandSelect.Subscribe(ActivateCommand);
             
@@ -138,6 +145,7 @@ namespace DefaultNamespace.Player
                 return;
             }
             
+            StandMeshRenderer.material = StandMaterial;
             _currentSkill.Deactivate();
         }
 
@@ -168,11 +176,16 @@ namespace DefaultNamespace.Player
             if (CurrentHealth > 0) return;
 
             Debug.Log($"Dead - {gameObject.name}");
+            SetDeadState();
+        }
+
+        private void SetDeadState()
+        {
             transform.rotation = Quaternion.Euler(0, 90, 90);
             transform.position -= new Vector3(0, 1.2f, 0);
             OccupiedTile.Occupant = null;
             OnUnitDead?.Invoke(this);
-            
+            StandMeshRenderer.GameObject().SetActive(false);
             HealthBarParent.gameObject.SetActive(false);
         }
 
