@@ -5,7 +5,6 @@ using DefaultNamespace;
 using DefaultNamespace.Player;
 using Game.Battle.Skills;
 using RedBjorn.ProtoTiles;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace Game.Battle
@@ -24,6 +23,8 @@ namespace Game.Battle
         private Attacker _attacker;
         private Movable _movable;
 
+        private Coroutine _waitForSkillRoutine;
+        
         public void Init()
         {
             _model = Globals.Global.Model;
@@ -40,7 +41,7 @@ namespace Game.Battle
                 _skills = skills;
                 _unit = unit;
                 _unit.OnUnitDead += ResetSelecting;
-                _unit.OnActionPointsEnd += () =>  ResetSelecting(_unit);
+                _unit.OnActionPointsEnd += DisableAI;
                 Debug.LogWarning("OnUnitStartTern");
                 SelectSkill();
             });
@@ -130,7 +131,10 @@ namespace Game.Battle
 
             
             Debug.LogWarning(" Wait for Select skill");
-            StartCoroutine(WaitForSkillUse(targetTile));
+
+            if (_waitForSkillRoutine != null)
+                StopCoroutine(_waitForSkillRoutine);
+            _waitForSkillRoutine = StartCoroutine(WaitForSkillUse(targetTile));
         }
 
         private IEnumerator WaitForSkillUse(TileEntity tile)
@@ -149,7 +153,9 @@ namespace Game.Battle
         }
 
         private void ResetSelecting(Unit unit)
-        {
+        {    
+            if (_waitForSkillRoutine != null)
+                StopCoroutine(_waitForSkillRoutine);
             _selectedSkill.onHandlerEnd -= SelectSkill;
             _unit.OnActionPointsEnd -= DisableAI;
             _unit.OnUnitDead -= ResetSelecting;

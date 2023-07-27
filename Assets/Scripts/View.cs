@@ -24,7 +24,11 @@ namespace DefaultNamespace
         public SubscribableAction<Unit> OnUnitInBattleSelect = new();
 
         public SubscribableAction ReturnToMap = new();
+        public SubscribableAction onBattleSkipTurn = new();
+        public SubscribableAction<Unit> mouseOverUnit = new();
+        
         public void Init()
+        
         {
  
         }

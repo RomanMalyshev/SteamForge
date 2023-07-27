@@ -11,11 +11,17 @@ namespace DefaultNamespace
         {
             _subscribers.Add(action);
         }
-
+        public void Unsubscribe(Action action)
+        {
+            if (_subscribers.Contains(action))
+                _subscribers.Remove(action);
+        }
         public void Invoke()
         {
-            foreach (var subscriber in _subscribers)
-                subscriber.Invoke();
+            for (var i = 0; i < _subscribers.Count; i++)
+            {
+                _subscribers[i].Invoke();
+            }
         }
     }
 
