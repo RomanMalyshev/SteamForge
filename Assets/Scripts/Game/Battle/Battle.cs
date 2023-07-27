@@ -123,6 +123,7 @@ namespace Game.Battle.Skills
 
         private void NextUnitMove()
         {
+            _aiSelector.DisableAI();
             _model.OnUnitEndTern.Invoke(_currentUnitTurn);
 
             var currentUnitIndex = _unitTurnOrder.IndexOf(_currentUnitTurn);

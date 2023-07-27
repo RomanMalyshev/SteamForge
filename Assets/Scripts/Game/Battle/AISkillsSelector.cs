@@ -24,7 +24,7 @@ namespace Game.Battle
         private Movable _movable;
 
         private Coroutine _waitForSkillRoutine;
-        
+
         public void Init()
         {
             _model = Globals.Global.Model;
@@ -34,14 +34,13 @@ namespace Game.Battle
             {
                 Debug.Log(unit.gameObject.name);
                 if (unit.UnitSide == UnitSide.Player) return;
-                
+
                 if (_unit != null)
                     ResetSelecting(_unit);
-                
+
                 _skills = skills;
                 _unit = unit;
                 _unit.OnUnitDead += ResetSelecting;
-                _unit.OnActionPointsEnd += DisableAI;
                 Debug.LogWarning("OnUnitStartTern");
                 SelectSkill();
             });
@@ -79,7 +78,7 @@ namespace Game.Battle
             while (_selectedSkill == null && orderedSkills.Count > 0)
             {
                 var skill = orderedSkills.First();
-                
+
                 orderedSkills.RemoveAt(0);
 
                 var range = skill.Range;
@@ -89,7 +88,6 @@ namespace Game.Battle
                     range = 100;
 
                 var tilesInRange = _mapEntity.AreaExistedTiles(_unit.OccupiedTile, range);
-
 
                 var validTargetInRange = units
                     .Where(unitTile => unitTile.Occupant.UnitSide == skill.TargetSide && tilesInRange
@@ -102,15 +100,19 @@ namespace Game.Battle
                 if (skill as Movable)
                 {
                     var rangeAroundTarget = 1;
-                    var targetToMoveTile = validTargetInRange[Random.Range(0, validTargetInRange.Count - 1)];
+                    var sortByDistance = validTargetInRange.OrderBy(tile =>
+                        _mapEntity.Distance(tile.Position, _unit.OccupiedTile.Position)).ToArray();
+                    var targetToMoveTile = sortByDistance[0];
                     while (rangeAroundTarget < 4)
                     {
-                        var walkable = _mapEntity.AreaExistedTiles(targetToMoveTile, rangeAroundTarget).Where(tile => tile.Vacant).ToList();
+                        var walkable = _mapEntity.AreaExistedTiles(targetToMoveTile, rangeAroundTarget)
+                            .Where(tile => tile.Vacant).ToList();
                         rangeAroundTarget++;
-                        
-                        if (walkable.Count == 0) continue;
 
-                        targetTile = walkable[Random.Range(0, walkable.Count - 1)];
+                        if (walkable.Count == 0) continue;
+                        var sortWalkableByDistance = walkable.OrderByDescending(tile =>
+                            _mapEntity.Distance(tile.Position, _unit.OccupiedTile.Position)).ToArray();
+                        targetTile = sortWalkableByDistance[0];
                         break;
                     }
                 }
@@ -129,7 +131,7 @@ namespace Game.Battle
                 return;
             }
 
-            
+
             Debug.LogWarning(" Wait for Select skill");
 
             if (_waitForSkillRoutine != null)
@@ -140,25 +142,27 @@ namespace Game.Battle
         private IEnumerator WaitForSkillUse(TileEntity tile)
         {
             yield return new WaitForSeconds(2f);
-            
+
             Debug.LogWarning("Select skill");
             _selectedSkill.onHandlerEnd += SelectSkill;
             _view.OnCommandSelect.Invoke(_selectedSkill);
             _selectedSkill.SelectTarget(tile);
         }
 
-        private void DisableAI()
+        public void DisableAI()
         {
+            Debug.LogWarning("DisableAI");
             ResetSelecting(_unit);
         }
 
         private void ResetSelecting(Unit unit)
-        {    
+        {
             if (_waitForSkillRoutine != null)
                 StopCoroutine(_waitForSkillRoutine);
-            _selectedSkill.onHandlerEnd -= SelectSkill;
-            _unit.OnActionPointsEnd -= DisableAI;
-            _unit.OnUnitDead -= ResetSelecting;
+            if (_selectedSkill != null)
+                _selectedSkill.onHandlerEnd -= SelectSkill;
+            if (_unit != null)
+                _unit.OnUnitDead -= ResetSelecting;
             _skills = null;
             _unit = null;
             _selectedSkill = null;
