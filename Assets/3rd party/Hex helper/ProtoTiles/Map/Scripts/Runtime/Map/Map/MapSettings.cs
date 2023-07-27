@@ -3,10 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using DefaultNamespace;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 namespace RedBjorn.ProtoTiles
 {
@@ -14,7 +16,8 @@ namespace RedBjorn.ProtoTiles
     public class MapSettings : ScriptableObjectExtended
     {
         public MapView MapViewPrefab;
-        
+        public List<EnemyData> _enemys;
+
         [Serializable]
         public class TileVisual
         {

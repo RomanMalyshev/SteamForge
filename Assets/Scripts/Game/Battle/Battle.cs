@@ -81,7 +81,7 @@ namespace Game.Battle.Skills
         private void InitUnits(MapEntity mapEntity, List<List<TileEntity>> opponentsTiles)
         {
             _aiSelector.InitNewMap(mapEntity);
-
+          
             for (var i = 0; i < opponentsTiles.Count; i++)
             {
                 for (var j = 0; j < opponentsTiles[i].Count; j++)
@@ -92,11 +92,12 @@ namespace Game.Battle.Skills
                         mapEntity.WorldPosition(tile).z);
 
                     var isPlayer = tile.Preset.Tags.Contains(PlayerTag);
-                    var prefab = isPlayer ? UnitsPrefab : UnitsEnemyPrefab;
+                    var character = isPlayer ?   _model.Plyer.Value.Party[j] : _mapSettings._enemys[j].Character;
+                    var prefab = isPlayer ?   _model.Plyer.Value.Party[j].BattleView : _mapSettings._enemys[j].Character.BattleView;
                     var unit = Instantiate(prefab, position, Quaternion.identity);
-
+                    
                     var side = isPlayer ? UnitSide.Player : UnitSide.Enemy;
-                    unit.Init(mapEntity, side);
+                    unit.Init(mapEntity, side,character);
                     unit.OnActionPointsEnd += NextUnitMove;
                     unit.OnUnitDead += RemoveUnit;
 

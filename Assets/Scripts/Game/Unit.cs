@@ -43,15 +43,18 @@ namespace DefaultNamespace.Player
         private MapEntity _mapEntity;
 
         private Vector3 _startPosition;
-
-        public void Init(MapEntity battleFieldFieldEntity, UnitSide side)
+            
+        public void Init(MapEntity battleFieldFieldEntity, UnitSide side, Character character)
         {
             UnitSide = side;
             Selector.Init(battleFieldFieldEntity);
 
             transform.rotation = Quaternion.Euler(0, UnitSide == UnitSide.Player ? 180 : 0, 0);
-
+            Health = character.Health.Value;
             CurrentHealth = Health;
+            ActionPoints =  character.ActionPoints.Value;
+            InitiativeTest =  character.Initiative.Value;
+            
             HealthBarParent.gameObject.SetActive(true);
             HealthBar.fillAmount =  (float)CurrentHealth / Health;
             _startPosition = transform.position;
@@ -62,7 +65,7 @@ namespace DefaultNamespace.Player
             {
                 handler.onHandlerEnd += OnHandlerEnd;
                 handler.OnTileOccupied += OccupyTile;
-                handler.Init(battleFieldFieldEntity, UnitSide);
+                handler.Init(battleFieldFieldEntity, UnitSide,character);
                 handler.Deactivate();
             }
 

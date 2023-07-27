@@ -32,22 +32,46 @@ namespace DefaultNamespace
                     new Character()
                     {
                         Name = "Tank",
-                        Level = 1,                           
+                        Level = 1,   
+                        Health = {Value = 100},
+                        MoveRange = {Value = 2},
+                        ActionPoints = {Value = 8},
+                        Damage = {Value = 4},
+                        AttackRange = {Value = 2},
+                        Initiative = {Value = 1},
                     },
                     new Character()
                     {
                         Name = "Bug",
                         Level = 1,
+                        Health = {Value = 90},
+                        MoveRange = {Value = 3},
+                        ActionPoints = {Value = 12},
+                        Damage = {Value = 15},
+                        AttackRange = {Value = 1},
+                        Initiative = {Value = 1},
                     },
                     new Character()
                     {
                         Name = "Caster",
                         Level = 1,
+                        Health = {Value = 150},
+                        MoveRange = {Value = 4},
+                        ActionPoints = {Value = 9},
+                        Damage = {Value = 5},
+                        AttackRange = {Value = 1},
+                        Initiative = {Value = 0},
                     },
                     new Character()
                     {
                         Name = "SteamMachine",
                         Level = 1,
+                        Health = {Value = 75},
+                        MoveRange = {Value = 3},
+                        ActionPoints = {Value = 18},
+                        Damage = {Value = 25},
+                        AttackRange = {Value = 1},
+                        Initiative = {Value = 1},
                     },
                 }
             };

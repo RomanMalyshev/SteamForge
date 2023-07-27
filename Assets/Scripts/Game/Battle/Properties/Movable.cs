@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DefaultNamespace.Player;
 using JetBrains.Annotations;
 using RedBjorn.ProtoTiles;
 using RedBjorn.ProtoTiles.Example;
@@ -20,8 +21,9 @@ namespace Game.Battle.Skills
 
         private Coroutine _moveRoutine;
 
-        public override void Init(MapEntity fieldEntity, UnitSide unitSide)
+        public override void Init(MapEntity fieldEntity, UnitSide unitSide, Character character)
         {
+            Range = character.MoveRange.Value;
             _fieldEntity = fieldEntity;
             _area = Instantiate(AreaPrefab, Vector3.zero, Quaternion.identity);
             _path = Instantiate(PathPrefab, Vector3.zero, Quaternion.identity);

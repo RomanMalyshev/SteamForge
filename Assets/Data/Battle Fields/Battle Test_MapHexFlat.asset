@@ -14,6 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MapViewPrefab: {fileID: 7777349898454273150, guid: 3ac7a17abcd18454180a2324a67cef89,
     type: 3}
+  _enemys:
+  - {fileID: 11400000, guid: 5a644a23976686d46a0d06a5e24ef9f6, type: 2}
+  - {fileID: 11400000, guid: b4adb15e7ca5fd949a3c1fb850fa076b, type: 2}
+  - {fileID: 11400000, guid: 809d87caf97cf3647802efc63e726efc, type: 2}
+  - {fileID: 11400000, guid: e33c7c6ca6b2c1441bb554fe88534f53, type: 2}
   Type: 1
   Axis: 0
   RotationType: 0
@@ -55,7 +60,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: bf4f87dafca508c4686b2a769a3e48b6, type: 2}
   Tiles:
   - TilePos: {x: 1, y: -7, z: 6}
-    Id: b1bb6bbfc946ada43ac25d85854bf2f9
+    Id: 923d9ccd918d1894faf57d38f7a3ca6a
     MovableArea: 1
     SideHeight:
     - 0
@@ -105,7 +110,7 @@ MonoBehaviour:
     - 0
     - 0
   - TilePos: {x: 6, y: -9, z: 3}
-    Id: b1bb6bbfc946ada43ac25d85854bf2f9
+    Id: 923d9ccd918d1894faf57d38f7a3ca6a
     MovableArea: 1
     SideHeight:
     - 0
@@ -1025,7 +1030,7 @@ MonoBehaviour:
     - 0
     - 0
   - TilePos: {x: 3, y: -11, z: 8}
-    Id: b1bb6bbfc946ada43ac25d85854bf2f9
+    Id: 923d9ccd918d1894faf57d38f7a3ca6a
     MovableArea: 1
     SideHeight:
     - 0
