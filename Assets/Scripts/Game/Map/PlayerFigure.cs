@@ -49,7 +49,7 @@ namespace GameMap
 
             while (!(_transform.position.x == movingPosition.position.x) || !(_transform.position.z == movingPosition.position.z))
             {
-                _transform.position = Vector3.MoveTowards(_transform.position, movingPosition.position, _speed);
+                _transform.position = Vector3.MoveTowards(_transform.position, movingPosition.position, _speed * Time.deltaTime);
 
                 _innerFigure.Translate(0, _jumpSpeed * _direction * Time.deltaTime, 0);                
                 

@@ -102,8 +102,8 @@ public class CameraController : MonoBehaviour
 
     private void GetCameraMovement()
     {
-        Vector3 lateralMove = transform.right * _speed * Input.GetAxis("Horizontal");
-        Vector3 forwardMove = transform.forward * _speed * Input.GetAxis("Vertical");
+        Vector3 lateralMove = transform.right * _speed * Input.GetAxis("Horizontal") * Time.deltaTime;
+        Vector3 forwardMove = transform.forward * _speed * Input.GetAxis("Vertical") * Time.deltaTime;
 
 
         if (Input.GetMouseButtonDown(1))
@@ -163,8 +163,8 @@ public class CameraController : MonoBehaviour
 
     private void GetCameraZoom()
     {
-        Vector3 zoomAmount = new Vector3(0, -_zoomSpeed * Input.GetAxis("Mouse ScrollWheel"),
-            _zoomSpeed * Input.GetAxis("Mouse ScrollWheel"));
+        Vector3 zoomAmount = new Vector3(0, -_zoomSpeed * Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime,
+            _zoomSpeed * Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime);
 
         _newZoom = zoomAmount;
 
@@ -186,8 +186,8 @@ public class CameraController : MonoBehaviour
         {
             _rotateEndPoint = Input.mousePosition;
 
-            float dx = (_rotateEndPoint - _rotateStartPoint).x * _rotateSpeed;
-            float dy = (_rotateEndPoint - _rotateStartPoint).y * _rotateSpeed;
+            float dx = (_rotateEndPoint - _rotateStartPoint).x * _rotateSpeed * Time.deltaTime;
+            float dy = (_rotateEndPoint - _rotateStartPoint).y * _rotateSpeed * Time.deltaTime;
 
             transform.rotation *= Quaternion.Euler(new Vector3(0, dx, 0));
 
@@ -260,7 +260,7 @@ public class CameraController : MonoBehaviour
     {
         while ((target != null) && ((transform.position.x != target.position.x) || (transform.position.z != target.position.z)))
         {
-            transform.position = Vector3.MoveTowards(transform.position, target.position, _targetSwapSpeed);
+            transform.position = Vector3.MoveTowards(transform.position, target.position, _targetSwapSpeed * Time.deltaTime);
                 yield return null;
         }
         
