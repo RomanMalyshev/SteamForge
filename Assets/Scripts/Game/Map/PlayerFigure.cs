@@ -56,5 +56,10 @@ namespace GameMap
         {
             transform.position = _currentEncounter.transform.position;
         }
+
+        public void LoadPosition(Transform loadPosition)
+        {
+            transform.position = loadPosition.position;
+        }
     }
 }

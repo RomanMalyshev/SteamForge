@@ -2,6 +2,8 @@
 using DefaultNamespace.Player;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -18,13 +20,16 @@ namespace GameMap
 
         private View _view;
         private Model _model;
+        private string _ecounterStatesSaveData = "EncounterStatesSaveData";
+        private string _currentEncounterSaveData = "CurrentEncounterSaveData";
 
         private void Start()
         {
+
             _view = Globals.Global.View;
             _model = Globals.Global.Model;
 
-            if (!(_cameraController == null))
+            if (_cameraController != null)
                 _cameraController.FindPlayerFigure(_playerFigure);
 
             _model.Plyer.Subscribe((player) =>
@@ -41,6 +46,16 @@ namespace GameMap
             {
                 SetCurrentEncounter(currentEncounter);
             });
+
+            _view.SaveButtonClick.Subscribe(() =>
+                {
+                    SaveData();
+                });
+
+            _view.LoadButtonClick.Subscribe(() =>
+                {
+                    LoadData();
+                });
 
             for (var index = 0; index < _encounterOrder.Count; index++)
             {
@@ -105,7 +120,6 @@ namespace GameMap
 
         private void FinalEncounterSelect(Player player)
         {
-            Debug.Log(player.Moral);
             if (player.Moral > 0)
             {
                 _encounterOrder[_encounterOrder.Capacity - 1].encounter[0].gameObject.SetActive(true);
@@ -127,6 +141,64 @@ namespace GameMap
                 _encounterOrder[_encounterOrder.Capacity - 1].encounter[2].gameObject.SetActive(true);
             }
         }
+
+        private void SaveData()
+        {
+            /*var encountersStateSaveData = new EncountersStateList();
+            encountersStateSaveData.EncountersState = _encounterOrder.Select(item => item.encounter.Select(enc => enc.EncounterState).ToList()).ToList();
+            var outputEncountersStateString = JsonUtility.ToJson(encountersStateSaveData);
+
+            PlayerPrefs.SetString(_ecounterStatesSaveData, outputEncountersStateString);*/
+
+            var currentEncaunterIndex = _encounterOrder[_currentColumn].encounter.IndexOf(_currentEncounter, 0);
+            var currentEncounterSaveData = new CurrentEncounterIndex();
+
+            currentEncounterSaveData.CurrentEncounter = new Vector2Int(_currentColumn, currentEncaunterIndex);
+            var outputCurrentEncounterString = JsonUtility.ToJson(currentEncounterSaveData);
+           
+            PlayerPrefs.SetString(_currentEncounterSaveData, outputCurrentEncounterString);
+            PlayerPrefs.Save();
+        }
+
+        private void LoadData()
+        {
+            /*var inputEncountersStateString = PlayerPrefs.GetString(_ecounterStatesSaveData);
+            var encountersStateLoadData = JsonUtility.FromJson<EncountersStateList>(inputEncountersStateString);            
+
+            for (var i = 0; i < _encounterOrder.Count; i++)
+            {
+                for (var a = 0; i < _encounterOrder[i].encounter.Count; a++)
+                {
+                    _encounterOrder[i].encounter[a].EncounterState = encountersStateLoadData.EncountersState[i][a];
+                }
+            }*/
+
+            var inputCurrentEncounterString = PlayerPrefs.GetString(_currentEncounterSaveData);
+            CurrentEncounterIndex currentEncounterLoadData = JsonUtility.FromJson<CurrentEncounterIndex>(inputCurrentEncounterString);
+            _currentEncounter = _encounterOrder[currentEncounterLoadData.CurrentEncounter.x].encounter[currentEncounterLoadData.CurrentEncounter.y];
+            
+            _playerFigure.LoadPosition(_currentEncounter.transform);
+            LoadMapState(currentEncounterLoadData.CurrentEncounter.x);
+        }
+        private void LoadMapState(int column)
+        {
+            _currentColumn = column;
+            Debug.Log(_currentColumn);
+
+            foreach (var column1 in _encounterOrder)
+            {
+                foreach (var encounter in column1.encounter)
+                {
+                    encounter.SetActive(true);
+
+                    if ((encounter.Column - _currentColumn > 1) || (encounter.Column <= _currentColumn))
+                    {
+                        encounter.SetReeachable(false);
+                    }
+                    else encounter.SetReeachable(true);
+                }
+            }
+        }
     }
 
     [Serializable]
@@ -134,5 +206,17 @@ namespace GameMap
     {
         [HideInInspector] public string name;
         public List<Encounter> encounter;
+    }
+
+    [Serializable]
+    public class EncountersStateList
+    {
+        public List<List<EncounterState>> EncountersState;
+    }
+
+    [Serializable]
+    public class CurrentEncounterIndex
+    {
+        public Vector2Int CurrentEncounter;
     }
 }

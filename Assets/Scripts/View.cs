@@ -24,6 +24,13 @@ namespace DefaultNamespace
         public SubscribableAction<Unit> OnUnitInBattleSelect = new();
 
         public SubscribableAction ReturnToMap = new();
+
+        public SubscribableAction SaveButtonClick = new();
+        public SubscribableAction LoadButtonClick = new();
+
+
+
+
         public void Init()
         {
  
