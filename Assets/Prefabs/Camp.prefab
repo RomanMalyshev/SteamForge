@@ -118,7 +118,7 @@ Transform:
   - {fileID: 2645766699387482674}
   - {fileID: 3766194626366779341}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7279079045772290950
 GameObject:
@@ -294,7 +294,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cyclop Bot (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8415534914180959869, guid: 1c9ba055ea94aa64096dd83811c55d32,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6598323108609139614, guid: 1c9ba055ea94aa64096dd83811c55d32, type: 3}
+    - {fileID: 370370983025366786, guid: 1c9ba055ea94aa64096dd83811c55d32, type: 3}
+    - {fileID: 7810213689241046088, guid: 1c9ba055ea94aa64096dd83811c55d32, type: 3}
+    - {fileID: 5817993325979003628, guid: 1c9ba055ea94aa64096dd83811c55d32, type: 3}
+    - {fileID: 3928979934538734495, guid: 1c9ba055ea94aa64096dd83811c55d32, type: 3}
+    - {fileID: 2640126854210740507, guid: 1c9ba055ea94aa64096dd83811c55d32, type: 3}
+    - {fileID: 444146082106625976, guid: 1c9ba055ea94aa64096dd83811c55d32, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -378,7 +390,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cyclop Bot
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8415534914180959869, guid: 1c9ba055ea94aa64096dd83811c55d32,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6598323108609139614, guid: 1c9ba055ea94aa64096dd83811c55d32, type: 3}
+    - {fileID: 370370983025366786, guid: 1c9ba055ea94aa64096dd83811c55d32, type: 3}
+    - {fileID: 7810213689241046088, guid: 1c9ba055ea94aa64096dd83811c55d32, type: 3}
+    - {fileID: 5817993325979003628, guid: 1c9ba055ea94aa64096dd83811c55d32, type: 3}
+    - {fileID: 3928979934538734495, guid: 1c9ba055ea94aa64096dd83811c55d32, type: 3}
+    - {fileID: 2640126854210740507, guid: 1c9ba055ea94aa64096dd83811c55d32, type: 3}
+    - {fileID: 444146082106625976, guid: 1c9ba055ea94aa64096dd83811c55d32, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -457,7 +481,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8930563138368411593, guid: 380fd29cf630e6c4d9439fffa7d21c9f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6104546114703522346, guid: 380fd29cf630e6c4d9439fffa7d21c9f, type: 3}
+    - {fileID: 722147980791254710, guid: 380fd29cf630e6c4d9439fffa7d21c9f, type: 3}
+    - {fileID: 7153181071941162492, guid: 380fd29cf630e6c4d9439fffa7d21c9f, type: 3}
+    - {fileID: 6889361376583660376, guid: 380fd29cf630e6c4d9439fffa7d21c9f, type: 3}
+    - {fileID: 4152545211946582571, guid: 380fd29cf630e6c4d9439fffa7d21c9f, type: 3}
+    - {fileID: 3136153318446971055, guid: 380fd29cf630e6c4d9439fffa7d21c9f, type: 3}
+    - {fileID: 652928708073100812, guid: 380fd29cf630e6c4d9439fffa7d21c9f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -541,7 +577,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Combat Bot
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8415534914180959869, guid: e1eccb4d1eb7eac4c886df36d80681a7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 2640126854210740507, guid: e1eccb4d1eb7eac4c886df36d80681a7, type: 3}
+    - {fileID: 6598323108609139614, guid: e1eccb4d1eb7eac4c886df36d80681a7, type: 3}
+    - {fileID: 370370983025366786, guid: e1eccb4d1eb7eac4c886df36d80681a7, type: 3}
+    - {fileID: 7810213689241046088, guid: e1eccb4d1eb7eac4c886df36d80681a7, type: 3}
+    - {fileID: 5817993325979003628, guid: e1eccb4d1eb7eac4c886df36d80681a7, type: 3}
+    - {fileID: 3928979934538734495, guid: e1eccb4d1eb7eac4c886df36d80681a7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

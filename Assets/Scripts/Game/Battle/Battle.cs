@@ -19,7 +19,7 @@ namespace Game.Battle.Skills
         public Unit UnitsEnemyPrefab;
         public AISkillsSelector _aiSelector;
 
-        private Unit _currentUnitMove;
+        private Unit _currentUnitTurn;
 
         private readonly List<Unit> _units = new();
         private List<Unit> _unitTurnOrder = new();
@@ -71,7 +71,7 @@ namespace Game.Battle.Skills
 
             _units.Clear();
             _round = 0;
-            _currentUnitMove = null;
+            _currentUnitTurn = null;
             _unitTurnOrder.Clear();
 
             //TODO:call from globals
@@ -81,7 +81,7 @@ namespace Game.Battle.Skills
         private void InitUnits(MapEntity mapEntity, List<List<TileEntity>> opponentsTiles)
         {
             _aiSelector.InitNewMap(mapEntity);
-
+          
             for (var i = 0; i < opponentsTiles.Count; i++)
             {
                 for (var j = 0; j < opponentsTiles[i].Count; j++)
@@ -92,11 +92,12 @@ namespace Game.Battle.Skills
                         mapEntity.WorldPosition(tile).z);
 
                     var isPlayer = tile.Preset.Tags.Contains(PlayerTag);
-                    var prefab = isPlayer ? UnitsPrefab : UnitsEnemyPrefab;
+                    var character = isPlayer ?   _model.Plyer.Value.Party[j] : _mapSettings._enemys[j].Character;
+                    var prefab = isPlayer ?   _model.Plyer.Value.Party[j].BattleView : _mapSettings._enemys[j].Character.BattleView;
                     var unit = Instantiate(prefab, position, Quaternion.identity);
-
+                    
                     var side = isPlayer ? UnitSide.Player : UnitSide.Enemy;
-                    unit.Init(mapEntity, side);
+                    unit.Init(mapEntity, side,character);
                     unit.OnActionPointsEnd += NextUnitMove;
                     unit.OnUnitDead += RemoveUnit;
 
@@ -112,24 +113,28 @@ namespace Game.Battle.Skills
             _unitTurnOrder = _units.OrderBy(unit => unit.InitiativeTest).ToList();
             _model.UnitBattleOrder.Value = _unitTurnOrder;
 
-            _currentUnitMove = _unitTurnOrder[0];
-            _currentUnitMove.Activate();
+            _currentUnitTurn = _unitTurnOrder[0];
+           
+            Debug.Log($"Start battle  {_currentUnitTurn.gameObject.name} now turn");
             _round++;
             _model.OnNewBattleRound.Invoke(_round);
+            _currentUnitTurn.Activate();
         }
 
         private void NextUnitMove()
         {
-            _currentUnitMove.Deactivate();
-            _model.OnUnitEndTern.Invoke(_currentUnitMove);
+            _model.OnUnitEndTern.Invoke(_currentUnitTurn);
 
-            var currentUnitIndex = _unitTurnOrder.IndexOf(_currentUnitMove);
+            var currentUnitIndex = _unitTurnOrder.IndexOf(_currentUnitTurn);
             var nexUnitIndex = currentUnitIndex + 1 < _unitTurnOrder.Count
                 ? currentUnitIndex + 1
                 : 0;
-            _currentUnitMove = _unitTurnOrder[nexUnitIndex];
-            _currentUnitMove.Activate();
+            
+            _currentUnitTurn = _unitTurnOrder[nexUnitIndex];
+            _currentUnitTurn.Activate();
 
+            Debug.Log($"NextUnitMove  {_currentUnitTurn.gameObject.name} now turn");
+            
             if (nexUnitIndex == 0)
             {
                 _round++;
@@ -141,7 +146,7 @@ namespace Game.Battle.Skills
         {
             _unitTurnOrder.Remove(unit);
 
-            if (_currentUnitMove == unit)
+            if (_currentUnitTurn == unit)
                 NextUnitMove();
 
             var enemyUnitsCount = _unitTurnOrder.Count(unitTurn => unitTurn.UnitSide == UnitSide.Enemy);

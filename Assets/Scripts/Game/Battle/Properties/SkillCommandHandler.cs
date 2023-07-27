@@ -1,4 +1,5 @@
 ﻿using System;
+using DefaultNamespace.Player;
 using RedBjorn.ProtoTiles;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -16,7 +17,7 @@ namespace Game.Battle.Skills
 
         internal bool _skillInProcces;
         
-        public abstract void Init(MapEntity mapEntity, UnitSide unitSide);
+        public abstract void Init(MapEntity mapEntity, UnitSide unitSide, Character character);
         
         public abstract void Activate();
 

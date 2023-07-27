@@ -10,5 +10,11 @@ public class UIUnitLine : MonoBehaviour
     public Button Button;
     public TMP_Text Label;
     public TMP_Text Health;
-  
+
+
+    public Sprite SpriteUnitMouseOver;
+    public Sprite SpriteUnitMouseExit;
+    public Image MouseTargetIcon;
+
+
 }

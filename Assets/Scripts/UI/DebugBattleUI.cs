@@ -5,7 +5,6 @@ using Game.Battle;
 using RedBjorn.ProtoTiles;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class DebugBattleUI : MonoBehaviour
@@ -21,6 +20,8 @@ public class DebugBattleUI : MonoBehaviour
     public Button RunTestField1;
     public Button RunTestField2;
     public Button RunTestField3;
+    
+    public Button SkipTurn;
 
     public MapSettings Field1;
     public MapSettings Field2;
@@ -59,6 +60,11 @@ public class DebugBattleUI : MonoBehaviour
         _testMapsOrder.Add(Field2);
         //_testMapsOrder.Add(Field3);   
 
+        SkipTurn.onClick.AddListener(() =>
+        {
+            _view.onBattleSkipTurn.Invoke();
+        });
+        
         _model.OnNewBattleRound.Subscribe(round =>
         {
             foreach (var unitLine in _unitsLine)
@@ -151,6 +157,28 @@ public class DebugBattleUI : MonoBehaviour
         {
             var symbol = value > 0 ? "+" : "";
             MoralResult.text = "Moral " + symbol + value.ToString();
+        });
+        
+        _view.mouseOverUnit.Subscribe(unit =>
+        {
+            if (unit == null)
+            {
+                foreach (var unitLine in _unitsLine)
+                    unitLine.Value.MouseTargetIcon.sprite = unitLine.Value.SpriteUnitMouseExit;
+                foreach (var unitLine in _unitsNextRoundLine)
+                    unitLine.Value.MouseTargetIcon.sprite = unitLine.Value.SpriteUnitMouseExit;
+                
+                return;
+            }
+
+            if (_unitsLine.TryGetValue(unit, out var currentLine))
+            {
+                currentLine.MouseTargetIcon.sprite = currentLine.SpriteUnitMouseOver;
+            }
+            if (_unitsNextRoundLine.TryGetValue(unit, out var nexRoundLine))
+            {
+                nexRoundLine.MouseTargetIcon.sprite = nexRoundLine.SpriteUnitMouseOver;
+            }
         });
         
         Restart.onClick.AddListener(() => { _view.OnRestartBattle.Invoke(); });

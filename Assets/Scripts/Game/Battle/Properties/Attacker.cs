@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DefaultNamespace.Player;
 using RedBjorn.ProtoTiles;
 using RedBjorn.ProtoTiles.Example;
 using UnityEngine;
@@ -22,8 +23,9 @@ namespace Game.Battle.Skills
         private UnitSide _side;
         private TileEntity _tile;
 
-        public override void Init(MapEntity mapEntity, UnitSide unitSide)
+        public override void Init(MapEntity mapEntity, UnitSide unitSide, Character character)
         {
+            Damage = character.Damage.Value;
             _side = unitSide;
             _fieldEntity = mapEntity;
             _area = Instantiate(AreaPrefab, Vector3.zero, Quaternion.identity);
