@@ -5,10 +5,11 @@ using UnityEngine;
 
 public abstract class Encounter : MonoBehaviour
 {
+    [SerializeField] private Renderer _renderer;
+
     private View _view;
     private bool _isReechable = false;
-    private Transform _transform;
-    private Renderer _renderer;
+    private Transform _transform;   
     private Color _color;
     private bool _isActive = true;
 
@@ -19,8 +20,7 @@ public abstract class Encounter : MonoBehaviour
 
     private void Start()
     {
-        _transform = GetComponent<Transform>();
-        _renderer = GetComponent<Renderer>();
+        _transform = GetComponent<Transform>();        
         _view = Globals.Global.View;
         _color = _renderer.material.color;
 
@@ -56,7 +56,7 @@ public abstract class Encounter : MonoBehaviour
     {
         if (_isActive)
         {
-            GetComponent<Renderer>().material.color = _color + new Color(10f, 10f, 10f);
+            _renderer.material.color = _color + new Color(10f, 10f, 10f);
         }
     }
 

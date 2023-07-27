@@ -195,8 +195,8 @@ MonoBehaviour:
   _maxZ: 3
   _cameraState: 0
   _target: {fileID: 0}
-  _onMapHeight: 6
-  _onMapDistance: -1
+  _onMapHeight: 0.5
+  _onMapDistance: -9
   _map: {fileID: 0}
   _battlePoint: {x: 0, y: 0, z: 0}
   _campPoint: {x: -5.1, y: 0.39, z: -322.75}
