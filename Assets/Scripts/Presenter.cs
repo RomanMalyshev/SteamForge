@@ -44,6 +44,15 @@ namespace DefaultNamespace
 
                 Globals.Global.Model.Plyer.Invoke(Globals.Global.Model.Plyer.Value);
             });
+            
+            Globals.Global.Model.Plyer.Subscribe(player =>
+            {
+                if (player != null)
+                {
+                    var playerJson = JsonUtility.ToJson(player);
+                    PlayerPrefs.SetString("player",playerJson);
+                }
+            } );
         }
     }
 }

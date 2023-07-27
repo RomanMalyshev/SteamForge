@@ -100,12 +100,13 @@ public class PartyUpgrade : MonoBehaviour
         _preUpgradePlayer._upPoints[_currentCharacter] = _player.Party[_currentCharacter].UpPoints;
 
         var stats = _player.Party[_currentCharacter].GetAllAttributes();
-
+        
+        Globals.Global.Model.Plyer.Invoke(_player);
         for (var i = 0; i < stats.Count; i++)
         {
             _preUpgradePlayer._characterAtributes[_currentCharacter]._atributes[i] = stats[i].Value;
         }
-
+        
         SetupParty();
     }
 
