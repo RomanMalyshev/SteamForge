@@ -236,6 +236,11 @@ PrefabInstance:
       propertyPath: AnimationHandler
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7801532180181126505, guid: 7b18ab5e1c599ab469bdaaf5765cca5e,
+        type: 3}
+      propertyPath: _isHumanBattleEncounter
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1569938203589975495, guid: 7b18ab5e1c599ab469bdaaf5765cca5e, type: 3}
