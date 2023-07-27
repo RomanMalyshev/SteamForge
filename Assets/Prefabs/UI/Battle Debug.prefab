@@ -1061,7 +1061,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29db9559e113d8a418d1c2dfae73af87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HealthBar: {fileID: 0}
   Round: {fileID: 5198366003813168071}
   UnitName: {fileID: 5228822777821259781}
   AP: {fileID: 1712494793200502887}
@@ -2351,8 +2350,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 139.6427, y: 93}
-  m_SizeDelta: {x: 1262.8423, y: 100}
+  m_AnchoredPosition: {x: 139.6427, y: 86}
+  m_SizeDelta: {x: 1262.8423, y: 134.4371}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &108467849132986830
 CanvasRenderer:

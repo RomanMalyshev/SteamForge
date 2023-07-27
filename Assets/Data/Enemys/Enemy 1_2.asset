@@ -13,55 +13,49 @@ MonoBehaviour:
   m_Name: Enemy 1_2
   m_EditorClassIdentifier: 
   Character:
-    Health:
-      Value: 110
-      Name: Health
-      Description: 
-    MoveRange:
-      Value: 3
-      Name: MoveRange
-      Description: 
-    ActionPoints:
-      Value: 9
-      Name: ActionPoints
-      Description: 
-    Damage:
-      Value: 3
-      Name: Damage
-      Description: 
-    AttackRange:
-      Value: 2
-      Name: AttackRange
-      Description: 
-    Initiative:
-      Value: 1
-      Name: Initiative
-      Description: 
-    Hull:
-      Value: 0
-      Name: Hull
-      Description: 
-    Strength:
-      Value: 0
-      Name: Strength
-      Description: 
-    Luck:
-      Value: 0
-      Name: Luck
-      Description: 
-    Speed:
-      Value: 0
-      Name: Speed
-      Description: 
-    Balance:
-      Value: 0
-      Name: Balance
-      Description: 
     Name: 
+    BattleView: {fileID: 6104546114703522346, guid: 380fd29cf630e6c4d9439fffa7d21c9f,
+      type: 3}
+    Skills: []
     UpPoints: 0
     Exp: 0
     Level: 0
-    Skills: []
-    BattleView: {fileID: 6104546114703522346, guid: 380fd29cf630e6c4d9439fffa7d21c9f,
-      type: 3}
+    Hull:
+      Value: 14
+      Name: Hull
+      Description: 
+    Strength:
+      Value: 25
+      Name: Strength
+      Description: 
+    Agile:
+      Value: 42
+      Name: Agile
+      Description: 
+    Speed:
+      Value: 14
+      Name: Speed
+      Description: 
+    Balance:
+      Value: 25
+      Name: Balance
+      Description: 
+    Health:
+      Name: Health
+      Description: 
+    MoveRange:
+      Name: MoveRange
+      Description: 
+    ActionPoints:
+      Name: ActionPoints
+      Description: 
+    Damage:
+      Name: Damage
+      Description: 
+    AttackRange:
+      Name: AttackRange
+      Description: 
+    Initiative:
+      Name: Initiative
+      Description: 
   TagOnField: {fileID: 11400000, guid: bf4f87dafca508c4686b2a769a3e48b6, type: 2}
