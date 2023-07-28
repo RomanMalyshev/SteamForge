@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DefaultNamespace;
 using RedBjorn.ProtoTiles;
+using Unity.VisualScripting;
 using UnityEngine;
 using Unit = DefaultNamespace.Player.Unit;
 
@@ -100,7 +101,7 @@ namespace Game.Battle.Skills
                     unit.Init(mapEntity, side,character);
                     unit.OnActionPointsEnd += NextUnitMove;
                     unit.OnUnitDead += RemoveUnit;
-
+                    unit.gameObject.name = unit.gameObject.name + " " + j;
                     _units.Add(unit);
                 }
             }

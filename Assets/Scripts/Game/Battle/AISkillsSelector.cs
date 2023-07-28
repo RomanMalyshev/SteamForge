@@ -11,6 +11,7 @@ namespace Game.Battle
 {
     public class AISkillsSelector : MonoBehaviour
     {
+        public GameObject TargetTest;
         private Model _model;
         private View _view;
 
@@ -130,10 +131,9 @@ namespace Game.Battle
                 _unit.OnActionPointsEnd?.Invoke();
                 return;
             }
-
-
-            Debug.LogWarning(" Wait for Select skill");
-
+            
+            Debug.LogWarning($" Bot select {_mapEntity.WorldPosition(targetTile)} ");
+            TargetTest.transform.position = _mapEntity.WorldPosition(targetTile);
             if (_waitForSkillRoutine != null)
                 StopCoroutine(_waitForSkillRoutine);
             _waitForSkillRoutine = StartCoroutine(WaitForSkillUse(targetTile));

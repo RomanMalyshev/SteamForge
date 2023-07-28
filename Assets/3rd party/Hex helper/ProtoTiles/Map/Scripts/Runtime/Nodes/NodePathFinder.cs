@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace RedBjorn.ProtoTiles
@@ -31,10 +32,11 @@ namespace RedBjorn.ProtoTiles
                         index++;
                     }
                 }
+
                 current.Visited = true;
                 closed.Add(current);
-
             }
+
             return closed;
         }
 
@@ -62,10 +64,11 @@ namespace RedBjorn.ProtoTiles
                         index++;
                     }
                 }
+
                 current.Visited = true;
                 closed.Add(current);
-
             }
+
             return closed;
         }
 
@@ -93,13 +96,14 @@ namespace RedBjorn.ProtoTiles
                         index++;
                     }
                 }
+
                 current.Visited = true;
                 closed.Add(current.Position);
-
             }
+
             return closed;
         }
-        
+
         public static HashSet<Vector3Int> AreaPosition(IMapNode map, INode origin, float range)
         {
             map.Reset(Mathf.CeilToInt(range), origin);
@@ -124,10 +128,11 @@ namespace RedBjorn.ProtoTiles
                         index++;
                     }
                 }
+
                 current.Visited = true;
                 closed.Add(current.Position);
-
             }
+
             return closed;
         }
 
@@ -135,10 +140,14 @@ namespace RedBjorn.ProtoTiles
         {
             if (start.MovableArea != finish.MovableArea)
             {
+                Debug.LogWarning("return null in path");
                 return null;
             }
+
             var fullPath = FindPath(map, start, finish);
-            return TrimPath(map, fullPath, range);
+            var trimPath = TrimPath(map, fullPath, range);
+            Debug.LogWarning($"return {trimPath.Count} in path, {fullPath.Count} full path");
+            return trimPath;
         }
 
         public static List<INode> Path(IMapNode map, INode start, INode finish)
@@ -147,6 +156,7 @@ namespace RedBjorn.ProtoTiles
             {
                 return null;
             }
+
             return FindPath(map, start, finish);
         }
 
@@ -161,6 +171,8 @@ namespace RedBjorn.ProtoTiles
             {
                 return path;
             }
+
+            List<INode> lastVacant = new();
             var open = new List<INode>();
             var closed = new List<INode>();
             open.Add(start);
@@ -193,6 +205,7 @@ namespace RedBjorn.ProtoTiles
                             ScoreG[node] = currengScoreG;
                             ScoreF[node] = currengScoreG + map.Distance(node, finish);
                             CameFrom[node] = check;
+                            //lastVacant = node;
                         }
                     }
                     else
@@ -201,18 +214,39 @@ namespace RedBjorn.ProtoTiles
                         ScoreG[node] = currengScoreG;
                         ScoreF[node] = currengScoreG + map.Distance(node, finish);
                         CameFrom[node] = check;
+                        lastVacant.Add(node);
                     }
                 }
             }
+
             var current = finish;
-            while (CameFrom.ContainsKey(current))
+            if (CameFrom.ContainsKey(current))
             {
-                path.Add(current);
-                current = CameFrom[current];
+                while (CameFrom.ContainsKey(current))
+                {
+                    path.Add(current);
+                    current = CameFrom[current];
+                }
+
+                path.Add(start);
+                path.Reverse();
+
+                Debug.LogWarning(path.Count + " path.Count");
+                return path;
             }
+
+            var current2 = lastVacant.OrderBy(last => map.Distance(last,finish)).ToList()[0];
+            
+            while (CameFrom.ContainsKey(current2))
+            {
+                path.Add(current2);
+                current2 = CameFrom[current2];
+            }
+
             path.Add(start);
             path.Reverse();
 
+            Debug.LogWarning(path.Count + " path.Count");
             return path;
         }
 
@@ -233,10 +267,12 @@ namespace RedBjorn.ProtoTiles
                     break;
                 }
             }
+
             if (trimIndex >= 0)
             {
                 path.RemoveRange(trimIndex, path.Count - trimIndex);
             }
+
             return path;
         }
     }
