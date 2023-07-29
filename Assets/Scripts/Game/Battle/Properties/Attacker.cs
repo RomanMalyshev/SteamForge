@@ -72,7 +72,7 @@ namespace Game.Battle.Skills
 
             var currentTile = _fieldEntity.Tile(transform.position);
 
-            if (_fieldEntity.IsSameTile(tile, currentTile.Position)) return;
+            if (currentTile ==  tile) return;
             if (_fieldEntity.Distance(currentTile, tile) > Range) return;
 
             _skillInProcces = true;

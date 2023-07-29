@@ -706,6 +706,12 @@ PrefabInstance:
       propertyPath: Column
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7801532180181126505, guid: 7b18ab5e1c599ab469bdaaf5765cca5e,
+        type: 3}
+      propertyPath: _battleground
+      value: 
+      objectReference: {fileID: 11400000, guid: da181e333bcd7ad4199d79ea9c8f1d31,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
