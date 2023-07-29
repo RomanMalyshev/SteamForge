@@ -24,7 +24,7 @@ namespace DefaultNamespace.Player
         public Attribute Strength = new() { Name = "Strength" };
         public Attribute Agile = new() { Name = "Agile" };
         public Attribute Speed = new() { Name = "Speed" };
-        public Attribute Balance = new() { Name = "Balance" };
+        public Attribute Reaction = new() { Name = "Reaction" };
 
         [HideInInspector] public Stat Health;
         [HideInInspector] public Stat MoveRange;
@@ -40,10 +40,12 @@ namespace DefaultNamespace.Player
         {
             Health = new(Hull, 10) { Name = "Health" };
             MoveRange = new(Speed, 0.2f) { Name = "Move Range" };
-            ActionPoints = new(Balance, 1.25f) { Name = "Action Points" };
             Damage = new(Strength, 0.5f) { Name = "Damage" };
-            AttackRange = new(Agile, 0.15f) { Name = "Attack Range" };
-            Initiative = new(Balance,Speed, 0.35f,0.25f) { Name = "Initiative" };
+            Initiative = new(Agile, 0.2f) { Name = "Initiative" };
+            ActionPoints = new(Reaction, 0.1f) { Name = "Action Points" };
+            
+            //fix remove
+            AttackRange = new(Agile, 0.1f) { Name = "Attack Range" };
         }
         
         private int GetNextLevelExp()
@@ -56,6 +58,7 @@ namespace DefaultNamespace.Player
             _stats = new();
             _stats.Add(Health);
             _stats.Add(MoveRange);
+            _stats.Add(ActionPoints );
             _stats.Add(Damage);
             _stats.Add(AttackRange);
             _stats.Add(Initiative);
@@ -71,7 +74,7 @@ namespace DefaultNamespace.Player
             _attributes.Add(Strength);
             _attributes.Add(Agile);
             _attributes.Add(Speed);
-            _attributes.Add(Balance);
+            _attributes.Add(Reaction);
 
             return _attributes;
         }

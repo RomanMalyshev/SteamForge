@@ -68,7 +68,7 @@ namespace DefaultNamespace
                             Strength = { Value = 40 },
                             Agile = { Value = 40 },
                             Speed = { Value = 40 },
-                            Balance = { Value = 40 },
+                            Reaction = { Value = 40 },
                         },
                         new Character()
                         {
@@ -78,7 +78,7 @@ namespace DefaultNamespace
                             Strength = { Value = 40 },
                             Agile = { Value = 40 },
                             Speed = { Value = 40 },
-                            Balance = { Value = 40 },
+                            Reaction = { Value = 40 },
                         },
                         new Character()
                         {
@@ -88,7 +88,7 @@ namespace DefaultNamespace
                             Strength = { Value = 40 },
                             Agile = { Value = 40 },
                             Speed = { Value = 40 },
-                            Balance = { Value = 40 },
+                            Reaction = { Value = 40 },
                         },
                         new Character()
                         {
@@ -98,7 +98,7 @@ namespace DefaultNamespace
                             Strength = { Value = 40 },
                             Agile = { Value = 40 },
                             Speed = { Value = 40 },
-                            Balance = { Value = 40 },
+                            Reaction = { Value = 40 },
                         },
                     }
                 };
