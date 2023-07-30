@@ -124,6 +124,18 @@ namespace GameMap
                     else encounter.SetReeachable(true);
                 }
             }
+
+            for (var i = 0; i < _currentColumn; i++)
+            {
+                for (var a = 0; a < _encounterOrder[i].encounter.Count; a++)
+                {
+                    if (_encounterOrder[i].encounter[a].EncounterState == EncounterState.NonVisited)
+                    {
+                        _encounterOrder[i].encounter[a].EncounterState = EncounterState.Skipped;
+                    }
+                }
+            }
+
         }
 
         private void SetCurrentEncounter(Encounter currentEncounter)

@@ -716,7 +716,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _battleground
       value: 
-      objectReference: {fileID: 11400000, guid: da181e333bcd7ad4199d79ea9c8f1d31,
+      objectReference: {fileID: 11400000, guid: 39bf45b856a3abd4994312c9fca7dcf7,
         type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
