@@ -47,7 +47,12 @@ namespace GameMap
                 SetCurrentEncounter(currentEncounter);
             });
 
-            _view.SaveButtonClick.Subscribe(() =>
+            _view.ReturnToMap.Subscribe(() =>
+            {
+                SaveData();
+            });
+
+            /*_view.SaveButtonClick.Subscribe(() =>
                 {
                     SaveData();
                 });
@@ -55,7 +60,7 @@ namespace GameMap
             _view.LoadButtonClick.Subscribe(() =>
                 {
                     LoadData();
-                });
+                });*/
 
             for (var index = 0; index < _encounterOrder.Count; index++)
             {
@@ -76,7 +81,16 @@ namespace GameMap
 
             _currentEncounter = _encounterOrder[0].encounter[0];
             _playerFigure.SetCurrentEncounter(_currentEncounter);
-            _playerFigure.GetStartingPoint();
+
+            if (PlayerPrefs.HasKey(_ecounterStatesSaveData))
+            {
+                LoadData();
+            }
+            else
+            {
+                _playerFigure.GetStartingPoint();
+            }
+            
         }
 
         private void MovePlayerFigure(Transform transform, int column)

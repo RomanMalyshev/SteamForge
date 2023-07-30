@@ -12,6 +12,8 @@ namespace DefaultNamespace
         public SubscribableAction OnMapCampClick = new();
         public SubscribableAction<Encounter> OnEncounterClick = new();
 
+        public SubscribableAction StartGame = new();
+
         public SubscribableAction<int> OnExitFromGame = new();
         public SubscribableAction OnEnterGame = new();
         
