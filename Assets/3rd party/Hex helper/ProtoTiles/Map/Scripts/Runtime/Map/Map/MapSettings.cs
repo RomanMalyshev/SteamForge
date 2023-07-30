@@ -15,6 +15,7 @@ namespace RedBjorn.ProtoTiles
     [CreateAssetMenu(menuName = "RedBjorn/ProtoTiles/Map")]
     public class MapSettings : ScriptableObjectExtended
     {
+        public bool isFinal;
         public MapView MapViewPrefab;
         public List<EnemyData> _enemys;
 
