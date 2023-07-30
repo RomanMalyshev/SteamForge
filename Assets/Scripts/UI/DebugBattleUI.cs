@@ -219,7 +219,7 @@ public class DebugBattleUI : MonoBehaviour
             unitLine.Button.onClick.AddListener(() => _view.OnUnitInBattleSelect.Invoke(unit));
             unitLine.Label.text = unit.UnitSide.ToString();
             unitLine.Health.text = unit.Health.ToString();
-
+            unitLine.Background.color = unit.UnitSide == UnitSide.Player ? Color.green : Color.red;
             unit.OnUnitDead += deadUnit =>
             {
                 unitLines.Remove(deadUnit);
