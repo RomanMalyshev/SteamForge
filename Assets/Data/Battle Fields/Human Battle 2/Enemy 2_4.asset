@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f444367d0fd04da8b8371d5d8805d7ea, type: 3}
-  m_Name: Enemy 1_1
+  m_Name: Enemy 2_4
   m_EditorClassIdentifier: 
   Character:
     Name: 
-    BattleView: {fileID: 6598323108609139614, guid: 718ea3dde74a8094a9237ffbf605dc34,
+    BattleView: {fileID: 6598323108609139614, guid: 3c3204f8b6db12943acba21c5f2397ae,
       type: 3}
     Icon: {fileID: 0}
     Skills: []
@@ -26,7 +26,7 @@ MonoBehaviour:
       Name: Hull
       Description: 
     Strength:
-      Value: 50
+      Value: 45
       Name: Strength
       Description: 
     Agile:
@@ -34,7 +34,7 @@ MonoBehaviour:
       Name: Agile
       Description: 
     Speed:
-      Value: 10
+      Value: 15
       Name: Speed
       Description: 
     Reaction:

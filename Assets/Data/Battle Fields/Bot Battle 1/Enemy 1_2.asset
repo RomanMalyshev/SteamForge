@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character:
     Name: 
-    BattleView: {fileID: 6104546114703522346, guid: 380fd29cf630e6c4d9439fffa7d21c9f,
+    BattleView: {fileID: 6104546114703522346, guid: 54c81b706ffb0c9489eda3773587e973,
       type: 3}
     Icon: {fileID: 0}
     Skills: []
