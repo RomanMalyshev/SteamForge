@@ -21,13 +21,13 @@ public class DebugBattleUI : MonoBehaviour
     public Button RunTestField1;
     public Button RunTestField2;
     public Button RunTestField3;
-    
+
     public Button SkipTurn;
-    
+
     public Button TestWin;
 
     public GameObject TurnMenu;
-    
+
     public MapSettings Field1;
     public MapSettings Field2;
     public MapSettings Field3;
@@ -49,7 +49,7 @@ public class DebugBattleUI : MonoBehaviour
     [Header("Skill Settings")] public Sprite MoveIcon;
     public Sprite AttackIcon;
     public Sprite HealIcon;
-    
+
     private readonly Dictionary<Unit, UIUnitLine> _unitsLine = new();
     private readonly Dictionary<Unit, UIUnitLine> _unitsNextRoundLine = new();
 
@@ -69,11 +69,8 @@ public class DebugBattleUI : MonoBehaviour
         _testMapsOrder.Add(Field2);
         //_testMapsOrder.Add(Field3);   
 
-        SkipTurn.onClick.AddListener(() =>
-        {
-            _view.onBattleSkipTurn.Invoke();
-        });
-        
+        SkipTurn.onClick.AddListener(() => { _view.onBattleSkipTurn.Invoke(); });
+
         _model.OnNewBattleRound.Subscribe(round =>
         {
             foreach (var unitLine in _unitsLine)
@@ -101,15 +98,12 @@ public class DebugBattleUI : MonoBehaviour
                 _unitCommands.Add(button);
                 button.onClick.AddListener(() => { _view.OnCommandSelect.Invoke(command); });
                 if (command is Movable)
-                {
                     button.image.sprite = MoveIcon;
-                }
                 if (command is Attacker)
-                {
                     button.image.sprite = AttackIcon;
-                }
+                if (command is Heal)
+                    button.image.sprite = HealIcon;
             }
-            
         });
 
         _model.UnitBattleOrder.Subscribe(units =>
@@ -160,10 +154,7 @@ public class DebugBattleUI : MonoBehaviour
             ResultPopup.gameObject.SetActive(false);
             _view.ActiveBattle.Value = (_testMapsOrder[Random.Range(0, _testMapsOrder.Count - 1)], false);
         });
-        TestWin.onClick.AddListener(() =>
-        {
-            _view.OnTestWin.Invoke();
-        });
+        TestWin.onClick.AddListener(() => { _view.OnTestWin.Invoke(); });
         _model.OnBattleEnd.Subscribe(winSide =>
         {
             Debug.LogWarning(winSide);
@@ -172,15 +163,15 @@ public class DebugBattleUI : MonoBehaviour
             ResultLabel.text = winSide == UnitSide.Player ? "Win!" : "Lose!";
             ResultPopup.gameObject.SetActive(true);
         });
-        
-        _model.ChangedPlayerExp.Subscribe(value => { ExpResult.text = "Exp +" +value.ToString(); });
-        
+
+        _model.ChangedPlayerExp.Subscribe(value => { ExpResult.text = "Exp +" + value.ToString(); });
+
         _model.ChangedPlayerMoral.Subscribe(value =>
         {
             var symbol = value > 0 ? "+" : "";
             MoralResult.text = "Moral " + symbol + value.ToString();
         });
-        
+
         _view.mouseOverUnit.Subscribe(unit =>
         {
             if (unit == null)
@@ -189,7 +180,7 @@ public class DebugBattleUI : MonoBehaviour
                     unitLine.Value.MouseTargetIcon.sprite = unitLine.Value.SpriteUnitMouseExit;
                 foreach (var unitLine in _unitsNextRoundLine)
                     unitLine.Value.MouseTargetIcon.sprite = unitLine.Value.SpriteUnitMouseExit;
-                
+
                 return;
             }
 
@@ -197,12 +188,13 @@ public class DebugBattleUI : MonoBehaviour
             {
                 currentLine.MouseTargetIcon.sprite = currentLine.SpriteUnitMouseOver;
             }
+
             if (_unitsNextRoundLine.TryGetValue(unit, out var nexRoundLine))
             {
                 nexRoundLine.MouseTargetIcon.sprite = nexRoundLine.SpriteUnitMouseOver;
             }
         });
-        
+
         Restart.onClick.AddListener(() => { _view.OnRestartBattle.Invoke(); });
 
         RunTestField1.onClick.AddListener(() => { _view.ActiveBattle.Value = (Field1, false); });
