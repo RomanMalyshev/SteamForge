@@ -86,7 +86,7 @@ public class DebugBattleUI : MonoBehaviour
 
             _unitCommands.Clear();
 
-            UnitName.text = $"{unit.gameObject.name}";
+            UnitName.text = $"{unit.Name}";
             Side.text = unit.UnitSide == UnitSide.Player ? "Player Turn" : "Enemy Turn";
 
             TurnMenu.gameObject.SetActive(unit.UnitSide == UnitSide.Player);

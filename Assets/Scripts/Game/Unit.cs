@@ -11,6 +11,7 @@ namespace DefaultNamespace.Player
 {
     public class Unit : MonoBehaviour
     {
+        [HideInInspector] public string Name;
         public TileEntity OccupiedTile { get; private set; }
         public int CurrentHealth { get; private set; }
 
@@ -45,9 +46,10 @@ namespace DefaultNamespace.Player
         private SkillCommandHandler _currentSkill;
         private GameObject _stand;
         private MapEntity _mapEntity;
-
+        
         public void Init(MapEntity battleFieldFieldEntity, UnitSide side, Character character)
         {
+            Name = character.Name;
             UnitSide = side;
             Selector.Init(battleFieldFieldEntity);
 
