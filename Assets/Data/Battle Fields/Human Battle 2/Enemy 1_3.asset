@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f444367d0fd04da8b8371d5d8805d7ea, type: 3}
+  m_Name: Enemy 1_3
+  m_EditorClassIdentifier: 
+  Character:
+    Name: 
+    BattleView: {fileID: 6598323108609139614, guid: 08873aec49b5882458fd6788bca420e1,
+      type: 3}
+    Icon: {fileID: 0}
+    Skills: []
+    UpPoints: 0
+    Exp: 0
+    Level: 0
+    Hull:
+      Value: 10
+      Name: Hull
+      Description: 
+    Strength:
+      Value: 60
+      Name: Strength
+      Description: 
+    Agile:
+      Value: 5
+      Name: Agile
+      Description: 
+    Speed:
+      Value: 20
+      Name: Speed
+      Description: 
+    Reaction:
+      Value: 20
+      Name: Reaction
+      Description: 
+    Health:
+      Name: Health
+      Description: 
+    MoveRange:
+      Name: MoveRange
+      Description: 
+    ActionPoints:
+      Name: ActionPoints
+      Description: 
+    Damage:
+      Name: Damage
+      Description: 
+    AttackRange:
+      Name: AttackRange
+      Description: 
+    Initiative:
+      Name: Initiative
+      Description: 
+  TagOnField: {fileID: 11400000, guid: bf4f87dafca508c4686b2a769a3e48b6, type: 2}

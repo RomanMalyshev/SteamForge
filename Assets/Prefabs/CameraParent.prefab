@@ -189,10 +189,10 @@ MonoBehaviour:
   _rotateSpeed: 10
   _maxHeight: 40
   _minHeight: 4
-  _minX: -5
-  _maxX: 15
+  _minX: -20
+  _maxX: 20
   _minZ: -20
-  _maxZ: 3
+  _maxZ: 20
   _cameraState: 0
   _target: {fileID: 0}
   _onMapHeight: 4
