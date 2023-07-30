@@ -33,7 +33,12 @@ namespace Game.Battle.Skills
         {
             _model = Globals.Global.Model;
             _view = Globals.Global.View;
-
+            _view.OnTestWin.Subscribe(() =>
+            {
+                _model.OnBattleEnd.Invoke(UnitSide.Player);
+                Reset();
+            });
+            
             //TODO:remake init from globals
             if (DebugBattleUI != null)
                 DebugBattleUI.Init();

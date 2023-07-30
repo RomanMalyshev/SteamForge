@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using DefaultNamespace;
 using DefaultNamespace.Player;
 using Game.Battle;
+using Game.Battle.Skills;
 using RedBjorn.ProtoTiles;
 using TMPro;
 using UnityEngine;
@@ -22,7 +23,11 @@ public class DebugBattleUI : MonoBehaviour
     public Button RunTestField3;
     
     public Button SkipTurn;
+    
+    public Button TestWin;
 
+    public GameObject TurnMenu;
+    
     public MapSettings Field1;
     public MapSettings Field2;
     public MapSettings Field3;
@@ -41,6 +46,10 @@ public class DebugBattleUI : MonoBehaviour
     public TMP_Text MoralResult;
     public TMP_Text ExpResult;
 
+    [Header("Skill Settings")] public Sprite MoveIcon;
+    public Sprite AttackIcon;
+    public Sprite HealIcon;
+    
     private readonly Dictionary<Unit, UIUnitLine> _unitsLine = new();
     private readonly Dictionary<Unit, UIUnitLine> _unitsNextRoundLine = new();
 
@@ -81,8 +90,9 @@ public class DebugBattleUI : MonoBehaviour
             _unitCommands.Clear();
 
             UnitName.text = $"{unit.gameObject.name}";
-            Side.text = unit.UnitSide.ToString();
+            Side.text = unit.UnitSide == UnitSide.Player ? "Player Turn" : "Enemy Turn";
 
+            TurnMenu.gameObject.SetActive(unit.UnitSide == UnitSide.Player);
             if (unit.UnitSide != UnitSide.Player) return;
 
             foreach (var command in commands)
@@ -90,7 +100,16 @@ public class DebugBattleUI : MonoBehaviour
                 var button = Instantiate(Prefab, ButtonsParents);
                 _unitCommands.Add(button);
                 button.onClick.AddListener(() => { _view.OnCommandSelect.Invoke(command); });
+                if (command is Movable)
+                {
+                    button.image.sprite = MoveIcon;
+                }
+                if (command is Attacker)
+                {
+                    button.image.sprite = AttackIcon;
+                }
             }
+            
         });
 
         _model.UnitBattleOrder.Subscribe(units =>
@@ -121,7 +140,7 @@ public class DebugBattleUI : MonoBehaviour
                 Debug.LogWarning("Unit has not line prefab on battle UI!");
         });
 
-        _model.OnChangeUnitActionPoints.Subscribe(ap => { AP.text = $"AP: {ap}"; });
+        _model.OnChangeUnitActionPoints.Subscribe(ap => { AP.text = $"Action points: {ap}"; });
 
         ResultPopup.gameObject.SetActive(false);
         RestartResult.onClick.AddListener(() =>
@@ -141,7 +160,10 @@ public class DebugBattleUI : MonoBehaviour
             ResultPopup.gameObject.SetActive(false);
             _view.ActiveBattle.Value = (_testMapsOrder[Random.Range(0, _testMapsOrder.Count - 1)], false);
         });
-
+        TestWin.onClick.AddListener(() =>
+        {
+            _view.OnTestWin.Invoke();
+        });
         _model.OnBattleEnd.Subscribe(winSide =>
         {
             Debug.LogWarning(winSide);

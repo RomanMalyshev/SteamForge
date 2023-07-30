@@ -25,9 +25,11 @@ namespace Game.Battle.Skills
             if (_skill == null) return;
             if (_fieldEntity == null) return;
 
-            var mouthPos = MyInput.GroundPosition(_fieldEntity.Settings.Plane());
-            var targetOverTile = _fieldEntity.Tile(mouthPos);
-
+       
+            var tilePosition = MyInput.GroundPosition(_fieldEntity.Settings.Plane());
+            if(tilePosition == null)return;
+            
+            var targetOverTile = _fieldEntity.Tile(tilePosition.Value);
             if (targetOverTile == null) return;
 
             _skill.OverTarget(targetOverTile);
@@ -35,7 +37,8 @@ namespace Game.Battle.Skills
             if (MyInput.GetOnWorldUp(_fieldEntity.Settings.Plane()))
             {
                 var clickPos = MyInput.GroundPosition(_fieldEntity.Settings.Plane());
-                var targetClickTile = _fieldEntity.Tile(clickPos);
+                if (clickPos == null) return;
+                var targetClickTile = _fieldEntity.Tile(clickPos.Value);
 
                 if (targetClickTile != null)
                     _skill.SelectTarget(targetClickTile);
