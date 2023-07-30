@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character:
     Name: 
-    BattleView: {fileID: 6104546114703522346, guid: 380fd29cf630e6c4d9439fffa7d21c9f,
+    BattleView: {fileID: 6598323108609139614, guid: fa31f80c957300b48b74365a87de4724,
       type: 3}
     Skills: []
     UpPoints: 0
@@ -36,9 +36,9 @@ MonoBehaviour:
       Value: 25
       Name: Speed
       Description: 
-    Balance:
-      Value: 42
-      Name: Balance
+    Reaction:
+      Value: 2
+      Name: Reaction
       Description: 
     Health:
       Name: Health
