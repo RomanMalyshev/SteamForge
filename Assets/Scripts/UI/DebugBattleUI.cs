@@ -168,15 +168,15 @@ public class DebugBattleUI : MonoBehaviour
             RestartResult.gameObject.SetActive(winSide == UnitSide.Enemy);
             ReturnToMap.gameObject.SetActive(winSide == UnitSide.Player);
             ResultLabel.text = winSide == UnitSide.Player ? "Win!" : "Lose!";
+            ExpResult.gameObject.SetActive(winSide == UnitSide.Player);
             ResultPopup.gameObject.SetActive(true);
         });
 
-        _model.ChangedPlayerExp.Subscribe(value => { ExpResult.text = "Exp +" + value.ToString(); });
 
         _model.ChangedPlayerMoral.Subscribe(value =>
         {
             var symbol = value > 0 ? "+" : "";
-            MoralResult.text = "Moral " + symbol + value.ToString();
+            MoralResult.text = "Humanity " + symbol + value.ToString();
         });
 
         _view.mouseOverUnit.Subscribe(unit =>
