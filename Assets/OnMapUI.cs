@@ -42,7 +42,7 @@ public class OnMapUI : MonoBehaviour
             _levels[i].text = $"AP: {_player.Party[i].Level}";
             _exps[i].text = $"Exp: {_player.Party[i].Exp}";            
         }
-        Debug.Log(_player.Moral);
+        
 
         _moralMarker.minValue = -5;
         _moralMarker.maxValue = 5;
