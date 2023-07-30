@@ -39,13 +39,14 @@ namespace RedBjorn.ProtoTiles.Example
         void HandleWorldClick()
         {
             var clickPos = MyInput.GroundPosition(Map.Settings.Plane());
-            var tile = Map.Tile(clickPos);
+            if(clickPos == null)return;
+            var tile = Map.Tile(clickPos.Value);
             if (tile != null && tile.Vacant)
             {
                 AreaHide();
                 Path.IsEnabled = false;
                 PathHide();
-                var path = Map.PathTiles(transform.position, clickPos, Range);
+                var path = Map.PathTiles(transform.position, clickPos.Value, Range);
                 Move(path, () =>
                 {
                     Path.IsEnabled = true;
@@ -135,7 +136,9 @@ namespace RedBjorn.ProtoTiles.Example
         {
             if (Path && Path.IsEnabled)
             {
-                var tile = Map.Tile(MyInput.GroundPosition(Map.Settings.Plane()));
+                var tilePos = MyInput.GroundPosition(Map.Settings.Plane());
+                if(tilePos == null)return;
+                var tile = Map.Tile(tilePos.Value);
                 if (tile != null && tile.Vacant)
                 {
                     var path = Map.PathPoints(transform.position, Map.WorldPosition(tile.Position), Range);

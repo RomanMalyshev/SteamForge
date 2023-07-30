@@ -72,7 +72,7 @@ namespace RedBjorn.ProtoTiles.Example
             return LastFrame.CameraGroundPosition;
         }
 
-        public static Vector3 GroundPosition(Plane plane)
+        public static Vector3? GroundPosition(Plane plane)
         {
             var mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             float enter = 0f;
@@ -82,7 +82,7 @@ namespace RedBjorn.ProtoTiles.Example
             }
             
          
-            return Vector3.zero;
+            return null;
         }
         private static bool IsPointerOverUIObject() {
             // Referencing this code for GraphicRaycaster https://gist.github.com/stramit/ead7ca1f432f3c0f181f

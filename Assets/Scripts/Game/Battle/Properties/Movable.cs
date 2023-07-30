@@ -76,7 +76,6 @@ namespace Game.Battle.Skills
             _path.Hide();
             _area.Hide();
             
-            //TODO: fix figure infinity fly
             if (_moveRoutine != null)
                 StopCoroutine(_moveRoutine);
 
@@ -136,7 +135,9 @@ namespace Game.Battle.Skills
             if (!_path) return;
             if (!_path.IsEnabled) return;
 
-            var tile = _fieldEntity.Tile(MyInput.GroundPosition(_fieldEntity.Settings.Plane()));
+            var tilePosition = MyInput.GroundPosition(_fieldEntity.Settings.Plane());
+            if(tilePosition == null)return;
+            var tile = _fieldEntity.Tile(tilePosition.Value);
             if (tile != null && tile.Vacant)
             {
                 var path = _fieldEntity.PathPoints(transform.position, _fieldEntity.WorldPosition(tile.Position),
