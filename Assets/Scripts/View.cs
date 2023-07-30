@@ -32,6 +32,8 @@ namespace DefaultNamespace
         public SubscribableAction SaveButtonClick = new();
         public SubscribableAction LoadButtonClick = new();
         public SubscribableAction OnTestWin = new();
+        public SubscribableAction OnEndGame = new();
+        public SubscribableAction OnNewGame = new();
 
         public void Init()
         

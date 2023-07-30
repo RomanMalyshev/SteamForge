@@ -10,15 +10,18 @@ public class UIController : MonoBehaviour
     [SerializeField] private PartyUpgrade _upgradeUI;
     [SerializeField] private OnMapUI _onMapUI;
     [SerializeField] private MainMenuUI _mainMenuUI;
+    [SerializeField] private EndGameUI _endGameUI;
 
 
     private void Start()
     {
+        _endGameUI.Init();
         _debugBattleUI.gameObject.SetActive(false);
         _upgradeUI.gameObject.SetActive(false);
         _onMapUI.gameObject.SetActive(false);
         _mainMenuUI.gameObject.SetActive(true);
-
+        _endGameUI.gameObject.SetActive(false);
+        
         Globals.Global.View.StartGame.Subscribe(() =>
         {
             _onMapUI.gameObject.SetActive(true);
@@ -44,6 +47,15 @@ public class UIController : MonoBehaviour
             _onMapUI.gameObject.SetActive(true);
             _upgradeUI.gameObject.SetActive(false);
             _debugBattleUI.gameObject.SetActive(false);
+        });
+        
+        Globals.Global.View.OnEndGame.Subscribe(() =>
+        {
+            _debugBattleUI.gameObject.SetActive(false);
+            _upgradeUI.gameObject.SetActive(false);
+            _onMapUI.gameObject.SetActive(false);
+            _mainMenuUI.gameObject.SetActive(false);
+            _endGameUI.gameObject.SetActive(true);
         });
     }
 }

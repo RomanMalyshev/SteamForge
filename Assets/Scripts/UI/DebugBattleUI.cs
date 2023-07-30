@@ -157,6 +157,13 @@ public class DebugBattleUI : MonoBehaviour
         TestWin.onClick.AddListener(() => { _view.OnTestWin.Invoke(); });
         _model.OnBattleEnd.Subscribe(winSide =>
         {
+            if (_view.ActiveBattle.Value.battleMap.isFinal && winSide == UnitSide.Player)
+            {
+                Debug.Log(winSide + " End game");
+                _view.OnEndGame.Invoke();
+                return;
+            }
+            
             Debug.LogWarning(winSide);
             RestartResult.gameObject.SetActive(winSide == UnitSide.Enemy);
             ReturnToMap.gameObject.SetActive(winSide == UnitSide.Player);

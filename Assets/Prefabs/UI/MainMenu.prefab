@@ -158,8 +158,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: PLAY
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
-  m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -183,8 +183,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70
-  m_fontSizeBase: 70
+  m_fontSize: 80
+  m_fontSizeBase: 80
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -339,7 +339,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 199, y: -608}
+  m_AnchoredPosition: {x: 199, y: -526}
   m_SizeDelta: {x: 450, y: 350}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &8352915488146975492
@@ -357,7 +357,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2983766880424404639}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -658,12 +658,12 @@ PrefabInstance:
     - target: {fileID: 7620824269988445974, guid: 5529cd024323ee443a6a183aa71540b9,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: -100
+      value: -70.5646
       objectReference: {fileID: 0}
     - target: {fileID: 7620824269988445974, guid: 5529cd024323ee443a6a183aa71540b9,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: -200
+      value: -187.3848
       objectReference: {fileID: 0}
     - target: {fileID: 7620824269988445974, guid: 5529cd024323ee443a6a183aa71540b9,
         type: 3}
