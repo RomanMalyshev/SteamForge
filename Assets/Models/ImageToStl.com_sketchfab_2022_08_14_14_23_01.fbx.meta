@@ -3,7 +3,47 @@ guid: e0a4138e57c96434681959961a57acba
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: ca6225d05bc72ed4fb10075158c94cc3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 142a9983cef710349a84758bf6065d65, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: firePlane_mat
+    second: {fileID: 2100000, guid: 56631530d183ceb449d11df1d03a6386, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sR.boiler_main_mat
+    second: {fileID: 2100000, guid: 715764c9b3afdfa42aa9e0e7d3c46194, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sR.head_mat
+    second: {fileID: 2100000, guid: a4621b39c3cb9414a92cce65e5b69f65, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sR.otherParts_mat
+    second: {fileID: 2100000, guid: d4b23ee9deda857429d8352d131ac38d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: smokePlane_mat
+    second: {fileID: 2100000, guid: 03517453becc9a34295705920fa063fb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: steamPlane_mat
+    second: {fileID: 2100000, guid: 27379c611da3e83489c003ba189b4ed5, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
