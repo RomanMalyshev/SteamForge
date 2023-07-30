@@ -7,6 +7,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 namespace GameMap
 {
@@ -42,6 +43,40 @@ namespace GameMap
                 PlayerFigireMoved(column);
             });
 
+            _view.OnNewGame.Subscribe(() =>
+            {
+                _currentEncounter = _encounterOrder[0].encounter[0];
+                _currentEncounter.Activate();
+                _encounterOrder[1].encounter[0].SetReeachable(true);
+                _encounterOrder[1].encounter[1].SetReeachable(true);
+
+                /*foreach (var column1 in _encounterOrder)
+                {
+                    foreach (var encounter in column1.encounter)
+                    {
+                        //encounter.SetActive(true);
+
+                        if ((encounter.Column - _currentColumn > 1) || (encounter.Column <= _currentColumn))
+                        {
+                            encounter.SetReeachable(false);
+                        }
+                        else encounter.SetReeachable(true);
+                    }
+                }*/
+
+                for (var i = 0; i < _encounterOrder.Count; i++)
+                { 
+                    for (var a = 0; a < _encounterOrder[i].encounter.Count; a++)
+                    {
+                        _encounterOrder[i].encounter[a].EncounterState = EncounterState.NonVisited;
+                    }
+                }
+
+                _playerFigure.SetCurrentEncounter(_currentEncounter);
+                _playerFigure.GetStartingPoint(); 
+            });           
+
+
             _view.OnEncounterClick.Subscribe((currentEncounter) =>
             {
                 SetCurrentEncounter(currentEncounter);
@@ -52,16 +87,7 @@ namespace GameMap
                 SaveData();
             });
 
-            /*_view.SaveButtonClick.Subscribe(() =>
-                {
-                    SaveData();
-                });
-
-            _view.LoadButtonClick.Subscribe(() =>
-                {
-                    LoadData();
-                });*/
-
+            
             for (var index = 0; index < _encounterOrder.Count; index++)
             {
                 var encounter = _encounterOrder[index];
@@ -149,22 +175,19 @@ namespace GameMap
             if (player.Moral > 0)
             {
                 _encounterOrder[_encounterOrder.Capacity - 1].encounter[0].gameObject.SetActive(true);
-                _encounterOrder[_encounterOrder.Capacity - 1].encounter[1].gameObject.SetActive(false);
-                _encounterOrder[_encounterOrder.Capacity - 1].encounter[2].gameObject.SetActive(false);
+                _encounterOrder[_encounterOrder.Capacity - 1].encounter[1].gameObject.SetActive(false);                
             }
 
             if (player.Moral == 0)
             {
-                _encounterOrder[_encounterOrder.Capacity - 1].encounter[0].gameObject.SetActive(false);
-                _encounterOrder[_encounterOrder.Capacity - 1].encounter[1].gameObject.SetActive(true);
-                _encounterOrder[_encounterOrder.Capacity - 1].encounter[2].gameObject.SetActive(false);
+                _encounterOrder[_encounterOrder.Capacity - 1].encounter[0].gameObject.SetActive(true);
+                _encounterOrder[_encounterOrder.Capacity - 1].encounter[1].gameObject.SetActive(true);                
             }
 
             if (player.Moral < 0)
             {
                 _encounterOrder[_encounterOrder.Capacity - 1].encounter[0].gameObject.SetActive(false);
-                _encounterOrder[_encounterOrder.Capacity - 1].encounter[1].gameObject.SetActive(false);
-                _encounterOrder[_encounterOrder.Capacity - 1].encounter[2].gameObject.SetActive(true);
+                _encounterOrder[_encounterOrder.Capacity - 1].encounter[1].gameObject.SetActive(true);                
             }
         }
 

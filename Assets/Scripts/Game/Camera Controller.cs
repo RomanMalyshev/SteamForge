@@ -56,7 +56,12 @@ public class CameraController : MonoBehaviour
         {
             SetCameraOnMapState(CameraState.InBattle);
         });
-        
+
+        _view.OnNewGame.Subscribe(() =>
+        {
+            SetCameraOnMapState(CameraState.OnMap);
+        });
+
         _view.OnMapCampClick.Subscribe(() =>
         {
             SetCameraOnMapState(CameraState.InCamp);
