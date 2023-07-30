@@ -11,6 +11,7 @@ namespace DefaultNamespace.Player
     {
         public string Name;
         public Unit BattleView;
+        public Sprite Icon;
         public List<SkillCommandHandler> Skills;
 
         [HideInInspector] public int UpPoints;
@@ -43,9 +44,6 @@ namespace DefaultNamespace.Player
             Damage = new(Strength, 0.5f) { Name = "Damage" };
             Initiative = new(Agile, 0.2f) { Name = "Initiative" };
             ActionPoints = new(Reaction, 0.1f) { Name = "Action Points" };
-            
-            //fix remove
-            AttackRange = new(Agile, 0.1f) { Name = "Attack Range" };
         }
         
         private int GetNextLevelExp()
@@ -58,9 +56,8 @@ namespace DefaultNamespace.Player
             _stats = new();
             _stats.Add(Health);
             _stats.Add(MoveRange);
-            _stats.Add(ActionPoints );
+            _stats.Add(ActionPoints);
             _stats.Add(Damage);
-            _stats.Add(AttackRange);
             _stats.Add(Initiative);
 
             return _stats;
@@ -68,7 +65,6 @@ namespace DefaultNamespace.Player
 
         public List<Attribute> GetAllAttributes()
         {
-            //TODO: fix
             _attributes = new();
             _attributes.Add(Hull);
             _attributes.Add(Strength);
