@@ -48,61 +48,72 @@ namespace DefaultNamespace
                 }
             });
 
+            Globals.Global.View.OnNewGame.Subscribe(() =>
+            {
+                PlayerPrefs.DeleteAll();
+                CreateNewPlayer();
+            });
+            
             if (PlayerPrefs.HasKey("player"))
             {
                 Globals.Global.Model.Plyer.Value = JsonUtility.FromJson<Player.Player>(PlayerPrefs.GetString("player"));
             }
             else
             {
-                Globals.Global.Model.Plyer.Value = new Player.Player()
-                {
-                    Currency = 1000,
-                    Gears = 10000,
-                    Party = new List<Character>()
-                    {
-                        new Character()
-                        {
-                            Name = "Tank",
-                            Level = 1,
-                            Hull = { Value = 15 },
-                            Speed = { Value = 10 },
-                            Strength = { Value = 40 },
-                            Agile = { Value = 5 },
-                            Reaction = { Value = 20 },
-                        },
-                        new Character()
-                        {
-                            Name = "DD",
-                            Level = 1,
-                            Hull = { Value = 10 },
-                            Speed = { Value = 15 },
-                            Strength = { Value = 70 },
-                            Agile = { Value = 5 },
-                            Reaction = { Value = 20 },
-                        },
-                        new Character()
-                        {
-                            Name = "Ranger",
-                            Level = 1,
-                            Hull = { Value = 8 },
-                            Speed = { Value = 15 },
-                            Strength = { Value = 50 },
-                            Agile = { Value = 5 },
-                            Reaction = { Value = 20 },
-                        },
-                        new Character()
-                        {
-                            Name = "Support",
-                            Level = 1,
-                            Hull = { Value = 7 },
-                            Speed = { Value = 10 },
-                            Strength = { Value = 40 },
-                            Agile = { Value = 5 },
-                            Reaction = { Value = 20 },
-                        },
-                    }
-                };
+                CreateNewPlayer();
             }
+        }
+
+        private static void CreateNewPlayer()
+        {
+            Globals.Global.Model.Plyer.Value = new Player.Player()
+            {
+                Currency = 1000,
+                Gears = 10000,
+                Party = new List<Character>()
+                {
+                    new Character()
+                    {
+                        Name = "Tank",
+                        Level = 1,
+                        Hull = {Value = 15},
+                        Speed = {Value = 10},
+                        Strength = {Value = 40},
+                        Agile = {Value = 5},
+                        Reaction = {Value = 20},
+                    },
+                    new Character()
+                    {
+                        Name = "DD",
+                        Level = 1,
+                        Hull = {Value = 10},
+                        Speed = {Value = 15},
+                        Strength = {Value = 70},
+                        Agile = {Value = 5},
+                        Reaction = {Value = 20},
+                    },
+                    new Character()
+                    {
+                        Name = "Ranger",
+                        Level = 1,
+                        Hull = {Value = 8},
+                        Speed = {Value = 15},
+                        Strength = {Value = 50},
+                        Agile = {Value = 5},
+                        Reaction = {Value = 20},
+                    },
+                    new Character()
+                    {
+                        Name = "Support",
+                        Level = 1,
+                        Hull = {Value = 7},
+                        Speed = {Value = 10},
+                        Strength = {Value = 40},
+                        Agile = {Value = 5},
+                        Reaction = {Value = 20},
+                    },
+                }
+            };
         }
     }
 }
