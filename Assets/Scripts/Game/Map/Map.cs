@@ -150,21 +150,21 @@ namespace GameMap
             {
                 _encounterOrder[_encounterOrder.Capacity - 1].encounter[0].gameObject.SetActive(true);
                 _encounterOrder[_encounterOrder.Capacity - 1].encounter[1].gameObject.SetActive(false);
-                _encounterOrder[_encounterOrder.Capacity - 1].encounter[2].gameObject.SetActive(false);
+                //_encounterOrder[_encounterOrder.Capacity - 1].encounter[2].gameObject.SetActive(false);
             }
 
             if (player.Moral == 0)
             {
-                _encounterOrder[_encounterOrder.Capacity - 1].encounter[0].gameObject.SetActive(false);
+                _encounterOrder[_encounterOrder.Capacity - 1].encounter[0].gameObject.SetActive(true);
                 _encounterOrder[_encounterOrder.Capacity - 1].encounter[1].gameObject.SetActive(true);
-                _encounterOrder[_encounterOrder.Capacity - 1].encounter[2].gameObject.SetActive(false);
+                //_encounterOrder[_encounterOrder.Capacity - 1].encounter[2].gameObject.SetActive(false);
             }
 
             if (player.Moral < 0)
             {
                 _encounterOrder[_encounterOrder.Capacity - 1].encounter[0].gameObject.SetActive(false);
-                _encounterOrder[_encounterOrder.Capacity - 1].encounter[1].gameObject.SetActive(false);
-                _encounterOrder[_encounterOrder.Capacity - 1].encounter[2].gameObject.SetActive(true);
+                _encounterOrder[_encounterOrder.Capacity - 1].encounter[1].gameObject.SetActive(true);
+                //_encounterOrder[_encounterOrder.Capacity - 1].encounter[2].gameObject.SetActive(true);
             }
         }
 
