@@ -55,7 +55,7 @@ MonoBehaviour:
   Health: 20
   InitiativeTest: 0
   ActionPoints: 20
-  Selector: {fileID: 6889361376583660376}
+  Selector: {fileID: 4152545211946582571}
   _handlers:
   - {fileID: 722147980791254710}
   - {fileID: 7153181071941162492}
