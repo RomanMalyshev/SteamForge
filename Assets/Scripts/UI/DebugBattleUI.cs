@@ -169,6 +169,7 @@ public class DebugBattleUI : MonoBehaviour
             ReturnToMap.gameObject.SetActive(winSide == UnitSide.Player);
             ResultLabel.text = winSide == UnitSide.Player ? "Win!" : "Lose!";
             ExpResult.gameObject.SetActive(winSide == UnitSide.Player);
+            MoralResult.gameObject.SetActive(winSide == UnitSide.Player);
             ResultPopup.gameObject.SetActive(true);
         });
 
