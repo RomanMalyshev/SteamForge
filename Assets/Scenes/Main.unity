@@ -2652,45 +2652,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 186656959}
     m_Modifications:
-    - target: {fileID: 522778441269533508, guid: 066347598f74f764dac62c63d7b66f51,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2281005679285706598, guid: 066347598f74f764dac62c63d7b66f51,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2395068785209042309, guid: 066347598f74f764dac62c63d7b66f51,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2738149054726808018, guid: 066347598f74f764dac62c63d7b66f51,
         type: 3}
       propertyPath: m_Name
       value: Battle Debug
-      objectReference: {fileID: 0}
-    - target: {fileID: 3697933825175046792, guid: 066347598f74f764dac62c63d7b66f51,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5662462586995771684, guid: 066347598f74f764dac62c63d7b66f51,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6584842456935314542, guid: 066347598f74f764dac62c63d7b66f51,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6642712754166986718, guid: 066347598f74f764dac62c63d7b66f51,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7499748525951753042, guid: 066347598f74f764dac62c63d7b66f51,
         type: 3}

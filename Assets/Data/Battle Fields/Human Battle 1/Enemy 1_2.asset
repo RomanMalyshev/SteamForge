@@ -16,28 +16,29 @@ MonoBehaviour:
     Name: 
     BattleView: {fileID: 6598323108609139614, guid: 7dfc39e60adfe1c408f7a73f81263bd3,
       type: 3}
+    Icon: {fileID: 0}
     Skills: []
     UpPoints: 0
     Exp: 0
     Level: 0
     Hull:
-      Value: 10
+      Value: 7
       Name: Hull
       Description: 
     Strength:
-      Value: 10
+      Value: 35
       Name: Strength
       Description: 
     Agile:
-      Value: 25
+      Value: 5
       Name: Agile
       Description: 
     Speed:
-      Value: 42
+      Value: 15
       Name: Speed
       Description: 
     Reaction:
-      Value: 50
+      Value: 20
       Name: Reaction
       Description: 
     Health:
