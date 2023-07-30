@@ -42,6 +42,14 @@ namespace GameMap
                 PlayerFigireMoved(column);
             });
 
+            _view.OnNewGame.Subscribe(() =>
+            {
+                _currentEncounter = _encounterOrder[0].encounter[0];
+                _playerFigure.SetCurrentEncounter(_currentEncounter);
+                _playerFigure.GetStartingPoint(); 
+            });           
+
+
             _view.OnEncounterClick.Subscribe((currentEncounter) =>
             {
                 SetCurrentEncounter(currentEncounter);
@@ -52,16 +60,7 @@ namespace GameMap
                 SaveData();
             });
 
-            /*_view.SaveButtonClick.Subscribe(() =>
-                {
-                    SaveData();
-                });
-
-            _view.LoadButtonClick.Subscribe(() =>
-                {
-                    LoadData();
-                });*/
-
+            
             for (var index = 0; index < _encounterOrder.Count; index++)
             {
                 var encounter = _encounterOrder[index];
@@ -149,22 +148,19 @@ namespace GameMap
             if (player.Moral > 0)
             {
                 _encounterOrder[_encounterOrder.Capacity - 1].encounter[0].gameObject.SetActive(true);
-                _encounterOrder[_encounterOrder.Capacity - 1].encounter[1].gameObject.SetActive(false);
-                //_encounterOrder[_encounterOrder.Capacity - 1].encounter[2].gameObject.SetActive(false);
+                _encounterOrder[_encounterOrder.Capacity - 1].encounter[1].gameObject.SetActive(false);                
             }
 
             if (player.Moral == 0)
             {
                 _encounterOrder[_encounterOrder.Capacity - 1].encounter[0].gameObject.SetActive(true);
-                _encounterOrder[_encounterOrder.Capacity - 1].encounter[1].gameObject.SetActive(true);
-                //_encounterOrder[_encounterOrder.Capacity - 1].encounter[2].gameObject.SetActive(false);
+                _encounterOrder[_encounterOrder.Capacity - 1].encounter[1].gameObject.SetActive(true);                
             }
 
             if (player.Moral < 0)
             {
                 _encounterOrder[_encounterOrder.Capacity - 1].encounter[0].gameObject.SetActive(false);
-                _encounterOrder[_encounterOrder.Capacity - 1].encounter[1].gameObject.SetActive(true);
-                //_encounterOrder[_encounterOrder.Capacity - 1].encounter[2].gameObject.SetActive(true);
+                _encounterOrder[_encounterOrder.Capacity - 1].encounter[1].gameObject.SetActive(true);                
             }
         }
 

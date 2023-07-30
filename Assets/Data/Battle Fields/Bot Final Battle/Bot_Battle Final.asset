@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6d32a2a8ca144a4396103e2a46a24f3, type: 3}
   m_Name: Bot_Battle Final
   m_EditorClassIdentifier: 
+  isFinal: 1
   MapViewPrefab: {fileID: 4432409999345681572, guid: 644880107d0ece64788160b4d61cf56b,
     type: 3}
   _enemys:
