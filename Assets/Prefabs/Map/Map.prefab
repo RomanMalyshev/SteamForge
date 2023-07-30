@@ -454,6 +454,12 @@ PrefabInstance:
       propertyPath: Column
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4261306342073900675, guid: 37421682fb2f0f04ea962bbd4d530839,
+        type: 3}
+      propertyPath: _battleground
+      value: 
+      objectReference: {fileID: 11400000, guid: 17768ea33624783449c6ea58d947a392,
+        type: 2}
     - target: {fileID: 7109428424279174040, guid: 37421682fb2f0f04ea962bbd4d530839,
         type: 3}
       propertyPath: m_RootOrder
