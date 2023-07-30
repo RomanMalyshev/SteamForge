@@ -7,6 +7,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 namespace GameMap
 {
@@ -45,6 +46,32 @@ namespace GameMap
             _view.OnNewGame.Subscribe(() =>
             {
                 _currentEncounter = _encounterOrder[0].encounter[0];
+                _currentEncounter.Activate();
+                _encounterOrder[1].encounter[0].SetReeachable(true);
+                _encounterOrder[1].encounter[1].SetReeachable(true);
+
+                /*foreach (var column1 in _encounterOrder)
+                {
+                    foreach (var encounter in column1.encounter)
+                    {
+                        //encounter.SetActive(true);
+
+                        if ((encounter.Column - _currentColumn > 1) || (encounter.Column <= _currentColumn))
+                        {
+                            encounter.SetReeachable(false);
+                        }
+                        else encounter.SetReeachable(true);
+                    }
+                }*/
+
+                for (var i = 0; i < _encounterOrder.Count; i++)
+                { 
+                    for (var a = 0; a < _encounterOrder[i].encounter.Count; a++)
+                    {
+                        _encounterOrder[i].encounter[a].EncounterState = EncounterState.NonVisited;
+                    }
+                }
+
                 _playerFigure.SetCurrentEncounter(_currentEncounter);
                 _playerFigure.GetStartingPoint(); 
             });           

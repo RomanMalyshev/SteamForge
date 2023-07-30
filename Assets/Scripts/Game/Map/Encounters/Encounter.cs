@@ -8,10 +8,10 @@ public abstract class Encounter : MonoBehaviour
     [SerializeField] private Renderer _renderer;
 
     private View _view;
-    private bool _isReechable = false;
+    public bool _isReechable = false;
     private Transform _transform;   
     private Color _color;
-    private bool _isActive = true;
+    public bool _isActive = true;
 
     public int Column;
     public EncounterState EncounterState;
