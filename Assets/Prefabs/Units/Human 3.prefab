@@ -103,7 +103,8 @@ PrefabInstance:
       propertyPath: AnimationHandler
       value: 
       objectReference: {fileID: 2233046765986728615}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4152545211946582571, guid: 380fd29cf630e6c4d9439fffa7d21c9f, type: 3}
     m_RemovedGameObjects:
     - {fileID: 3495912800064948232, guid: 380fd29cf630e6c4d9439fffa7d21c9f, type: 3}
     m_AddedGameObjects:
