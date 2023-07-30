@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MapViewPrefab: {fileID: 6380530479125274015, guid: c46b2ff6e840c9e48b49f42fb38d8a2b,
     type: 3}
-  _enemys: []
+  _enemys:
+  - {fileID: 11400000, guid: 83ff6a27e2f84f448938be7e1d374fc6, type: 2}
+  - {fileID: 11400000, guid: 7004038cd8780de4e94c38369fd8bca3, type: 2}
+  - {fileID: 11400000, guid: ef8bc432dc17cd24891cb03eaef76a40, type: 2}
   Type: 1
   Axis: 0
   RotationType: 0
