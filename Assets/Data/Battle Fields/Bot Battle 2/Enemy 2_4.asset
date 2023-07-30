@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f444367d0fd04da8b8371d5d8805d7ea, type: 3}
-  m_Name: Enemy 1_2
+  m_Name: Enemy 2_4
   m_EditorClassIdentifier: 
   Character:
     Name: 
-    BattleView: {fileID: 6598323108609139614, guid: 7dfc39e60adfe1c408f7a73f81263bd3,
+    BattleView: {fileID: 6598323108609139614, guid: 6834847b500e93043bf3a62fc795aef7,
       type: 3}
     Icon: {fileID: 0}
     Skills: []
@@ -30,11 +30,11 @@ MonoBehaviour:
       Name: Strength
       Description: 
     Agile:
-      Value: 15
+      Value: 10
       Name: Agile
       Description: 
     Speed:
-      Value: 10
+      Value: 15
       Name: Speed
       Description: 
     Reaction:
