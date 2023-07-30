@@ -141,7 +141,7 @@ namespace Game.Battle
 
         private IEnumerator WaitForSkillUse(TileEntity tile)
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
 
             Debug.LogWarning("Select skill");
             _selectedSkill.onHandlerEnd += SelectSkill;
