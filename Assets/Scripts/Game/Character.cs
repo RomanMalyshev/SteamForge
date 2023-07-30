@@ -48,7 +48,7 @@ namespace DefaultNamespace.Player
         
         private int GetNextLevelExp()
         {
-            return Level * 100;
+            return 100;
         }
         
         public List<Stat> GetAllStats()

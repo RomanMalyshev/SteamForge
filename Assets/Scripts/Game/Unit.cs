@@ -141,7 +141,7 @@ namespace DefaultNamespace.Player
 
         private void OnHandlerEnd()
         {
-            _currentActionPoints -= 5;
+            _currentActionPoints -= 1;
             _model.OnChangeUnitActionPoints.Invoke(_currentActionPoints);
             Debug.Log(" HANDLE END " + gameObject.name + " " + gameObject.transform.GetSiblingIndex());
 
