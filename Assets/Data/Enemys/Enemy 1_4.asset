@@ -36,9 +36,9 @@ MonoBehaviour:
       Value: 14
       Name: Speed
       Description: 
-    Balance:
-      Value: 20
-      Name: Balance
+    Reaction:
+      Value: 50
+      Name: Reaction
       Description: 
     Health:
       Name: Health
