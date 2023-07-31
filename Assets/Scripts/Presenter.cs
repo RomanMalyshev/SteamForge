@@ -65,7 +65,7 @@ namespace DefaultNamespace
 
         private static void CreateNewPlayer()
         {
-            Globals.Global.Model.Plyer.Value = new Player.Player()
+            var player = new Player.Player()
             {
                 Currency = 1000,
                 Gears = 10000,
@@ -115,11 +115,13 @@ namespace DefaultNamespace
             };
             
             //Character Set
-            for (var i = 0; i <  Globals.Global.Model.Plyer.Value.Party.Count; i++)
+            for (var i = 0; i <  player.Party.Count; i++)
             {
-                var character =  Globals.Global.Model.Plyer.Value.Party[i];
+                var character =  player.Party[i];
                 character.BattleView = _playerUnits[i];
             }
+            
+            Globals.Global.Model.Plyer.Value = player;
         }
     }
 }
