@@ -194,8 +194,8 @@ MonoBehaviour:
   _minZ: -20
   _maxZ: 20
   _slide: 8
-  _onMapHeight: 8
-  _onMapDistance: -4
+  _onMapHeight: 6
+  _onMapDistance: -8
   _cameraTransform: {fileID: 9173622146406031256}
   _cameraState: 0
   _map: {fileID: 0}
