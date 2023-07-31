@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6889361376583660376}
   - component: {fileID: 4152545211946582571}
   m_Layer: 0
-  m_Name: Optimizated_Bot
+  m_Name: DD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

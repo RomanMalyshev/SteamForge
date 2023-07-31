@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 780532841492617908, guid: 380fd29cf630e6c4d9439fffa7d21c9f,
         type: 3}
       propertyPath: m_Name
-      value: Optimizate_Fly
+      value: Ranger
       objectReference: {fileID: 0}
     - target: {fileID: 1053069983996712520, guid: 380fd29cf630e6c4d9439fffa7d21c9f,
         type: 3}
@@ -294,6 +294,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: d4b23ee9deda857429d8352d131ac38d, type: 2}
     - target: {fileID: -1086208758873256375, guid: 4572807a06b0fb544bfcc715775392b5,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1086208758873256375, guid: 4572807a06b0fb544bfcc715775392b5,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 715764c9b3afdfa42aa9e0e7d3c46194, type: 2}
@@ -314,9 +319,19 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: d4b23ee9deda857429d8352d131ac38d, type: 2}
     - target: {fileID: 1393030140787765872, guid: 4572807a06b0fb544bfcc715775392b5,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1393030140787765872, guid: 4572807a06b0fb544bfcc715775392b5,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d4b23ee9deda857429d8352d131ac38d, type: 2}
+    - target: {fileID: 1469879229319285049, guid: 4572807a06b0fb544bfcc715775392b5,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1469879229319285049, guid: 4572807a06b0fb544bfcc715775392b5,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -443,7 +458,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: d4b23ee9deda857429d8352d131ac38d, type: 2}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: -2866636513227293309, guid: 4572807a06b0fb544bfcc715775392b5, type: 3}
+    - {fileID: -1074735667161867547, guid: 4572807a06b0fb544bfcc715775392b5, type: 3}
+    - {fileID: -3114158456447055901, guid: 4572807a06b0fb544bfcc715775392b5, type: 3}
+    - {fileID: -6425192592079785029, guid: 4572807a06b0fb544bfcc715775392b5, type: 3}
+    - {fileID: -3307754440376002429, guid: 4572807a06b0fb544bfcc715775392b5, type: 3}
+    - {fileID: 1350394486546977207, guid: 4572807a06b0fb544bfcc715775392b5, type: 3}
+    - {fileID: -7283963241028910262, guid: 4572807a06b0fb544bfcc715775392b5, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4572807a06b0fb544bfcc715775392b5,

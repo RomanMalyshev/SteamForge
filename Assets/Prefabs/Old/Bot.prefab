@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c12ce03c29dd47de9366020ec632d556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: 
   UnitSide: 0
   Health: 20
   InitiativeTest: 0
@@ -822,37 +823,37 @@ PrefabInstance:
     - target: {fileID: -4660769789582954007, guid: 91c8ae94f68cf494c861f057937a59c1,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.6832972
+      value: 0.6840208
       objectReference: {fileID: 0}
     - target: {fileID: -4660769789582954007, guid: 91c8ae94f68cf494c861f057937a59c1,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.71652627
+      value: -0.71578115
       objectReference: {fileID: 0}
     - target: {fileID: -4660769789582954007, guid: 91c8ae94f68cf494c861f057937a59c1,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.12781523
+      value: 0.12897953
       objectReference: {fileID: 0}
     - target: {fileID: -4660769789582954007, guid: 91c8ae94f68cf494c861f057937a59c1,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.057951435
+      value: 0.056011226
       objectReference: {fileID: 0}
     - target: {fileID: -4660769789582954007, guid: 91c8ae94f68cf494c861f057937a59c1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -83.728
+      value: -83.548
       objectReference: {fileID: 0}
     - target: {fileID: -4660769789582954007, guid: 91c8ae94f68cf494c861f057937a59c1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 122.996
+      value: 121.05
       objectReference: {fileID: 0}
     - target: {fileID: -4660769789582954007, guid: 91c8ae94f68cf494c861f057937a59c1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -107.878
+      value: -105.993
       objectReference: {fileID: 0}
     - target: {fileID: -3670646047634104630, guid: 91c8ae94f68cf494c861f057937a59c1,
         type: 3}
