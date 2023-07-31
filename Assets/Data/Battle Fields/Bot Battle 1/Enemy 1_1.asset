@@ -22,7 +22,7 @@ MonoBehaviour:
     Exp: 0
     Level: 0
     Hull:
-      Value: 10
+      Value: 7
       Name: Hull
       Description: 
     Strength:

@@ -22,11 +22,11 @@ MonoBehaviour:
     Exp: 0
     Level: 0
     Hull:
-      Value: 8
+      Value: 10
       Name: Hull
       Description: 
     Strength:
-      Value: 35
+      Value: 25
       Name: Strength
       Description: 
     Agile:
