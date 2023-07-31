@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c12ce03c29dd47de9366020ec632d556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Icon: {fileID: 21300000, guid: 12c0beba649a9194e854ba9343c65869, type: 3}
   Name: 
   UnitSide: 0
   Health: 20
