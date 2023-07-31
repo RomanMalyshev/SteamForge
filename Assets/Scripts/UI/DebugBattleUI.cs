@@ -163,7 +163,7 @@ public class DebugBattleUI : MonoBehaviour
                 _view.OnEndGame.Invoke();
                 return;
             }
-            
+
             Debug.LogWarning(winSide);
             RestartResult.gameObject.SetActive(winSide == UnitSide.Enemy);
             ReturnToMap.gameObject.SetActive(winSide == UnitSide.Player);
@@ -220,7 +220,11 @@ public class DebugBattleUI : MonoBehaviour
             unitLine.Button.onClick.AddListener(() => _view.OnUnitInBattleSelect.Invoke(unit));
             unitLine.Label.text = unit.UnitSide.ToString();
             unitLine.Health.text = unit.Health.ToString();
-            unitLine.Background.color = unit.UnitSide == UnitSide.Player ? Color.green : Color.red;
+            if (unit.Icon != null)
+                unitLine.Background.sprite = unit.Icon;
+            else
+                unitLine.Background.color = unit.UnitSide == UnitSide.Player ? Color.green : Color.red;
+
             unit.OnUnitDead += deadUnit =>
             {
                 unitLines.Remove(deadUnit);
