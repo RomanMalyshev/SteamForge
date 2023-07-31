@@ -7,7 +7,6 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 namespace GameMap
 {
@@ -36,6 +35,8 @@ namespace GameMap
             {
                 FinalEncounterSelect(_model.Plyer.Value);
             }
+
+            _encounterOrder[0].encounter[0].SetReeachable(false);
 
             _model.Plyer.Subscribe((player) =>
             {
@@ -253,6 +254,7 @@ namespace GameMap
 
             _playerFigure.SetCurrentEncounter(_currentEncounter);
             _playerFigure.GetStartingPoint();
+            _encounterOrder[0].encounter[0].SetReeachable(false);
         }
     }
 
