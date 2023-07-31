@@ -26,7 +26,6 @@ namespace GameMap
 
         private void Start()
         {
-
             _view = Globals.Global.View;
             _model = Globals.Global.Model;
 
@@ -45,37 +44,8 @@ namespace GameMap
 
             _view.OnNewGame.Subscribe(() =>
             {
-                _currentEncounter = _encounterOrder[0].encounter[0];
-                _currentEncounter.Activate();
-                _encounterOrder[1].encounter[0].SetReeachable(true);
-                _encounterOrder[1].encounter[1].SetReeachable(true);
-
-                /*foreach (var column1 in _encounterOrder)
-                {
-                    foreach (var encounter in column1.encounter)
-                    {
-                        //encounter.SetActive(true);
-
-                        if ((encounter.Column - _currentColumn > 1) || (encounter.Column <= _currentColumn))
-                        {
-                            encounter.SetReeachable(false);
-                        }
-                        else encounter.SetReeachable(true);
-                    }
-                }*/
-
-                for (var i = 0; i < _encounterOrder.Count; i++)
-                { 
-                    for (var a = 0; a < _encounterOrder[i].encounter.Count; a++)
-                    {
-                        _encounterOrder[i].encounter[a].EncounterState = EncounterState.NonVisited;
-                    }
-                }
-
-                _playerFigure.SetCurrentEncounter(_currentEncounter);
-                _playerFigure.GetStartingPoint(); 
+                StartNewGame();                
             });           
-
 
             _view.OnEncounterClick.Subscribe((currentEncounter) =>
             {
@@ -86,7 +56,6 @@ namespace GameMap
             {
                 SaveData();
             });
-
             
             for (var index = 0; index < _encounterOrder.Count; index++)
             {
@@ -116,7 +85,8 @@ namespace GameMap
             {
                 _playerFigure.GetStartingPoint();
             }
-            
+
+            _cameraController.GetOnMapBorderPoint(_encounterOrder[_encounterOrder.Count - 1].encounter[0]);
         }
 
         private void MovePlayerFigure(Transform transform, int column)
@@ -161,7 +131,6 @@ namespace GameMap
                     }
                 }
             }
-
         }
 
         private void SetCurrentEncounter(Encounter currentEncounter)
@@ -243,8 +212,7 @@ namespace GameMap
         }
         private void LoadMapState(int column)
         {
-            _currentColumn = column;
-            Debug.Log(_currentColumn);
+            _currentColumn = column;            
 
             foreach (var column1 in _encounterOrder)
             {
@@ -259,6 +227,27 @@ namespace GameMap
                     else encounter.SetReeachable(true);
                 }
             }
+        }
+
+        private void StartNewGame()
+        {
+            _currentEncounter = _encounterOrder[0].encounter[0];
+            _playerFigure.SetCurrentEncounter(_currentEncounter);
+            _playerFigure.GetStartingPoint();
+            _encounterOrder[1].encounter[0].SetReeachable(true);
+            _encounterOrder[1].encounter[1].SetReeachable(true);
+
+            foreach (var column1 in _encounterOrder)
+            {
+                foreach (var encounter in column1.encounter)
+                {
+                    encounter.SetActive(true);
+                    encounter.EncounterState = EncounterState.NonVisited;                    
+                }
+            }           
+
+            _playerFigure.SetCurrentEncounter(_currentEncounter);
+            _playerFigure.GetStartingPoint();
         }
     }
 

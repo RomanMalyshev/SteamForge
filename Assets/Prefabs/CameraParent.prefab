@@ -182,21 +182,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 747d7d5cf62bb6846a4ba14403669173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraTransform: {fileID: 9173622146406031256}
   _speed: 6
   _targetSwapSpeed: 40
   _zoomSpeed: 350
   _rotateSpeed: 10
   _maxHeight: 40
   _minHeight: 4
+  _target: {fileID: 0}
   _minX: -20
   _maxX: 20
   _minZ: -20
   _maxZ: 20
-  _cameraState: 0
-  _target: {fileID: 0}
-  _onMapHeight: 4
+  _slide: 8
+  _onMapHeight: 8
   _onMapDistance: -4
+  _cameraTransform: {fileID: 9173622146406031256}
+  _cameraState: 0
   _map: {fileID: 0}
   _battlePoint: {x: 0, y: 0, z: 0}
   _campPoint: {x: -5.1, y: 0.39, z: -322.75}

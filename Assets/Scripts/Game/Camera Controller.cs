@@ -9,21 +9,25 @@ using UnityEngine.UIElements;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private Transform _cameraTransform;
+    
     [SerializeField] private float _speed = 0.06f;
     [SerializeField] private float _targetSwapSpeed = 0.01f;
     [SerializeField] private float _zoomSpeed = 10.0f;
     [SerializeField] private float _rotateSpeed = 0.1f;
     [SerializeField] private float _maxHeight = 25f;
-    [SerializeField] private float _minHeight = 1f;
+    [SerializeField] private float _minHeight = 1f;    
+    [SerializeField] private Transform _target;
     [SerializeField] private float _minX;
     [SerializeField] private float _maxX;
     [SerializeField] private float _minZ;
     [SerializeField] private float _maxZ;
-    [SerializeField] private CameraState _cameraState;
-    [SerializeField] private Transform _target;    
+    [Space]
+    [SerializeField] private float _slide;
     [SerializeField] private float _onMapHeight;
     [SerializeField] private float _onMapDistance;
+    [Space]
+    [SerializeField] private Transform _cameraTransform;
+    [SerializeField] private CameraState _cameraState;
     [SerializeField] private Map _map;    
     [SerializeField] private Vector3 _battlePoint;
     [SerializeField] private Vector3 _campPoint;
@@ -37,9 +41,11 @@ public class CameraController : MonoBehaviour
     private Vector3 _newZoom;
     private Vector3 _dragStartPoint;
     private Vector3 _dragStopPosition;
-    public bool _isActiveControl;
-    public bool _isMooving;
-    private PlayerFigure _playerFigure;    
+    public Transform _borderPoint;
+    private bool _isActiveControl;
+    private bool _isMooving;
+    private PlayerFigure _playerFigure;
+    
 
     private void Start()
     {        
@@ -214,8 +220,18 @@ public class CameraController : MonoBehaviour
     private void OnMapCameraMovement()
     {
         if (_playerFigure == null) return;
-        transform.position = new Vector3(_playerFigure.transform.position.x,
+
+        if (_playerFigure.transform.position.x + _slide <= _borderPoint.position.x)
+        {
+            transform.position = new Vector3(_playerFigure.transform.position.x + _slide,
             _playerFigure.transform.position.y + _onMapHeight, _mapPoint.z - _onMapDistance);
+        }
+        else
+        {
+            transform.position = new Vector3(_borderPoint.position.x,
+            _playerFigure.transform.position.y + _onMapHeight, _mapPoint.z - _onMapDistance);
+        }
+
     }       
 
     public void SetCameraOnMapState(CameraState state)
@@ -270,6 +286,11 @@ public class CameraController : MonoBehaviour
         }
         
         _isMooving = false;
+    }
+
+    public void GetOnMapBorderPoint(Encounter borderPoint)
+    {       
+        _borderPoint = borderPoint.transform;
     }
 }
 

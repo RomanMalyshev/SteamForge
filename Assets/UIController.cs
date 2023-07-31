@@ -21,11 +21,19 @@ public class UIController : MonoBehaviour
         _onMapUI.gameObject.SetActive(false);
         _mainMenuUI.gameObject.SetActive(true);
         _endGameUI.gameObject.SetActive(false);
-        
+
+        Globals.Global.View.OnNewGame.Subscribe(() =>
+        {
+            _onMapUI.gameObject.SetActive(true);
+            _mainMenuUI.gameObject.SetActive(false);
+            _endGameUI.gameObject.SetActive(false);
+        });
+
         Globals.Global.View.StartGame.Subscribe(() =>
         {
             _onMapUI.gameObject.SetActive(true);
             _mainMenuUI.gameObject.SetActive(false);
+
         });
 
         Globals.Global.View.ActiveBattle.Subscribe(map => 

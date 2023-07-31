@@ -46,6 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerUnits:
   - {fileID: 6598323108609139614, guid: e1eccb4d1eb7eac4c886df36d80681a7, type: 3}
-  - {fileID: 6104546114703522346, guid: 380fd29cf630e6c4d9439fffa7d21c9f, type: 3}
+  - {fileID: 6104546114703522346, guid: 9afa15bdfa5a0264382747e01384c92c, type: 3}
   - {fileID: 6598323108609139614, guid: 0b51a241938a9d74ab076e4fe4396323, type: 3}
-  - {fileID: 6598323108609139614, guid: 1c9ba055ea94aa64096dd83811c55d32, type: 3}
+  - {fileID: 6598323108609139614, guid: 975d1494ecc08514a98e9e8e39e1ebc3, type: 3}
