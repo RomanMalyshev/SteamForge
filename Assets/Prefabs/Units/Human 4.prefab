@@ -179,6 +179,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6104546114703522346, guid: 380fd29cf630e6c4d9439fffa7d21c9f,
         type: 3}
+      propertyPath: Icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 46b679c98bbe86b4ebc01a0956660a9c,
+        type: 3}
+    - target: {fileID: 6104546114703522346, guid: 380fd29cf630e6c4d9439fffa7d21c9f,
+        type: 3}
       propertyPath: Health
       value: 120
       objectReference: {fileID: 0}

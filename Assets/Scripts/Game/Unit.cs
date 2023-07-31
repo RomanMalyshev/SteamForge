@@ -11,6 +11,7 @@ namespace DefaultNamespace.Player
 {
     public class Unit : MonoBehaviour
     {
+        public Sprite Icon;
         [HideInInspector] public string Name;
         public TileEntity OccupiedTile { get; private set; }
         public int CurrentHealth { get; private set; }
