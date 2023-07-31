@@ -201,9 +201,8 @@ MonoBehaviour:
   _map: {fileID: 0}
   _battlePoint: {x: 0, y: 0, z: 0}
   _campPoint: {x: -5.1, y: 0.39, z: -322.75}
-  _mapPoint: {x: 9.66, y: 11.88, z: 209.73}
-  _isActiveControl: 0
-  _isMooving: 0
+  _mapPoint: {x: 9.66, y: 11.88, z: 2038}
+  _borderPoint: {fileID: 0}
 --- !u!1 &7665153843976055664
 GameObject:
   m_ObjectHideFlags: 0
