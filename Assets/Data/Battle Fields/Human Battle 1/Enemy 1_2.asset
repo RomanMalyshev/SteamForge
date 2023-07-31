@@ -34,7 +34,7 @@ MonoBehaviour:
       Name: Agile
       Description: 
     Speed:
-      Value: 15
+      Value: 10
       Name: Speed
       Description: 
     Reaction:
