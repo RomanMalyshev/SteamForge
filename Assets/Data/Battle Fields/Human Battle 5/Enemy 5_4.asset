@@ -22,23 +22,23 @@ MonoBehaviour:
     Exp: 0
     Level: 0
     Hull:
-      Value: 15
+      Value: 16
       Name: Hull
       Description: 
     Strength:
-      Value: 45
+      Value: 38
       Name: Strength
       Description: 
     Agile:
-      Value: 10
+      Value: 13
       Name: Agile
       Description: 
     Speed:
-      Value: 15
+      Value: 18
       Name: Speed
       Description: 
     Reaction:
-      Value: 20
+      Value: 28
       Name: Reaction
       Description: 
     Health:

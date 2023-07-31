@@ -26,19 +26,19 @@ MonoBehaviour:
       Name: Hull
       Description: 
     Strength:
-      Value: 50
+      Value: 53
       Name: Strength
       Description: 
     Agile:
-      Value: 10
+      Value: 13
       Name: Agile
       Description: 
     Speed:
-      Value: 10
+      Value: 18
       Name: Speed
       Description: 
     Reaction:
-      Value: 20
+      Value: 28
       Name: Reaction
       Description: 
     Health:
