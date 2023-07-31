@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6d32a2a8ca144a4396103e2a46a24f3, type: 3}
   m_Name: Bot_Battle 2
   m_EditorClassIdentifier: 
+  isFinal: 0
   MapViewPrefab: {fileID: 4703452075799608982, guid: d7005d2d273fb2d42952a7ca49d5abf2,
     type: 3}
   _enemys:
-  - {fileID: 11400000, guid: 6a2effb774bbba34c9a898087bc58151, type: 2}
-  - {fileID: 11400000, guid: 268b8442f9ee58049b87fd0c84606ede, type: 2}
-  - {fileID: 11400000, guid: dfef854fc48e3834e89c8b554ee22b2c, type: 2}
-  - {fileID: 11400000, guid: eb29600f6547b844b9783bae366f1ec4, type: 2}
+  - {fileID: 11400000, guid: fdbef33b053125f4b8cd29c326d8877b, type: 2}
+  - {fileID: 11400000, guid: 667b298541ec680409d4cc3aaf7e3c16, type: 2}
+  - {fileID: 11400000, guid: baf36e10002820b44a406e73d4e69686, type: 2}
+  - {fileID: 11400000, guid: 343c27685ce4d614d90618266befa804, type: 2}
   Type: 1
   Axis: 0
   RotationType: 0

@@ -32,6 +32,11 @@ namespace GameMap
             if (_cameraController != null)
                 _cameraController.FindPlayerFigure(_playerFigure);
 
+            if (_model.Plyer != null)
+            {
+                FinalEncounterSelect(_model.Plyer.Value);
+            }
+
             _model.Plyer.Subscribe((player) =>
             {
                 FinalEncounterSelect(player);

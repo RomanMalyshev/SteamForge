@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6d32a2a8ca144a4396103e2a46a24f3, type: 3}
   m_Name: Human_Battle 3
   m_EditorClassIdentifier: 
+  isFinal: 0
   MapViewPrefab: {fileID: 3663485175235945188, guid: 3089f8e620238e54ab0a00cdd064eb6b,
     type: 3}
   _enemys:
   - {fileID: 11400000, guid: 71955dc908102054f9e9d5b203b848e2, type: 2}
   - {fileID: 11400000, guid: 18805c09af4cb8944a982b14fc0a1c31, type: 2}
-  - {fileID: 11400000, guid: dfef854fc48e3834e89c8b554ee22b2c, type: 2}
+  - {fileID: 11400000, guid: 2a4a3b7466a9dd347817d353a8e359c6, type: 2}
   - {fileID: 11400000, guid: 2a4a3b7466a9dd347817d353a8e359c6, type: 2}
   Type: 1
   Axis: 0
