@@ -278,8 +278,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fly Bot
       objectReference: {fileID: 0}
+    - target: {fileID: 6598323108609139614, guid: 0b51a241938a9d74ab076e4fe4396323,
+        type: 3}
+      propertyPath: HealthBar
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598323108609139614, guid: 0b51a241938a9d74ab076e4fe4396323,
+        type: 3}
+      propertyPath: _mouseDetector
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598323108609139614, guid: 0b51a241938a9d74ab076e4fe4396323,
+        type: 3}
+      propertyPath: HealthBarParent
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8415534914180959869, guid: 0b51a241938a9d74ab076e4fe4396323, type: 3}
+    - {fileID: 2251041288412272462, guid: 0b51a241938a9d74ab076e4fe4396323, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b51a241938a9d74ab076e4fe4396323, type: 3}
@@ -372,8 +389,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Optimized_Cyclop Bot
       objectReference: {fileID: 0}
+    - target: {fileID: 6598323108609139614, guid: 975d1494ecc08514a98e9e8e39e1ebc3,
+        type: 3}
+      propertyPath: HealthBar
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598323108609139614, guid: 975d1494ecc08514a98e9e8e39e1ebc3,
+        type: 3}
+      propertyPath: _mouseDetector
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598323108609139614, guid: 975d1494ecc08514a98e9e8e39e1ebc3,
+        type: 3}
+      propertyPath: HealthBarParent
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8415534914180959869, guid: 975d1494ecc08514a98e9e8e39e1ebc3, type: 3}
+    - {fileID: 2251041288412272462, guid: 975d1494ecc08514a98e9e8e39e1ebc3, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 975d1494ecc08514a98e9e8e39e1ebc3, type: 3}
@@ -466,8 +500,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Combat Bot
       objectReference: {fileID: 0}
+    - target: {fileID: 6598323108609139614, guid: e1eccb4d1eb7eac4c886df36d80681a7,
+        type: 3}
+      propertyPath: HealthBar
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598323108609139614, guid: e1eccb4d1eb7eac4c886df36d80681a7,
+        type: 3}
+      propertyPath: _mouseDetector
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598323108609139614, guid: e1eccb4d1eb7eac4c886df36d80681a7,
+        type: 3}
+      propertyPath: HealthBarParent
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8415534914180959869, guid: e1eccb4d1eb7eac4c886df36d80681a7, type: 3}
+    - {fileID: 2251041288412272462, guid: e1eccb4d1eb7eac4c886df36d80681a7, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1eccb4d1eb7eac4c886df36d80681a7, type: 3}
@@ -560,8 +611,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6104546114703522346, guid: 9afa15bdfa5a0264382747e01384c92c,
+        type: 3}
+      propertyPath: HealthBar
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6104546114703522346, guid: 9afa15bdfa5a0264382747e01384c92c,
+        type: 3}
+      propertyPath: _mouseDetector
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6104546114703522346, guid: 9afa15bdfa5a0264382747e01384c92c,
+        type: 3}
+      propertyPath: HealthBarParent
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8930563138368411593, guid: 9afa15bdfa5a0264382747e01384c92c, type: 3}
+    - {fileID: 1160531849006534394, guid: 9afa15bdfa5a0264382747e01384c92c, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9afa15bdfa5a0264382747e01384c92c, type: 3}
