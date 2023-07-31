@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: 
-  UnitSide: 0
+  UnitSide: 1
   Health: 20
   InitiativeTest: 0
   ActionPoints: 20
