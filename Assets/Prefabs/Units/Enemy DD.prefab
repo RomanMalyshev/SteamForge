@@ -63,6 +63,7 @@ MonoBehaviour:
   HealthBar: {fileID: 4794671517606412099}
   HealthBarParent: {fileID: 8930563138368411593}
   _mouseDetector: {fileID: 3136153318446971055}
+  Model: {fileID: 8137825151811979131}
   StandMaterial: {fileID: 2100000, guid: 619ca4317657d2244b4d9c94333d5797, type: 2}
   TurnStandMaterial: {fileID: 2100000, guid: 82e3c8e4e17d21f4ca272bc1419f5180, type: 2}
   StandMeshRenderer: {fileID: 3697738087040993055}
