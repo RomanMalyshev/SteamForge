@@ -33,6 +33,7 @@ namespace DefaultNamespace.Player
         public GameObject HealthBarParent;
         public UnitMoseDetector _mouseDetector;
 
+        public GameObject Model;
         public Material StandMaterial;
         public Material TurnStandMaterial;
         public MeshRenderer StandMeshRenderer;
@@ -47,7 +48,7 @@ namespace DefaultNamespace.Player
         private SkillCommandHandler _currentSkill;
         private GameObject _stand;
         private MapEntity _mapEntity;
-        
+
         public void Init(MapEntity battleFieldFieldEntity, UnitSide side, Character character)
         {
             Name = character.Name;
@@ -61,7 +62,7 @@ namespace DefaultNamespace.Player
             InitiativeTest = character.Initiative.Value;
 
             HealthBarParent.gameObject.SetActive(true);
-            HealthBar.fillAmount = (float)CurrentHealth / Health;
+            HealthBar.fillAmount = (float) CurrentHealth / Health;
             _mapEntity = battleFieldFieldEntity;
             _model = Globals.Global.Model;
 
@@ -149,7 +150,7 @@ namespace DefaultNamespace.Player
             Debug.Log(" HANDLE END " + gameObject.name + " " + gameObject.transform.GetSiblingIndex());
 
             if (_currentActionPoints > 0) return;
-            
+
             Deactivate();
             Debug.Log("OnActionPointsEnd " + gameObject.name + " " + gameObject.transform.GetSiblingIndex());
             OnActionPointsEnd?.Invoke();
@@ -160,7 +161,7 @@ namespace DefaultNamespace.Player
             CurrentHealth -= damage;
             _model.OnUnitHealthChange.Invoke(this);
 
-            HealthBar.fillAmount = (float)CurrentHealth / Health;
+            HealthBar.fillAmount = (float) CurrentHealth / Health;
 
             if (CurrentHealth > 0) return;
             SetDeadState();
@@ -177,6 +178,10 @@ namespace DefaultNamespace.Player
 
             if (Animator != null)
                 Animator.enabled = false;
+
+
+            if (Model != null)
+                Model.SetActive(false);
         }
 
         public void OnDestroy()

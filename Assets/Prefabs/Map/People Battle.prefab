@@ -95,7 +95,7 @@ PrefabInstance:
     - target: {fileID: 2436281145247022138, guid: 7b18ab5e1c599ab469bdaaf5765cca5e,
         type: 3}
       propertyPath: m_text
-      value: Humn's outpost
+      value: Human's outpost
       objectReference: {fileID: 0}
     - target: {fileID: 3159048378186679175, guid: 7b18ab5e1c599ab469bdaaf5765cca5e,
         type: 3}
