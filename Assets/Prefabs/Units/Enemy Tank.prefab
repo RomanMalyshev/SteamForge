@@ -245,6 +245,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6889361376583660376, guid: 6586e494b2ca41142bbca779531acee1,
         type: 3}
+    - target: {fileID: 6104546114703522346, guid: 380fd29cf630e6c4d9439fffa7d21c9f,
+        type: 3}
+      propertyPath: UnitSide
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7153181071941162492, guid: 380fd29cf630e6c4d9439fffa7d21c9f,
         type: 3}
       propertyPath: AnimationHandler
