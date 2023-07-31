@@ -31,15 +31,10 @@ namespace DefaultNamespace
             
             View.Init();
             Model.Init();
-            Presenter.Init();
+            Presenter.Init(PlayerUnits);
 
             
-            //Character Set
-            for (var i = 0; i < Model.Plyer.Value.Party.Count; i++)
-            {
-                var character = Model.Plyer.Value.Party[i];
-                character.BattleView = PlayerUnits[i];
-            }
+          
         }
     }
 }

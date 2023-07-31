@@ -8,11 +8,10 @@ namespace DefaultNamespace
 {
     public class Presenter
     {
-        private int cashAction;
-
-        public void Init()
+        private static Unit[] _playerUnits;
+        public void Init(Unit[] playerUnits)
         {
-
+            _playerUnits = playerUnits;
             Globals.Global.Model.OnBattleEnd.Subscribe(side =>
             {
                 if (side != UnitSide.Player) return;
@@ -114,6 +113,13 @@ namespace DefaultNamespace
                     },
                 }
             };
+            
+            //Character Set
+            for (var i = 0; i <  Globals.Global.Model.Plyer.Value.Party.Count; i++)
+            {
+                var character =  Globals.Global.Model.Plyer.Value.Party[i];
+                character.BattleView = _playerUnits[i];
+            }
         }
     }
 }
